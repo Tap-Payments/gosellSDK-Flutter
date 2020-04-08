@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:go_sell_sdk_flutter/go_sell_sdk_flutter.dart';
+import 'package:go_sell_sdk_flutter/model/customer.dart';
 
 void main() => runApp(MyApp());
 
@@ -25,7 +26,33 @@ class _MyAppState extends State<MyApp> {
     String platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      platformVersion = await GoSellSdkFlutter.platformVersion;
+      GoSellSdkFlutter.sessionConfigurations(
+          "kwd",
+          Customer(
+              customerId: "",
+              email: "h@tap.company",
+              isdNumber: "965",
+              number: "65562630",
+              firstName: "Haitham",
+              middleName: "Mohammad",
+              lastName: "Elsheshtawy",
+              metaData: null),
+          null,
+          null,
+          null,
+          "",
+          "paymentDescription",
+          null,
+          null,
+          "paymentStatementDescriptor",
+          true,
+          false,
+          null,
+          null,
+          null,
+          "merchantID",
+          null);
+      platformVersion = await GoSellSdkFlutter.startPaymentSDK;
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }

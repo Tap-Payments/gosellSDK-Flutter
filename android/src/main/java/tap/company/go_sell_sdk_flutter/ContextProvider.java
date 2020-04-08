@@ -1,16 +1,16 @@
 package tap.company.go_sell_sdk_flutter;
 
-import android.content.Context;
+import android.app.Activity;
 
 public class ContextProvider {
 
-    private static Context context;
+    private static Activity context;
 
-    public static void setContext(Context mainActivity) {
+    public static void setContext(Activity mainActivity) {
         context = mainActivity;
     }
 
-    public static Context getContext() {
+    public static Activity getContext() {
         return context;
     }
 

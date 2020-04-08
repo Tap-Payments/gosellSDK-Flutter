@@ -1,0 +1,1 @@
+ enum AuthorizeActionType { CAPTURE,VOID}
