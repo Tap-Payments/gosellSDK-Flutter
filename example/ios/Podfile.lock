@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - go_sell_sdk_flutter (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - go_sell_sdk_flutter (from `.symlinks/plugins/go_sell_sdk_flutter/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  go_sell_sdk_flutter:
+    :path: ".symlinks/plugins/go_sell_sdk_flutter/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  go_sell_sdk_flutter: 369310fc6eb6b4e3a1b7b62e7fa5088bbcfb3324
+
+PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83
+
+COCOAPODS: 1.8.4

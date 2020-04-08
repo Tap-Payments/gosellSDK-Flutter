@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="tap.company.go_sell_sdk_flutter">
+
+    <application>
+        <activity android:name=".SDKStarterActivity"></activity>
+    </application>
+
+</manifest>
