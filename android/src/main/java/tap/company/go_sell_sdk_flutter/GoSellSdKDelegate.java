@@ -132,7 +132,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
          * Required step.
          * Choose between different SDK modes
          */
-        sdkSession.setTransactionMode(TransactionMode.PURCHASE);
+        sdkSession.setTransactionMode(TransactionMode.TOKENIZE_CARD);
 
         TransactionMode trx_mode = sdkSession.getTransactionMode();
 
@@ -258,16 +258,11 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @Override
-    public void paymentSucceed(@NonNull Charge charge) {
-        sendResult(charge);
-    }
 
-
-    private void sendResult(Charge charge) {
+    private void sendChargeResult(Charge charge,String paymentStatus,String trx_mode) {
         Map<String, Object> resultMap = new HashMap<>();
         if(charge.getStatus()!=null)
-        resultMap.put("status", charge.getStatus().name());
+            resultMap.put("status", charge.getStatus().name());
         resultMap.put("charge_id", charge.getId());
         resultMap.put("description", charge.getDescription());
         resultMap.put("message", charge.getResponse().getMessage());
@@ -276,7 +271,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
             resultMap.put("card_last_four", charge.getCard().getLast4());
             resultMap.put("card_object", charge.getCard().getObject());
             resultMap.put("card_brand", charge.getCard().getBrand());
-            resultMap.put("card_exp_year", charge.getCard().getExp_month());
+            resultMap.put("card_exp_month", charge.getCard().getExp_month());
             resultMap.put("card_exp_year", charge.getCard().getExp_year());
         }
         if (charge.getAcquirer() != null) {
@@ -287,63 +282,63 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         if (charge.getSource() != null) {
             resultMap.put("source_id", charge.getSource().getId());
             if(charge.getSource().getChannel()!=null)
-            resultMap.put("source_channel", charge.getSource().getChannel().name());
+                resultMap.put("source_channel", charge.getSource().getChannel().name());
             resultMap.put("source_object", charge.getSource().getObject());
             resultMap.put("source_payment_type", charge.getSource().getPaymentType());
         }
-        resultMap.put("sdk_result","SUCCESS");
+        resultMap.put("sdk_result",paymentStatus);
+        resultMap.put("trx_mode",trx_mode);
         pendingResult.success(resultMap);
+        pendingResult=null;
     }
 
+
+    private void sendTokenResult(Token token,String paymentStatus) {
+        Map<String, Object> resultMap = new HashMap<>();
+
+        resultMap.put("token", token.getId());
+        resultMap.put("token_currency", token.getCurrency());
+        if(token.getCard()!=null){
+            resultMap.put("card_first_six", token.getCard().getFirstSix());
+            resultMap.put("card_last_four", token.getCard().getLastFour());
+            resultMap.put("card_object", token.getCard().getObject());
+            resultMap.put("card_exp_month", token.getCard().getExpirationYear());
+            resultMap.put("card_exp_year", token.getCard().getExpirationMonth());
+        }
+        resultMap.put("sdk_result",paymentStatus);
+        resultMap.put("trx_mode","TOKENIZE");
+        pendingResult.success(resultMap);
+        pendingResult=null;
+    }
+
+
+    private void sendSDKError(int errorCode, String errorMessage, String errorBody) {
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("sdk_result","SDK_ERROR");
+        resultMap.put("sdk_error_code",errorCode);
+        resultMap.put("sdk_error_message",errorMessage);
+        resultMap.put("sdk_error_description",errorBody);
+        pendingResult.success(resultMap);
+        pendingResult=null;
+    }
+
+
+    @Override
+    public void paymentSucceed(@NonNull Charge charge) {
+        sendChargeResult(charge,"SUCCESS","CHARGE");
+    }
 
     @Override
     public void paymentFailed(@Nullable Charge charge) {
         System.out.println("Payment Failed : " + charge.getStatus());
         System.out.println("Payment Failed : " + charge.getDescription());
         System.out.println("Payment Failed : " + charge.getResponse().getMessage());
-//        result.setText(charge.getStatus() + "  [ " + charge.getId()+ " ] " );
-
-
-//        showDialog(charge.getId(),charge.getResponse().getMessage(),company.tap.gosellapi.R.drawable.icon_failed);
+        sendChargeResult(charge,"FAILED","CHARGE");
     }
 
     @Override
     public void authorizationSucceed(@NonNull Authorize authorize) {
-        System.out.println("Authorize Succeeded : " + authorize.getStatus());
-        System.out.println("Authorize Succeeded : " + authorize.getResponse().getMessage());
-
-        if (authorize.getCard() != null) {
-            System.out.println("Payment Authorized Succeeded : first six : " + authorize.getCard().getFirstSix());
-            System.out.println("Payment Authorized Succeeded : last four: " + authorize.getCard().getLast4());
-            System.out.println("Payment Authorized Succeeded : card object : " + authorize.getCard().getObject());
-        }
-
-        System.out.println("##############################################################################");
-        if (authorize.getAcquirer() != null) {
-            System.out.println("Payment Authorized Succeeded : acquirer id : " + authorize.getAcquirer().getId());
-            System.out.println("Payment Authorized Succeeded : acquirer response code : " + authorize.getAcquirer().getResponse().getCode());
-            System.out.println("Payment Authorized Succeeded : acquirer response message: " + authorize.getAcquirer().getResponse().getMessage());
-        }
-        System.out.println("##############################################################################");
-        if (authorize.getSource() != null) {
-            System.out.println("Payment Authorized Succeeded : source id: " + authorize.getSource().getId());
-            System.out.println("Payment Authorized Succeeded : source channel: " + authorize.getSource().getChannel());
-            System.out.println("Payment Authorized Succeeded : source object: " + authorize.getSource().getObject());
-            System.out.println("Payment Authorized Succeeded : source payment method: " + authorize.getSource().getPaymentMethodStringValue());
-            System.out.println("Payment Authorized Succeeded : source payment type: " + authorize.getSource().getPaymentType());
-            System.out.println("Payment Authorized Succeeded : source type: " + authorize.getSource().getType());
-        }
-
-        System.out.println("##############################################################################");
-        if (authorize.getExpiry() != null) {
-            System.out.println("Payment Authorized Succeeded : expiry type :" + authorize.getExpiry().getType());
-            System.out.println("Payment Authorized Succeeded : expiry period :" + authorize.getExpiry().getPeriod());
-        }
-
-
-//        saveCustomerRefInSession(authorize);
-//        configureSDKSession();
-//        showDialog(authorize.getId(),authorize.getResponse().getMessage(),company.tap.gosellapi.R.drawable.ic_checkmark_normal);
+        sendChargeResult(authorize,"SUCCESS","AUTHORIZE");
     }
 
     @Override
@@ -351,7 +346,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         System.out.println("Authorize Failed : " + authorize.getStatus());
         System.out.println("Authorize Failed : " + authorize.getDescription());
         System.out.println("Authorize Failed : " + authorize.getResponse().getMessage());
-//        showDialog(authorize.getId(),authorize.getResponse().getMessage(),company.tap.gosellapi.R.drawable.icon_failed);
+        sendChargeResult(authorize,"FAILED","AUTHORIZE");
     }
 
 
@@ -365,8 +360,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         System.out.println("Card Saved Succeeded : " + charge.getCard().getBrand());
         System.out.println("Card Saved Succeeded : " + charge.getDescription());
         System.out.println("Card Saved Succeeded : " + charge.getResponse().getMessage());
-//        saveCustomerRefInSession(charge);
-//        showDialog(charge.getId(),charge.getStatus().toString(),company.tap.gosellapi.R.drawable.ic_checkmark_normal);
+        sendChargeResult(charge,"SUCCESS","SAVE_CARD");
     }
 
     @Override
@@ -374,7 +368,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         System.out.println("Card Saved Failed : " + charge.getStatus());
         System.out.println("Card Saved Failed : " + charge.getDescription());
         System.out.println("Card Saved Failed : " + charge.getResponse().getMessage());
-//        showDialog(charge.getId(),charge.getStatus().toString(),company.tap.gosellapi.R.drawable.icon_failed);
+        sendChargeResult(charge,"FAILED","SaveCard");
     }
 
     @Override
@@ -386,7 +380,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         System.out.println("Token card : " + token.getCard().getAddress() + " ****** " + token.getCard().getObject());
         System.out.println("Token card : " + token.getCard().getExpirationMonth() + " ****** " + token.getCard().getExpirationYear());
 
-//        showDialog(token. getId(),"Token",company.tap.gosellapi.R.drawable.ic_checkmark_normal);
+        sendTokenResult(token,"SUCCESS");
     }
 
     @Override
@@ -412,13 +406,12 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
             System.out.println("SDK Process Error : " + goSellError.getErrorBody());
             System.out.println("SDK Process Error : " + goSellError.getErrorMessage());
             System.out.println("SDK Process Error : " + goSellError.getErrorCode());
-            pendingResult.error(
-                    "Error code :" + goSellError.getErrorCode(),
-                    "Error msg :" + goSellError.getErrorMessage(),
-                    goSellError.getErrorMessage()
-            );
         }
+
+        sendSDKError(goSellError.getErrorCode(),goSellError.getErrorMessage(),goSellError.getErrorBody() );
     }
+
+
 
 
     @Override
@@ -451,19 +444,20 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
     @Override
     public void backendUnknownError(String message) {
         System.out.println("Backend Un-Known error.... : " + message);
+        sendSDKError(500,message,message);
     }
 
     @Override
     public void invalidTransactionMode() {
         System.out.println(" invalidTransactionMode  ......");
+        sendSDKError(503,"invalidTransactionMode","invalidTransactionMode");
+
     }
 
     @Override
     public void invalidCustomerID() {
-//        if(progress!=null)
-//            progress.dismiss();
         System.out.println("Invalid Customer ID .......");
-
+        sendSDKError(501,"Invalid Customer ID ","Invalid Customer ID ");
     }
 
     @Override
