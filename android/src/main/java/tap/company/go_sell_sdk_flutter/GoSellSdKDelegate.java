@@ -132,7 +132,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
          * Required step.
          * Choose between different SDK modes
          */
-        sdkSession.setTransactionMode(TransactionMode.TOKENIZE_CARD);
+        sdkSession.setTransactionMode(TransactionMode.SAVE_CARD);
 
         TransactionMode trx_mode = sdkSession.getTransactionMode();
 
