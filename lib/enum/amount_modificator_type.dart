@@ -1,1 +1,0 @@
-enum AmountModificatorType{PERCENTAGE,FIXED}  

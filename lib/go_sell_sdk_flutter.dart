@@ -1,37 +1,46 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:go_sell_sdk_flutter/enum/card_type.dart';
-import 'package:go_sell_sdk_flutter/model/authorize_action.dart';
-import 'package:go_sell_sdk_flutter/model/customer.dart';
-import 'package:go_sell_sdk_flutter/model/destinations.dart';
-import 'package:go_sell_sdk_flutter/model/payment_item.dart';
-import 'package:go_sell_sdk_flutter/model/payment_reference.dart';
-import 'package:go_sell_sdk_flutter/model/receipt.dart';
-import 'package:go_sell_sdk_flutter/model/shipping.dart';
-import 'package:go_sell_sdk_flutter/model/tax.dart';
+import 'package:go_sell_sdk_flutter/model/models.dart';
 
 class GoSellSdkFlutter {
   static const MethodChannel _channel =
       const MethodChannel('go_sell_sdk_flutter');
 
-  // static Future<String> get platformVersion async {
-  //   // final String version = await _channel.invokeMethod('getPlatformVersion');
-  //   final String version = await _channel.invokeMethod('start_sdk');
-  //   return version;
-  // }
 
-   static Future<dynamic> get startPaymentSDK async{
 
-     final String result = await _channel.invokeMethod('start_sdk', sessionParameters);
-     return result;
+  static Future<dynamic> get startPaymentSDK async {
+    // prepare sdk configurations
+    sdkConfigurations = {
+      "appCredentials": appCredentials,
+      "sessionParameters": sessionParameters
+    };
 
-   }
+   // forward call to channel
+    final dynamic result =
+        await _channel.invokeMethod('start_sdk', sdkConfigurations);
+    
+    print('result in dart : $result');
+    return result;
+  }
 
+  static Map<String, dynamic> sdkConfigurations;
+  static Map<String, dynamic> appCredentials;
   static Map<String, dynamic> sessionParameters;
 
+// App configurations
+  static void configureApp({String secreteKey, String bundleId, String lang}) {
+    appCredentials = <String, dynamic>{
+      "secrete_key": secreteKey,
+      "bundleID": bundleId,
+      "language": lang
+    };
+  }
+
+  // session configurations
   static void sessionConfigurations(
-      String transactionCurrency,
+      {String transactionCurrency,
       Customer customer,
       List<PaymentItem> paymentItems,
       List<Tax> taxes,
@@ -47,40 +56,25 @@ class GoSellSdkFlutter {
       AuthorizeAction authorizeAction,
       Destinations destinations,
       String merchantID,
-      CardType cardType) {
-
+      CardType cardType}) {
     sessionParameters = <String, dynamic>{
-      'transactionCurrency': "",
-      'customer': {
-        "ISDNumber": customer.isdNumber,
-        "number": customer.number,
-        "customerId": customer.customerId,
-        "email": customer.email,
-        "firstName": customer.firstName,
-        "firstName": customer.firstName,
-        "lastName": customer.lastName,
-        "metaData": customer.metaData,
-      },
-      "paymentitems": paymentItems,
-      "taxes": taxes,
-      "shipping": shippings,
+      'transactionCurrency': "kwd",
+      'customer': jsonEncode(customer),
+      "paymentitems": jsonEncode(paymentItems),
+      "taxes": jsonEncode(taxes),
+      "shipping": jsonEncode(shippings),
       "postURL": postURL,
       "paymentDescription": paymentDescription,
-      "paymenMetaData": paymentMetaData,
-      "paymentReference": paymentReference,
+      "paymenMetaData": jsonEncode(paymentMetaData),
+      "paymentReference": jsonEncode(paymentReference),
       "paymentStatementDescriptor": paymentStatementDescriptor,
       "isUserAllowedToSaveCard": isUserAllowedToSaveCard,
       "isRequires3DSecure": isRequires3DSecure,
-      "receiptSettings": receipt,
-      "authorizeAction": authorizeAction,
-      "destinations": destinations,
-      //   "amount": destinations.amount,
-      //   "currency": destinations.currency,
-      //   "count": destinations.count,
-      //   "destination": destinations.destinations
-      // },
+      "receiptSettings": jsonEncode(receipt),
+      "authorizeAction": jsonEncode(authorizeAction),
+      "destinations": jsonEncode(destinations),
       "merchantID": merchantID,
-      "cardType": cardType,
+      "cardType": cardType.toString(),
     };
   }
 }

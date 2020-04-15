@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="22cf9833-5951-46af-90ee-2aa34f6b2b10" name="Default Changelist" comment="" />
+    <list default="true" id="22cf9833-5951-46af-90ee-2aa34f6b2b10" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.idea/caches/build_file_checksums.ser" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/tap/company/go_sell_sdk_flutter/GoSellSdkFlutterPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/tap/company/go_sell_sdk_flutter/GoSellSdkFlutterPlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/go_sell_sdk_flutter.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/go_sell_sdk_flutter.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/customer.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/payment_reference.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/receipt.dart" beforeDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -9,6 +18,9 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_3_API_29" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1aFp1MDUCvvTtlqEXaRTvBs7Ogi" />
   <component name="PropertiesComponent">
     <property name="dart.analysis.tool.window.force.activate" value="false" />
@@ -97,5 +109,16 @@
       <updated>1586340979742</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
