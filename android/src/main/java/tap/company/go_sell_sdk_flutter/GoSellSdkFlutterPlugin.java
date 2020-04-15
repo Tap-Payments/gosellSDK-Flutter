@@ -11,7 +11,8 @@ import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 
-import company.tap.gosellapi.internal.api.models.Charge;
+import java.util.HashMap;
+
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
@@ -23,7 +24,7 @@ import io.flutter.plugin.common.PluginRegistry;
 /**
  * GoSellSdkFlutterPlugin
  */
-public class GoSellSdkFlutterPlugin  implements  MethodChannel.MethodCallHandler, FlutterPlugin, ActivityAware {
+public class GoSellSdkFlutterPlugin implements MethodChannel.MethodCallHandler, FlutterPlugin, ActivityAware {
 
 
     /**
@@ -38,16 +39,20 @@ public class GoSellSdkFlutterPlugin  implements  MethodChannel.MethodCallHandler
         }
 
         @Override
-        public void onCreate(@NonNull LifecycleOwner owner) {}
+        public void onCreate(@NonNull LifecycleOwner owner) {
+        }
 
         @Override
-        public void onStart(@NonNull LifecycleOwner owner) {}
+        public void onStart(@NonNull LifecycleOwner owner) {
+        }
 
         @Override
-        public void onResume(@NonNull LifecycleOwner owner) {}
+        public void onResume(@NonNull LifecycleOwner owner) {
+        }
 
         @Override
-        public void onPause(@NonNull LifecycleOwner owner) {}
+        public void onPause(@NonNull LifecycleOwner owner) {
+        }
 
         @Override
         public void onStop(@NonNull LifecycleOwner owner) {
@@ -60,19 +65,24 @@ public class GoSellSdkFlutterPlugin  implements  MethodChannel.MethodCallHandler
         }
 
         @Override
-        public void onActivityCreated(Activity activity, Bundle savedInstanceState) {}
+        public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+        }
 
         @Override
-        public void onActivityStarted(Activity activity) {}
+        public void onActivityStarted(Activity activity) {
+        }
 
         @Override
-        public void onActivityResumed(Activity activity) {}
+        public void onActivityResumed(Activity activity) {
+        }
 
         @Override
-        public void onActivityPaused(Activity activity) {}
+        public void onActivityPaused(Activity activity) {
+        }
 
         @Override
-        public void onActivitySaveInstanceState(Activity activity, Bundle outState) {}
+        public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+        }
 
         @Override
         public void onActivityDestroyed(Activity activity) {
@@ -107,6 +117,7 @@ public class GoSellSdkFlutterPlugin  implements  MethodChannel.MethodCallHandler
 
     /**
      * Register with
+     *
      * @param registrar
      */
 
@@ -131,11 +142,11 @@ public class GoSellSdkFlutterPlugin  implements  MethodChannel.MethodCallHandler
      *
      * <p>Use this constructor for production code.
      */
-    public GoSellSdkFlutterPlugin() {}
+    public GoSellSdkFlutterPlugin() {
+    }
 
 
     /**
-     *
      * @param binding
      */
     @Override
@@ -228,14 +239,7 @@ public class GoSellSdkFlutterPlugin  implements  MethodChannel.MethodCallHandler
      */
 
     private final GoSellSdKDelegate constructDelegate(final Activity setupActivity) {
-//        final ImagePickerCache cache = new ImagePickerCache(setupActivity);
-//
-//        final File externalFilesDirectory =
-//                setupActivity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-//        final ExifDataCopier exifDataCopier = new ExifDataCopier();
-//        final ImageResizer imageResizer = new ImageResizer(externalFilesDirectory, exifDataCopier);
-//        return new ImagePickerDelegate(setupActivity, externalFilesDirectory, imageResizer, cache);
-          return new GoSellSdKDelegate(setupActivity);
+        return new GoSellSdKDelegate(setupActivity);
     }
 
     /**
@@ -253,8 +257,9 @@ public class GoSellSdkFlutterPlugin  implements  MethodChannel.MethodCallHandler
 
         @Override
         public void success(final Object result) {
-            Charge charge = (Charge)result;
-            System.out.println("success coming from delegate : "+ charge.getId());
+
+            System.out.println("success coming from delegate : " + result);
+
             handler.post(
                     new Runnable() {
                         @Override
@@ -267,36 +272,30 @@ public class GoSellSdkFlutterPlugin  implements  MethodChannel.MethodCallHandler
         @Override
         public void error(
                 final String errorCode, final String errorMessage, final Object errorDetails) {
+            System.out.println("error encountered................." + errorCode);
+
             handler.post(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            methodResult.error(errorCode, errorMessage, errorDetails);
-                        }
-                    });
+                    () -> methodResult.error(errorCode,errorMessage,errorDetails));
         }
 
         @Override
         public void notImplemented() {
             handler.post(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            methodResult.notImplemented();
-                        }
-                    });
+                    () -> methodResult.notImplemented());
         }
     }
 
     @Override
     public void onMethodCall(MethodCall call, MethodChannel.Result rawResult) {
+        HashMap<String, Object> args = call.arguments();
+        System.out.println("args : " + args);
         System.out.println("onMethodCall..... started");
         if (activity == null) {
             rawResult.error("no_activity", "SDK plugin requires a foreground activity.", null);
             return;
         }
         MethodChannel.Result result = new MethodResultWrapper(rawResult);
-        delegate.startSDK(call,result);
+        delegate.startSDK(call, result, args);
 
     }
 
