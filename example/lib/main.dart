@@ -16,9 +16,9 @@ class _MyAppState extends State<MyApp> {
   Map<dynamic, dynamic> tapSDKResult;
   String responseID = "";
   String sdkStatus = "";
-  String sdk_error_code;
-  String sdk_error_message;
-  String sdk_error_description;
+  String sdkErrorCode;
+  String sdkErrorMessage;
+  String sdkErrorDescription;
 
   @override
   void initState() {
@@ -172,14 +172,22 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       switch (tapSDKResult['sdk_result']) {
         case "SUCCESS":
+          sdkStatus = "SUCCESS";
+          handleSDKResult();
+          break;
         case "FAILED":
+          sdkStatus = "FAILED";
           handleSDKResult();
           break;
         case "SDK_ERROR":
-          sdk_error_code = tapSDKResult['sdk_error_code'];
-          sdk_error_message = tapSDKResult['sdk_error_message'];
-          sdk_error_description = tapSDKResult['sdk_error_description'];
+          sdkErrorCode = tapSDKResult['sdk_error_code'];
+          sdkErrorMessage = tapSDKResult['sdk_error_message'];
+          sdkErrorDescription = tapSDKResult['sdk_error_description'];
           break;
+
+         case "NOT_IMPLEMENTED":
+             sdkStatus = "NOT_IMPLEMENTED";
+         break; 
       }
     });
   }
