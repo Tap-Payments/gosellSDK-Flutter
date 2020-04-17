@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:go_sell_sdk_flutter/model/models.dart';
 
@@ -11,6 +12,15 @@ class GoSellSdkFlutter {
 
 
   static Future<dynamic> get startPaymentSDK async {
+  
+    dynamic result = Map<dynamic, dynamic> () ;
+    if(TargetPlatform.iOS==TargetPlatform.iOS) 
+    {
+      result['sdk_result']='NOT_IMPLEMENTED';
+        return result;
+    }
+    
+  
     // prepare sdk configurations
     sdkConfigurations = {
       "appCredentials": appCredentials,
@@ -18,7 +28,8 @@ class GoSellSdkFlutter {
     };
 
    // forward call to channel
-    final dynamic result =
+   
+     result =
         await _channel.invokeMethod('start_sdk', sdkConfigurations);
     
     print('result in dart : $result');
