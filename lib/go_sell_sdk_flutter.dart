@@ -86,7 +86,7 @@ class GoSellSdkFlutter {
       "merchantID": merchantID,
       "cardType": cardType.toString(),
       "applePayMerchantID":applePayMerchantID,
-      "SDKMode":sdkMode
+      "SDKMode":sdkMode.toString()
     };
   }
 

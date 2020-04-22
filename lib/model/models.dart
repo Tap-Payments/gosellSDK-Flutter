@@ -299,7 +299,7 @@ class Destination {
 class PaymentItem {
   int amountPerUnit;
   String description;
-  AmountModificator discount;
+  Map<String,Object> discount;
   String name;
   Quantity quantity;
   List<Tax> taxes;
@@ -319,9 +319,7 @@ class PaymentItem {
     data['amount_per_unit'] = this.amountPerUnit;
     data['description'] = this.description;
 
-    if (this.discount != null) {
-      data['discount'] = this.discount.toJson();
-    }
+      data['discount'] = this.discount;
     data['name'] = this.name;
 
     if (this.quantity != null) {
@@ -369,19 +367,24 @@ class Quantity {
 }
 
 class Tax {
-  AmountModificator amount;
-  String description;
+  String type;
+  int value;
+  int maximum_fee;
+  int minimum_fee;
   String name;
+  String description;
+  
 
-  Tax({this.amount, this.description, this.name});
+  Tax({this.type, this.value, this.maximum_fee,this.minimum_fee,this.name,this.description});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.amount != null) {
-      data['amount'] = this.amount.toJson();
-    }
-    data['description'] = this.description;
+    data['type'] = this.type;
+    data['value'] = this.value;
+    data['maximum_fee'] = this.maximum_fee;
+    data['minimum_fee'] = this.minimum_fee;
     data['name'] = this.name;
+    data['description'] = this.description;
     return data;
   }
 }
