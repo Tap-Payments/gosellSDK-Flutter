@@ -33,9 +33,10 @@ class GoSellSdkFlutter {
   static Map<String, dynamic> sessionParameters;
 
 // App configurations
-  static void configureApp({String secreteKey, String bundleId, String lang}) {
+  static void configureApp({String productionSecreteKey, String sandBoxsecretKey,String bundleId, String lang}) {
     appCredentials = <String, dynamic>{
-      "secrete_key": secreteKey,
+      "production_secrete_key": productionSecreteKey,
+      "sandbox_secrete_key": sandBoxsecretKey,
       "bundleID": bundleId,
       "language": lang
     };
@@ -61,9 +62,11 @@ class GoSellSdkFlutter {
       AuthorizeAction authorizeAction,
       Destinations destinations,
       String merchantID,
-      CardType cardType,
+      List<CardType> allowedCadTypes,
       String applePayMerchantID,
-      SDKMode sdkMode
+      SDKMode sdkMode,
+      PaymentType paymentType,
+      bool allowsToSaveSameCardMoreThanOnce,
       }) {
     sessionParameters = <String, dynamic>{
       'trxMode': trxMode.toString(),
@@ -84,9 +87,11 @@ class GoSellSdkFlutter {
       "authorizeAction": jsonEncode(authorizeAction),
       "destinations": jsonEncode(destinations),
       "merchantID": merchantID,
-      "cardType": cardType.toString(),
+      "allowedCadTypes": allowedCadTypes.toString(),
       "applePayMerchantID":applePayMerchantID,
-      "SDKMode":sdkMode.toString()
+      "SDKMode":sdkMode.toString(),
+      "paymentType":paymentType.toString(),
+      "allowsToSaveSameCardMoreThanOnce":allowsToSaveSameCardMoreThanOnce,
     };
   }
 
@@ -170,35 +175,22 @@ class GoSellSdkFlutter {
     }
 
     // validate 3dsecure
-    if (sessionParameters["isRequires3DSecure"] == "null" ||
-        sessionParameters["isRequires3DSecure"] == null ||
-        sessionParameters["isRequires3DSecure"] == "") {
-      sessionParameters["isRequires3DSecure"] = false;
-    }
-
+    _validateBooleanValues("isRequires3DSecure");
     // validate saveCard
-    if (sessionParameters["isUserAllowedToSaveCard"] == "null" ||
-        sessionParameters["isUserAllowedToSaveCard"] == null ||
-        sessionParameters["isUserAllowedToSaveCard"] == "") {
-      sessionParameters["isUserAllowedToSaveCard"] = false;
-    }
-
-    // validate card type
-    if (sessionParameters["cardType"] == "null" ||
-        sessionParameters["cardType"] == null ||
-        sessionParameters["cardType"] == "") {
-      sessionParameters["cardType"] = "";
-    }
-
-     // validate sdk mode
-    if (sessionParameters["SDKMode"] == "null" ||
-        sessionParameters["SDKMode"] == null ||
-        sessionParameters["SDKMode"] == "") {
-      sessionParameters["SDKMode"] = SDKMode.Sandbox;
-    }
+    _validateBooleanValues("isUserAllowedToSaveCard");
+    // validate save multiple
+    _validateBooleanValues("allowsToSaveSameCardMoreThanOnce");
 
     return true;
   }
+
+  static void _validateBooleanValues(String param){
+    if (sessionParameters[param] == "null" ||
+        sessionParameters[param] == null ||
+        sessionParameters[param] == "") {
+      sessionParameters[param] = false;
+    }
+  } 
 
   static void _prepareConfigurationsErrorMap(
       {String errorCode, String errorMsg, String errorDescription}) {
@@ -211,3 +203,4 @@ class GoSellSdkFlutter {
 
 enum TransactionMode { PURCHASE, AUTHORIZE_CAPTURE, SAVE_CARD, TOKENIZE_CARD }
 enum SDKMode{Sandbox,Production}
+enum PaymentType {ALL,CARD,WEB,APPLE_PAY}

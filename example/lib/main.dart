@@ -38,7 +38,8 @@ class _MyAppState extends State<MyApp> {
   Future<void> configureApp() async {
     GoSellSdkFlutter.configureApp(
         bundleId: "company.tap.goSellSDKExample",
-        secreteKey: "sk_test_kovrMB0mupFJXfNZWx6Etg5y",
+        productionSecreteKey: "sk_live_kovrMB0mupFJXfNZWx6Etg5y",
+        sandBoxsecretKey:  "sk_test_kovrMB0mupFJXfNZWx6Etg5y",
         lang: "en");
   }
 
@@ -47,7 +48,7 @@ class _MyAppState extends State<MyApp> {
     try {
       GoSellSdkFlutter.sessionConfigurations(
           trxMode: TransactionMode.AUTHORIZE_CAPTURE,
-          transactionCurrency: "mjsj",
+          transactionCurrency: "kwd",
           amount: '10',
           customer: Customer(
               customerId: "",
@@ -75,34 +76,28 @@ class _MyAppState extends State<MyApp> {
                 description: "Item 1 Apple",
                 taxes: [
                   Tax(
-                      type: "F",  // Fixed
-                      value: 10,
-                      minimum_fee: 1,
-                      maximum_fee: 10,
+                      amount: Amount(
+                          type: "F",
+                          value: 10,
+                          minimum_fee: 1,
+                          maximum_fee: 10),
                       name: "tax1",
-                      description: "tax describtion"
-                      )
+                      description: "tax describtion")
                 ],
                 totalAmount: 100),
           ],
           // List of taxes
           taxes: [
             Tax(
-                      type: "P", // Percentage
-                      value: 2,
-                      minimum_fee: 1,
-                      maximum_fee: 10,
-                      name: "tax1",
-                      description: "tax describtion"
-                      ),
+                amount: Amount(
+                    type: "F", value: 10, minimum_fee: 1, maximum_fee: 10),
+                name: "tax1",
+                description: "tax describtion"),
             Tax(
-                      type: "F",
-                      value: 20,
-                      minimum_fee: 2,
-                      maximum_fee: 20,
-                      name: "tax2",
-                      description: "tax describtion"
-                      )
+                amount: Amount(
+                    type: "F", value: 10, minimum_fee: 1, maximum_fee: 10),
+                name: "tax1",
+                description: "tax describtion")
           ],
           // List of shippnig
           shippings: [
@@ -123,11 +118,6 @@ class _MyAppState extends State<MyApp> {
           paymentMetaData: {
             "a": "a meta",
             "b": "b meta",
-            "c": "c meta",
-            "d": "d meta",
-            "e": "e meta",
-            "f": "f meta",
-            "g": "g meta",
           },
           // Payment Reference
           paymentReference: Reference(
@@ -170,8 +160,10 @@ class _MyAppState extends State<MyApp> {
           // merchant id
           merchantID: "merchantID",
           // Allowed cards
-          cardType: CardType.CREDIT,
+          allowedCadTypes: [CardType.CREDIT,CardType.DEBIT],
           applePayMerchantID: "applePayMerchantID",
+          allowsToSaveSameCardMoreThanOnce:false,
+          paymentType: PaymentType.ALL,  
           sdkMode: SDKMode.Sandbox);
     } on PlatformException {
       // platformVersion = 'Failed to get platform version.';

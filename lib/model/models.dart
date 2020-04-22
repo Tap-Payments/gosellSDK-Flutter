@@ -260,7 +260,7 @@ class Destinations {
   int count;
   List<Destination> destinations;
 
-  Destinations({this.amount, this.currency, int count, this.destinations});
+  Destinations({this.amount, this.currency, this.count, this.destinations});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -289,6 +289,7 @@ class Destination {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['amount'] = this.amount;
+    data['id'] = this.id;
     data['currency'] = this.currency;
     data['description'] = this.description;
     data["reference"] = this.reference;
@@ -336,16 +337,19 @@ class PaymentItem {
   }
 }
 
-class AmountModificator {
+class Amount {
   String type;
-  int value;
-
-  AmountModificator({this.type, this.value});
+  double value;
+  double maximum_fee;
+  double minimum_fee;
+  Amount({this.type, this.value,this.maximum_fee,this.minimum_fee});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['type'] = this.type;
     data['value'] = this.value;
+    data['maximum_fee'] = this.maximum_fee;
+    data['minimum_fee'] = this.minimum_fee;
     return data;
   }
 }
@@ -367,24 +371,20 @@ class Quantity {
 }
 
 class Tax {
-  String type;
-  int value;
-  int maximum_fee;
-  int minimum_fee;
   String name;
   String description;
+  Amount amount;
   
 
-  Tax({this.type, this.value, this.maximum_fee,this.minimum_fee,this.name,this.description});
+  Tax({this.amount,this.name,this.description});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['type'] = this.type;
-    data['value'] = this.value;
-    data['maximum_fee'] = this.maximum_fee;
-    data['minimum_fee'] = this.minimum_fee;
     data['name'] = this.name;
     data['description'] = this.description;
+     if (this.amount != null) {
+      data['amount'] = this.amount.toJson();
+    }
     return data;
   }
 }
@@ -415,6 +415,7 @@ class AuthorizeAction {
   Map<String,dynamic> toJson(){
      final Map<String, dynamic> data = new Map<String, dynamic>();
       data['timeInHours'] = this.timeInHours;
+      data['time'] = this.timeInHours;
      switch (this.type) {
        case AuthorizeActionType.CAPTURE:
          data['type'] = "CAPTURE";
@@ -431,3 +432,4 @@ class AuthorizeAction {
 enum AuthorizeActionType { CAPTURE, VOID }
 
 enum CardType { DEBIT, CREDIT }
+

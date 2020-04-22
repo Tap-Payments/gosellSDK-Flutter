@@ -54,6 +54,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
     private MethodCall methodCall;
 
 
+
     public GoSellSdKDelegate(Activity _activity) {
         this.activity = _activity;
     }
@@ -97,12 +98,21 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
     }
 
     private void showSDK(HashMap<String, Object> sdkConfigurations, MethodChannel.Result result) {
+
+        HashMap<String, Object> sessionParameters = (HashMap<String, Object>) sdkConfigurations.get("sessionParameters");
+
         /**
          * Required step.
          * Configure SDK with your Secret API key and App Bundle name registered with tap company.
          */
         HashMap<String, String> appConfigurations = (HashMap<String, String>) sdkConfigurations.get("appCredentials");
-        configureApp(appConfigurations.get("secrete_key"), appConfigurations.get("bundleID"), appConfigurations.get("language"));
+        String sandboxKey = appConfigurations.get("sandbox_secrete_key");
+        String productionKey = appConfigurations.get("production_secrete_key");
+        String activeKey=sandboxKey;
+        if("SDKMode.Production".equalsIgnoreCase(sessionParameters.get("SDKMode").toString()))
+         activeKey= productionKey;
+        System.out.println("activeKey : "+activeKey);
+        configureApp(activeKey, appConfigurations.get("bundleID"), appConfigurations.get("language"));
 
 //        configureSDKThemeObject();
 
@@ -110,7 +120,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
          * Required step.
          * Configure SDK Session with all required data.
          */
-        configureSDKSession(sdkConfigurations, result);
+        configureSDKSession(sessionParameters,result);
         sdkSession.start(activity);
     }
 
@@ -159,11 +169,10 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
     /**
      * Configure SDK Session
      *
-     * @param sdkConfigurations
+     * @param sessionParameters
      * @param result
      */
-    private void configureSDKSession(HashMap<String, Object> sdkConfigurations, MethodChannel.Result result) {
-        HashMap<String, Object> sessionParameters = (HashMap<String, Object>) sdkConfigurations.get("sessionParameters");
+    private void configureSDKSession(HashMap<String, Object> sessionParameters, MethodChannel.Result result) {
 
         // Instantiate SDK Session
         if (sdkSession == null) sdkSession = new SDKSession();   //** Required **
@@ -204,11 +213,6 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         }
         sdkSession.setAmount(amount);   //** Required **
 
-//        // Set Payment Items array listfDouble
-//        ArrayList<PaymentItem> paymentItems = (ArrayList<PaymentItem>) getPaymentItems(sessionParameters.get("paymentitems"));
-//        for (PaymentItem p : paymentItems) {
-//            System.out.println(">>> p :" + p.getQuantity());
-//        }
         sdkSession.setPaymentItems(new ArrayList<>());// ** Optional ** you can pass empty array list
 
         // Set Taxes array list
