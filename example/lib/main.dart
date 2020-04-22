@@ -75,22 +75,34 @@ class _MyAppState extends State<MyApp> {
                 description: "Item 1 Apple",
                 taxes: [
                   Tax(
-                      amount: AmountModificator(type: "F", value: 10),
-                      description: "discount",
-                      name: "tax1")
+                      type: "F",  // Fixed
+                      value: 10,
+                      minimum_fee: 1,
+                      maximum_fee: 10,
+                      name: "tax1",
+                      description: "tax describtion"
+                      )
                 ],
                 totalAmount: 100),
           ],
           // List of taxes
           taxes: [
             Tax(
-                amount: AmountModificator(type: "F", value: 10),
-                description: "discount",
-                name: "tax1"),
+                      type: "P", // Percentage
+                      value: 2,
+                      minimum_fee: 1,
+                      maximum_fee: 10,
+                      name: "tax1",
+                      description: "tax describtion"
+                      ),
             Tax(
-                amount: AmountModificator(type: "F", value: 10),
-                description: "discount",
-                name: "tax2")
+                      type: "F",
+                      value: 20,
+                      minimum_fee: 2,
+                      maximum_fee: 20,
+                      name: "tax2",
+                      description: "tax describtion"
+                      )
           ],
           // List of shippnig
           shippings: [
