@@ -1,121 +1,3 @@
-class Charge {
-  String object;
-  bool liveMode;
-  String apiVersion;
-  String id;
-  String status;
-  int amount;
-  String currency;
-  bool threeDSecure;
-  bool saveCard;
-  String description;
-  String statementDescriptor;
-  Metadata metadata;
-  Transaction transaction;
-  Reference reference;
-  Response response;
-  Receipt receipt;
-  Customer customer;
-  Source source;
-  Post post;
-  Post redirect;
-
-  Charge(
-      {this.object,
-      this.liveMode,
-      this.apiVersion,
-      this.id,
-      this.status,
-      this.amount,
-      this.currency,
-      this.threeDSecure,
-      this.saveCard,
-      this.description,
-      this.statementDescriptor,
-      this.metadata,
-      this.transaction,
-      this.reference,
-      this.response,
-      this.receipt,
-      this.customer,
-      this.source,
-      this.post,
-      this.redirect});
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['object'] = this.object;
-    data['live_mode'] = this.liveMode;
-    data['api_version'] = this.apiVersion;
-    data['id'] = this.id;
-    data['status'] = this.status;
-    data['amount'] = this.amount;
-    data['currency'] = this.currency;
-    data['threeDSecure'] = this.threeDSecure;
-    data['save_card'] = this.saveCard;
-    data['description'] = this.description;
-    data['statement_descriptor'] = this.statementDescriptor;
-    if (this.metadata != null) {
-      data['metadata'] = this.metadata.toJson();
-    }
-    if (this.transaction != null) {
-      data['transaction'] = this.transaction.toJson();
-    }
-    if (this.reference != null) {
-      data['reference'] = this.reference.toJson();
-    }
-    if (this.response != null) {
-      data['response'] = this.response.toJson();
-    }
-    if (this.receipt != null) {
-      data['receipt'] = this.receipt.toJson();
-    }
-    if (this.customer != null) {
-      data['customer'] = this.customer.toJson();
-    }
-    if (this.source != null) {
-      data['source'] = this.source.toJson();
-    }
-    if (this.post != null) {
-      data['post'] = this.post.toJson();
-    }
-    if (this.redirect != null) {
-      data['redirect'] = this.redirect.toJson();
-    }
-    return data;
-  }
-}
-
-class Metadata {
-  String udf1;
-
-  Metadata({this.udf1});
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['udf1'] = this.udf1;
-    return data;
-  }
-}
-
-class Transaction {
-  String authorizationId;
-  String timezone;
-  String created;
-  String url;
-
-  Transaction({this.authorizationId, this.timezone, this.created, this.url});
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['authorization_id'] = this.authorizationId;
-    data['timezone'] = this.timezone;
-    data['created'] = this.created;
-    data['url'] = this.url;
-    return data;
-  }
-}
-
 class Reference {
   String acquirer;
   String gateway;
@@ -143,20 +25,6 @@ class Reference {
     data['transaction'] = this.transaction;
     data['order'] = this.order;
     data['gosellID'] = this.gosellID;
-    return data;
-  }
-}
-
-class Response {
-  String code;
-  String message;
-
-  Response({this.code, this.message});
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    data['message'] = this.message;
     return data;
   }
 }
@@ -214,53 +82,13 @@ class Customer {
   }
 }
 
-// class Phone {
-//   String countryCode;
-//   String number;
-
-//   Phone({this.countryCode, this.number});
-
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = new Map<String, dynamic>();
-//     data['country_code'] = this.countryCode;
-//     data['number'] = this.number;
-//     return data;
-//   }
-// }
-
-class Source {
-  String object;
-  String id;
-
-  Source({this.object, this.id});
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['object'] = this.object;
-    data['id'] = this.id;
-    return data;
-  }
-}
-
-class Post {
-  String url;
-
-  Post({this.url});
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['url'] = this.url;
-    return data;
-  }
-}
-
 class Destinations {
   double amount;
   String currency;
   int count;
-  List<Destination> destinations;
+  List<Destination> destinationlist;
 
-  Destinations({this.amount, this.currency, this.count, this.destinations});
+  Destinations({this.amount, this.currency, this.count, this.destinationlist});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -268,8 +96,9 @@ class Destinations {
     data['currency'] = this.currency;
     data['count'] = this.count;
 
-    if (this.destinations != null) {
-      data['destinations'] = this.destinations.map((v) => v.toJson()).toList();
+    if (this.destinationlist != null) {
+      data['destination'] =
+          this.destinationlist.map((v) => v.toJson()).toList();
     }
 
     return data;
@@ -300,7 +129,7 @@ class Destination {
 class PaymentItem {
   int amountPerUnit;
   String description;
-  Map<String,Object> discount;
+  Map<String, Object> discount;
   String name;
   Quantity quantity;
   List<Tax> taxes;
@@ -320,7 +149,7 @@ class PaymentItem {
     data['amount_per_unit'] = this.amountPerUnit;
     data['description'] = this.description;
 
-      data['discount'] = this.discount;
+    data['discount'] = this.discount;
     data['name'] = this.name;
 
     if (this.quantity != null) {
@@ -342,7 +171,7 @@ class Amount {
   double value;
   double maximum_fee;
   double minimum_fee;
-  Amount({this.type, this.value,this.maximum_fee,this.minimum_fee});
+  Amount({this.type, this.value, this.maximum_fee, this.minimum_fee});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -355,16 +184,12 @@ class Amount {
 }
 
 class Quantity {
-  String measurementGroup;
-  String measurementUnit;
   int value;
 
-  Quantity({this.measurementGroup, this.measurementUnit, this.value});
+  Quantity({this.value});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['measurement_group'] = this.measurementGroup;
-    data['measurement_unit'] = this.measurementUnit;
     data['value'] = this.value;
     return data;
   }
@@ -374,15 +199,14 @@ class Tax {
   String name;
   String description;
   Amount amount;
-  
 
-  Tax({this.amount,this.name,this.description});
+  Tax({this.amount, this.name, this.description});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['name'] = this.name;
     data['description'] = this.description;
-     if (this.amount != null) {
+    if (this.amount != null) {
       data['amount'] = this.amount.toJson();
     }
     return data;
@@ -406,25 +230,24 @@ class Shipping {
 }
 
 class AuthorizeAction {
-
   AuthorizeActionType type;
   int timeInHours;
 
   AuthorizeAction({this.type, this.timeInHours});
 
-  Map<String,dynamic> toJson(){
-     final Map<String, dynamic> data = new Map<String, dynamic>();
-      data['timeInHours'] = this.timeInHours;
-      data['time'] = this.timeInHours;
-     switch (this.type) {
-       case AuthorizeActionType.CAPTURE:
-         data['type'] = "CAPTURE";
-         break;
-       case AuthorizeActionType.VOID:
-         data['type'] = "VOID";
-         break;  
-       default:
-     }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['timeInHours'] = this.timeInHours;
+    data['time'] = this.timeInHours;
+    switch (this.type) {
+      case AuthorizeActionType.CAPTURE:
+        data['type'] = "CAPTURE";
+        break;
+      case AuthorizeActionType.VOID:
+        data['type'] = "VOID";
+        break;
+      default:
+    }
     return data;
   }
 }
@@ -432,4 +255,3 @@ class AuthorizeAction {
 enum AuthorizeActionType { CAPTURE, VOID }
 
 enum CardType { DEBIT, CREDIT }
-
