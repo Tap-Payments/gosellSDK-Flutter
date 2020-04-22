@@ -181,7 +181,7 @@ class Customer {
   String middleName;
   String lastName;
   String email;
-  Phone phone;
+  // Phone phone;
 
   String isdNumber;
   String number;
@@ -207,26 +207,26 @@ class Customer {
     data['middle_name'] = this.middleName;
     data['last_name'] = this.lastName;
     data['email'] = this.email;
-    if (this.phone != null) {
-      data['phone'] = this.phone.toJson();
-    }
+    // if (this.phone != null) {
+    //   data['phone'] = this.phone.toJson();
+    // }
     return data;
   }
 }
 
-class Phone {
-  String countryCode;
-  String number;
+// class Phone {
+//   String countryCode;
+//   String number;
 
-  Phone({this.countryCode, this.number});
+//   Phone({this.countryCode, this.number});
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['country_code'] = this.countryCode;
-    data['number'] = this.number;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['country_code'] = this.countryCode;
+//     data['number'] = this.number;
+//     return data;
+//   }
+// }
 
 class Source {
   String object;

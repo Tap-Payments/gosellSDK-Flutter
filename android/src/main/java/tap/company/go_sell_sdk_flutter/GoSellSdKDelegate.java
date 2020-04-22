@@ -7,10 +7,19 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import company.tap.gosellapi.GoSellSDK;
 import company.tap.gosellapi.internal.api.callbacks.GoSellError;
@@ -26,8 +35,10 @@ import company.tap.gosellapi.open.delegate.SessionDelegate;
 import company.tap.gosellapi.open.enums.AppearanceMode;
 import company.tap.gosellapi.open.enums.CardType;
 import company.tap.gosellapi.open.enums.TransactionMode;
+import company.tap.gosellapi.open.exception.CurrencyException;
 import company.tap.gosellapi.open.models.CardsList;
 import company.tap.gosellapi.open.models.Customer;
+import company.tap.gosellapi.open.models.PaymentItem;
 import company.tap.gosellapi.open.models.Receipt;
 import company.tap.gosellapi.open.models.TapCurrency;
 import io.flutter.plugin.common.MethodCall;
@@ -65,30 +76,8 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
             finishWithAlreadyActiveError(result);
             return;
         }
-        // check sdk session map
-        if (sdkConfigurations == null) finishWithEmptySessionConfigurations(result);
-        // validate sdk credentials
-        if (!validCredentials(sdkConfigurations)) {
-            finishWithInvalidCredentialsError(result);
-        }
-
         // start SDK
-        showSDK(sdkConfigurations);
-    }
-
-
-    private boolean validCredentials(HashMap<String, Object> sdkConfigurations) {
-        if (!sdkConfigurations.containsKey("appCredentials")) return false;
-        return true;
-    }
-
-
-    private void finishWithEmptySessionConfigurations(MethodChannel.Result result) {
-        result.error("null_configurations", "SDK configurations not exist", null);
-    }
-
-    private void finishWithInvalidCredentialsError(MethodChannel.Result result) {
-        result.error("missing_credentials", "SDK configurations missing app credentials", null);
+        showSDK(sdkConfigurations, result);
     }
 
     private void finishWithAlreadyActiveError(MethodChannel.Result result) {
@@ -107,7 +96,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         return true;
     }
 
-    private void showSDK(HashMap<String, Object> sdkConfigurations) {
+    private void showSDK(HashMap<String, Object> sdkConfigurations, MethodChannel.Result result) {
         /**
          * Required step.
          * Configure SDK with your Secret API key and App Bundle name registered with tap company.
@@ -115,27 +104,13 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         HashMap<String, String> appConfigurations = (HashMap<String, String>) sdkConfigurations.get("appCredentials");
         configureApp(appConfigurations.get("secrete_key"), appConfigurations.get("bundleID"), appConfigurations.get("language"));
 
-        /**
-         * Optional step
-         * Here you can configure your app theme (Look and Feel).
-         */
-        configureSDKThemeObject();
-
+//        configureSDKThemeObject();
 
         /**
          * Required step.
          * Configure SDK Session with all required data.
          */
-        configureSDKSession();
-
-        /**
-         * Required step.
-         * Choose between different SDK modes
-         */
-        sdkSession.setTransactionMode(TransactionMode.SAVE_CARD);
-
-        TransactionMode trx_mode = sdkSession.getTransactionMode();
-
+        configureSDKSession(sdkConfigurations, result);
         sdkSession.start(activity);
     }
 
@@ -183,8 +158,12 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
 
     /**
      * Configure SDK Session
+     *
+     * @param sdkConfigurations
+     * @param result
      */
-    private void configureSDKSession() {
+    private void configureSDKSession(HashMap<String, Object> sdkConfigurations, MethodChannel.Result result) {
+        HashMap<String, Object> sessionParameters = (HashMap<String, Object>) sdkConfigurations.get("sessionParameters");
 
         // Instantiate SDK Session
         if (sdkSession == null) sdkSession = new SDKSession();   //** Required **
@@ -195,16 +174,41 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         // initiate PaymentDataSource
         sdkSession.instantiatePaymentDataSource();    //** Required **
 
+        // sdk mode
+        sdkSession.setTransactionMode(getTransactionMode(sessionParameters.get("trxMode")));
+
         // set transaction currency associated to your account
-        sdkSession.setTransactionCurrency(new TapCurrency("KWD"));    //** Required **
+        TapCurrency transactionCurrency;
+        try {
+            transactionCurrency = new TapCurrency((String) Objects.requireNonNull(sessionParameters.get("transactionCurrency")));
+        } catch (CurrencyException c) {
+            Log.d("GoSellSDKDelegate : ", "Unknown currency exception thrown : " + (String) Objects.requireNonNull(sessionParameters.get("transactionCurrency")));
+            transactionCurrency = new TapCurrency("KWD");
+        } catch (Exception e) {
+            Log.d("GoSellSDKDelegate : ", "Unknown currency: " + (String) Objects.requireNonNull(sessionParameters.get("transactionCurrency")));
+            transactionCurrency = new TapCurrency("KWD");
+        }
+
+        sdkSession.setTransactionCurrency(transactionCurrency);    //** Required **
 
         // Using static CustomerBuilder method available inside TAP Customer Class you can populate TAP Customer object and pass it to SDK
-        sdkSession.setCustomer(getCustomer());    //** Required **
+        sdkSession.setCustomer(getCustomer(sessionParameters));    //** Required **
 
         // Set Total Amount. The Total amount will be recalculated according to provided Taxes and Shipping
-        sdkSession.setAmount(new BigDecimal(1));  //** Required **
+        BigDecimal amount;
+        try {
+            amount = new BigDecimal(Double.parseDouble((String) Objects.requireNonNull(sessionParameters.get("amount"))));
+        } catch (Exception e) {
+            Log.d("GoSellSDKDelegate : ", "Invalid amount can't be parsed to double : " + (String) Objects.requireNonNull(sessionParameters.get("amount")));
+            amount = BigDecimal.ZERO;
+        }
+        sdkSession.setAmount(amount);   //** Required **
 
-        // Set Payment Items array list
+//        // Set Payment Items array listfDouble
+//        ArrayList<PaymentItem> paymentItems = (ArrayList<PaymentItem>) getPaymentItems(sessionParameters.get("paymentitems"));
+//        for (PaymentItem p : paymentItems) {
+//            System.out.println(">>> p :" + p.getQuantity());
+//        }
         sdkSession.setPaymentItems(new ArrayList<>());// ** Optional ** you can pass empty array list
 
         // Set Taxes array list
@@ -249,19 +253,67 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
 
     }
 
+    private List<PaymentItem> getPaymentItems(Object paymentitems) {
+//        if (paymentitems == null) return null;
+//        Gson gson = new Gson();
+//        PaymentItemsList nameList = gson.fromJson(paymentitems.toString(), PaymentItemsList.class);
+//
+//        List<PaymentItem> list = nameList.getList();
+//        return list;
+
+
+        Gson gson = new Gson();
+
+
+        Type type = new TypeToken<ArrayList<PaymentItem>>(){}.getType();
+
+        ArrayList<PaymentItem> array = gson.fromJson(paymentitems.toString(), type);
+        return array;
+
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private Customer getCustomer() { // test customer id cus_Kh1b4220191939i1KP2506448
-        PhoneNumber phoneNumber = new PhoneNumber("965", "69045932");
-        return new Customer.CustomerBuilder(null).email("abc@abc.com").firstName("firstname")
-                .lastName("lastname").metadata("").phone(new PhoneNumber(phoneNumber.getCountryCode(), phoneNumber.getNumber()))
-                .middleName("middlename").build();
+    private TransactionMode getTransactionMode(Object trxMode) {
+        if (trxMode == null) return TransactionMode.PURCHASE;
+        System.out.println("trxMode >>>> " + trxMode);
+        switch (trxMode.toString()) {
+            case "TransactionMode.PURCHASE":
+                return TransactionMode.PURCHASE;
+            case "TransactionMode.AUTHORIZE_CAPTURE":
+                return TransactionMode.AUTHORIZE_CAPTURE;
+            case "TransactionMode.SAVE_CARD":
+                return TransactionMode.SAVE_CARD;
+            case "TransactionMode.TOKENIZE_CARD":
+                return TransactionMode.TOKENIZE_CARD;
+        }
+        return TransactionMode.PURCHASE;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private Customer getCustomer(HashMap<String, Object> sessionParameters) {
+        System.out.println("customer object >>>>> " + sessionParameters.get("customer"));
+        if (sessionParameters.get("customer") == null || "null".equalsIgnoreCase(sessionParameters.get("customer").toString()))
+            return null;
+        String customerString = (String) sessionParameters.get("customer");
+        JSONObject jsonObject;
+        try {
+            jsonObject = new JSONObject(customerString);
+            PhoneNumber phoneNumber = new PhoneNumber(jsonObject.get("isdNumber").toString(), jsonObject.get("number").toString());
+            return new Customer.CustomerBuilder(jsonObject.get("customerId").toString()).email(jsonObject.get("email").toString()).firstName(jsonObject.get("first_name").toString())
+                    .lastName(jsonObject.get("last_name").toString()).phone(phoneNumber)
+                    .middleName(jsonObject.get("middle_name").toString()).build();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private void sendChargeResult(Charge charge,String paymentStatus,String trx_mode) {
+    private void sendChargeResult(Charge charge, String paymentStatus, String trx_mode) {
         Map<String, Object> resultMap = new HashMap<>();
-        if(charge.getStatus()!=null)
+        if (charge.getStatus() != null)
             resultMap.put("status", charge.getStatus().name());
         resultMap.put("charge_id", charge.getId());
         resultMap.put("description", charge.getDescription());
@@ -281,51 +333,51 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         }
         if (charge.getSource() != null) {
             resultMap.put("source_id", charge.getSource().getId());
-            if(charge.getSource().getChannel()!=null)
+            if (charge.getSource().getChannel() != null)
                 resultMap.put("source_channel", charge.getSource().getChannel().name());
             resultMap.put("source_object", charge.getSource().getObject());
             resultMap.put("source_payment_type", charge.getSource().getPaymentType());
         }
-        resultMap.put("sdk_result",paymentStatus);
-        resultMap.put("trx_mode",trx_mode);
+        resultMap.put("sdk_result", paymentStatus);
+        resultMap.put("trx_mode", trx_mode);
         pendingResult.success(resultMap);
-        pendingResult=null;
+        pendingResult = null;
     }
 
 
-    private void sendTokenResult(Token token,String paymentStatus) {
+    private void sendTokenResult(Token token, String paymentStatus) {
         Map<String, Object> resultMap = new HashMap<>();
 
         resultMap.put("token", token.getId());
         resultMap.put("token_currency", token.getCurrency());
-        if(token.getCard()!=null){
+        if (token.getCard() != null) {
             resultMap.put("card_first_six", token.getCard().getFirstSix());
             resultMap.put("card_last_four", token.getCard().getLastFour());
             resultMap.put("card_object", token.getCard().getObject());
             resultMap.put("card_exp_month", token.getCard().getExpirationYear());
             resultMap.put("card_exp_year", token.getCard().getExpirationMonth());
         }
-        resultMap.put("sdk_result",paymentStatus);
-        resultMap.put("trx_mode","TOKENIZE");
+        resultMap.put("sdk_result", paymentStatus);
+        resultMap.put("trx_mode", "TOKENIZE");
         pendingResult.success(resultMap);
-        pendingResult=null;
+        pendingResult = null;
     }
 
 
     private void sendSDKError(int errorCode, String errorMessage, String errorBody) {
         Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("sdk_result","SDK_ERROR");
-        resultMap.put("sdk_error_code",errorCode);
-        resultMap.put("sdk_error_message",errorMessage);
-        resultMap.put("sdk_error_description",errorBody);
+        resultMap.put("sdk_result", "SDK_ERROR");
+        resultMap.put("sdk_error_code", errorCode);
+        resultMap.put("sdk_error_message", errorMessage);
+        resultMap.put("sdk_error_description", errorBody);
         pendingResult.success(resultMap);
-        pendingResult=null;
+        pendingResult = null;
     }
 
 
     @Override
     public void paymentSucceed(@NonNull Charge charge) {
-        sendChargeResult(charge,"SUCCESS","CHARGE");
+        sendChargeResult(charge, "SUCCESS", "CHARGE");
     }
 
     @Override
@@ -333,12 +385,12 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         System.out.println("Payment Failed : " + charge.getStatus());
         System.out.println("Payment Failed : " + charge.getDescription());
         System.out.println("Payment Failed : " + charge.getResponse().getMessage());
-        sendChargeResult(charge,"FAILED","CHARGE");
+        sendChargeResult(charge, "FAILED", "CHARGE");
     }
 
     @Override
     public void authorizationSucceed(@NonNull Authorize authorize) {
-        sendChargeResult(authorize,"SUCCESS","AUTHORIZE");
+        sendChargeResult(authorize, "SUCCESS", "AUTHORIZE");
     }
 
     @Override
@@ -346,7 +398,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         System.out.println("Authorize Failed : " + authorize.getStatus());
         System.out.println("Authorize Failed : " + authorize.getDescription());
         System.out.println("Authorize Failed : " + authorize.getResponse().getMessage());
-        sendChargeResult(authorize,"FAILED","AUTHORIZE");
+        sendChargeResult(authorize, "FAILED", "AUTHORIZE");
     }
 
 
@@ -360,7 +412,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         System.out.println("Card Saved Succeeded : " + charge.getCard().getBrand());
         System.out.println("Card Saved Succeeded : " + charge.getDescription());
         System.out.println("Card Saved Succeeded : " + charge.getResponse().getMessage());
-        sendChargeResult(charge,"SUCCESS","SAVE_CARD");
+        sendChargeResult(charge, "SUCCESS", "SAVE_CARD");
     }
 
     @Override
@@ -368,7 +420,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         System.out.println("Card Saved Failed : " + charge.getStatus());
         System.out.println("Card Saved Failed : " + charge.getDescription());
         System.out.println("Card Saved Failed : " + charge.getResponse().getMessage());
-        sendChargeResult(charge,"FAILED","SaveCard");
+        sendChargeResult(charge, "FAILED", "SaveCard");
     }
 
     @Override
@@ -380,7 +432,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         System.out.println("Token card : " + token.getCard().getAddress() + " ****** " + token.getCard().getObject());
         System.out.println("Token card : " + token.getCard().getExpirationMonth() + " ****** " + token.getCard().getExpirationYear());
 
-        sendTokenResult(token,"SUCCESS");
+        sendTokenResult(token, "SUCCESS");
     }
 
     @Override
@@ -408,10 +460,8 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
             System.out.println("SDK Process Error : " + goSellError.getErrorCode());
         }
 
-        sendSDKError(goSellError.getErrorCode(),goSellError.getErrorMessage(),goSellError.getErrorBody() );
+        sendSDKError(goSellError.getErrorCode(), goSellError.getErrorMessage(), goSellError.getErrorBody());
     }
-
-
 
 
     @Override
@@ -444,20 +494,20 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
     @Override
     public void backendUnknownError(String message) {
         System.out.println("Backend Un-Known error.... : " + message);
-        sendSDKError(500,message,message);
+        sendSDKError(Constants.ERROR_CODE_BACKEND_UNKNOWN_ERROR, message, message);
     }
 
     @Override
     public void invalidTransactionMode() {
         System.out.println(" invalidTransactionMode  ......");
-        sendSDKError(503,"invalidTransactionMode","invalidTransactionMode");
+        sendSDKError(Constants.ERROR_CODE_INVALID_TRX_MODE, "invalidTransactionMode", "invalidTransactionMode");
 
     }
 
     @Override
     public void invalidCustomerID() {
         System.out.println("Invalid Customer ID .......");
-        sendSDKError(501,"Invalid Customer ID ","Invalid Customer ID ");
+        sendSDKError(Constants.ERROR_CODE_INVALID_CUSTOMER_ID, "Invalid Customer ID ", "Invalid Customer ID ");
     }
 
     @Override
@@ -468,5 +518,15 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
 
 /////////////////////////////////////////////////////////  needed only for demo ////////////////////
 
+    class PaymentItemsList {
+        List<PaymentItem> list;
 
+        public List<PaymentItem> getList() {
+            return list;
+        }
+
+        public void setList(List<PaymentItem> list) {
+            this.list = list;
+        }
+    }
 }

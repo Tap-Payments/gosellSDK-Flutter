@@ -9,6 +9,14 @@ public class SwiftGoSellSdkFlutterPlugin: NSObject, FlutterPlugin {
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    result("iOS " + UIDevice.current.systemVersion)
+
+    // print("sssssssssss....")//
+    // call.arguments
+    // NSNumber *maxWidth = [_arguments objectForKey:@"appCredentials"];
+    // var appCredentials = [String : String]()
+    // var secrete_key = call.arguments.flatMap { $0.AnyObject as [String : String]}.flatMap { $0 }
+    // print("Flatmap: \(flatCars)") 
+
+    result("iOS  + sssssssssss " )
   }
 }

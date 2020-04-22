@@ -44,12 +44,11 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> setupSDKSession() async {
-    // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       GoSellSdkFlutter.sessionConfigurations(
-          // transaction currency
-          transactionCurrency: "kwd",
-          // customer information
+          trxMode: TransactionMode.AUTHORIZE_CAPTURE,
+          transactionCurrency: "mjsj",
+          amount: '10',
           customer: Customer(
               customerId: "",
               email: "h@tap.company",
@@ -59,7 +58,6 @@ class _MyAppState extends State<MyApp> {
               middleName: "Mohammad",
               lastName: "Elsheshtawy",
               metaData: null),
-          // List of payment items
           paymentItems: <PaymentItem>[
             PaymentItem(
                 name: "item1",
@@ -68,7 +66,12 @@ class _MyAppState extends State<MyApp> {
                     measurementGroup: "mass",
                     measurementUnit: "kilograms",
                     value: 1),
-                discount: AmountModificator(type: "F", value: 10),
+                discount: {
+                  "type": "F",
+                  "value": 10,
+                  "maximum_fee": 10,
+                  "minimum_fee": 1
+                },
                 description: "Item 1 Apple",
                 taxes: [
                   Tax(
@@ -155,7 +158,9 @@ class _MyAppState extends State<MyApp> {
           // merchant id
           merchantID: "merchantID",
           // Allowed cards
-          cardType: CardType.CREDIT);
+          cardType: CardType.CREDIT,
+          applePayMerchantID: "applePayMerchantID",
+          sdkMode: SDKMode.Sandbox);
     } on PlatformException {
       // platformVersion = 'Failed to get platform version.';
     }
@@ -169,6 +174,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> startSDK() async {
     tapSDKResult = await GoSellSdkFlutter.startPaymentSDK;
+    print('>>>> ${tapSDKResult['sdk_result']}');
     setState(() {
       switch (tapSDKResult['sdk_result']) {
         case "SUCCESS":
@@ -180,14 +186,19 @@ class _MyAppState extends State<MyApp> {
           handleSDKResult();
           break;
         case "SDK_ERROR":
-          sdkErrorCode = tapSDKResult['sdk_error_code'];
+          print('sdk error............');
+          print(tapSDKResult['sdk_error_code']);
+          print(tapSDKResult['sdk_error_message']);
+          print(tapSDKResult['sdk_error_description']);
+          print('sdk error............');
+          sdkErrorCode = tapSDKResult['sdk_error_code'].toString();
           sdkErrorMessage = tapSDKResult['sdk_error_message'];
           sdkErrorDescription = tapSDKResult['sdk_error_description'];
           break;
 
-         case "NOT_IMPLEMENTED":
-             sdkStatus = "NOT_IMPLEMENTED";
-         break; 
+        case "NOT_IMPLEMENTED":
+          sdkStatus = "NOT_IMPLEMENTED";
+          break;
       }
     });
   }
