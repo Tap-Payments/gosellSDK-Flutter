@@ -110,15 +110,26 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
       if let paymentItemsString:String = argsSessionParameters?["paymentitems"] as? String {
         if let data = paymentItemsString.data(using: .utf8) {
           do {
+            var paymentItemsArray:[[String:Any]] = try JSONSerialization.jsonObject(with: data, options: []) as? [[String:Any]] ?? []
+            for (index, var item) in paymentItemsArray.enumerated() {
+              guard var quantityDict:[String:Any] = item["quantity"] as? [String:Any] else {
+                return nil
+              }
+              quantityDict["measurement_group"] = "mass"
+              quantityDict["measurement_unit"] = "kilograms"
+              item["quantity"] = quantityDict
+              paymentItemsArray[index] = item
+            }
             let decoder = JSONDecoder()
-            let paymentItems:[PaymentItem] = try decoder.decode([PaymentItem].self, from: data)
+            let paymentItemsData = try JSONSerialization.data(withJSONObject: paymentItemsArray, options: [.fragmentsAllowed])
+            let paymentItems:[PaymentItem] = try decoder.decode([PaymentItem].self, from: paymentItemsData)
             return paymentItems
           } catch {
             print(error.localizedDescription)
           }
         }
       }
-      return []
+      return nil
     }
     public var amount: Decimal {
       if let amountString:String = argsSessionParameters?["amount"] as? String,
@@ -263,5 +274,43 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
         }
       }
       return nil
+    }
+    
+    public var paymentType: PaymentType {
+      if let paymentTypeString:String = argsSessionParameters?["paymentType"] as? String {
+        let paymentTypeComponents: [String] = paymentTypeString.components(separatedBy: ".")
+        if paymentTypeComponents.count == 2 {
+        do {
+            let data = try JSONEncoder().encode(paymentTypeComponents[1])
+            let decoder = JSONDecoder()
+            let paymentTypeMode:PaymentType = try decoder.decode(PaymentType.self, from: data)
+            return paymentTypeMode
+          } catch {
+            print(error.localizedDescription)
+          }
+        }
+      }
+      return PaymentType.all
+    }
+    
+    public var allowedCadTypes: [CardType]? {
+      if let cardTypeString:String = argsSessionParameters?["allowedCadTypes"] as? String {
+        let cardTypeComponents: [String] = cardTypeString.components(separatedBy: ".")
+        if cardTypeComponents.count == 2 {
+          var cardType:cardTypes = .All
+          cardTypes.allCases.forEach{
+            if $0.description.lowercased() == cardTypeComponents[1].lowercased() {
+              cardType = $0
+            }
+          }
+          if cardType == .All {
+            return [CardType(cardType: .Debit), CardType(cardType: .Credit)]
+          }else
+          {
+            return [CardType(cardType: cardType)]
+          }
+        }
+      }
+      return [CardType(cardType: .Debit), CardType(cardType: .Credit)]
     }
 }
