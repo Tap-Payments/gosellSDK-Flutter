@@ -268,7 +268,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         pendingResult = null;
     }
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void paymentSucceed(@NonNull Charge charge) {
         sendChargeResult(charge, "SUCCESS", "CHARGE");
@@ -276,9 +276,6 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
 
     @Override
     public void paymentFailed(@Nullable Charge charge) {
-        System.out.println("Payment Failed : " + charge.getStatus());
-        System.out.println("Payment Failed : " + charge.getDescription());
-        System.out.println("Payment Failed : " + charge.getResponse().getMessage());
         sendChargeResult(charge, "FAILED", "CHARGE");
     }
 
@@ -289,60 +286,26 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
 
     @Override
     public void authorizationFailed(Authorize authorize) {
-        System.out.println("Authorize Failed : " + authorize.getStatus());
-        System.out.println("Authorize Failed : " + authorize.getDescription());
-        System.out.println("Authorize Failed : " + authorize.getResponse().getMessage());
         sendChargeResult(authorize, "FAILED", "AUTHORIZE");
     }
 
-
     @Override
     public void cardSaved(@NonNull Charge charge) {
-        // Cast charge object to SaveCard first to get all the Card info.
-        if (charge instanceof SaveCard) {
-            System.out.println("Card Saved Succeeded : first six digits : " + ((SaveCard) charge).getCard().getFirstSix() + "  last four :" + ((SaveCard) charge).getCard().getLast4());
-        }
-        System.out.println("Card Saved Succeeded : " + charge.getStatus());
-        System.out.println("Card Saved Succeeded : " + charge.getCard().getBrand());
-        System.out.println("Card Saved Succeeded : " + charge.getDescription());
-        System.out.println("Card Saved Succeeded : " + charge.getResponse().getMessage());
         sendChargeResult(charge, "SUCCESS", "SAVE_CARD");
     }
 
     @Override
     public void cardSavingFailed(@NonNull Charge charge) {
-        System.out.println("Card Saved Failed : " + charge.getStatus());
-        System.out.println("Card Saved Failed : " + charge.getDescription());
-        System.out.println("Card Saved Failed : " + charge.getResponse().getMessage());
-        sendChargeResult(charge, "FAILED", "SaveCard");
+        sendChargeResult(charge, "FAILED", "SAVE_CARD");
     }
 
     @Override
     public void cardTokenizedSuccessfully(@NonNull Token token) {
-        System.out.println("Card Tokenized Succeeded : ");
-        System.out.println("Token card : " + token.getCard().getFirstSix() + " **** " + token.getCard().getLastFour());
-        System.out.println("Token card : " + token.getCard().getFingerprint() + " **** " + token.getCard().getFunding());
-        System.out.println("Token card : " + token.getCard().getId() + " ****** " + token.getCard().getName());
-        System.out.println("Token card : " + token.getCard().getAddress() + " ****** " + token.getCard().getObject());
-        System.out.println("Token card : " + token.getCard().getExpirationMonth() + " ****** " + token.getCard().getExpirationYear());
-
         sendTokenResult(token, "SUCCESS");
     }
 
     @Override
     public void savedCardsList(@NonNull CardsList cardsList) {
-        if (cardsList != null && cardsList.getCards() != null) {
-            System.out.println(" Card List Response Code : " + cardsList.getResponseCode());
-            System.out.println(" Card List Top 10 : " + cardsList.getCards().size());
-            System.out.println(" Card List Has More : " + cardsList.isHas_more());
-            System.out.println("----------------------------------------------");
-            for (SavedCard sc : cardsList.getCards()) {
-                System.out.println(sc.getBrandName());
-            }
-            System.out.println("----------------------------------------------");
-
-//            showSavedCardsDialog(cardsList);
-        }
     }
 
 

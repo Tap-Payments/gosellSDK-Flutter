@@ -107,15 +107,26 @@ class GoSellSdkFlutter {
       return false;
     }
 
-    if (appCredentials["secreteKey"] == "" ||
-        appCredentials["secreteKey"] == "null" ||
-        appCredentials["secreteKey"] == null) {
+    if (appCredentials["production_secrete_key"] == "" ||
+        appCredentials["production_secrete_key"] == "null" ||
+        appCredentials["production_secrete_key"] == null) {
       _prepareConfigurationsErrorMap(
           errorCode: ERROR_CODE_INVALID_APP_CONFIGURATION,
           errorMsg: 'Invalid secrete Key',
-          errorDescription: 'Secrete key can not empty or null');
+          errorDescription: 'Production Secrete key can not empty or null');
       return false;
     }
+
+      if (appCredentials["sandbox_secrete_key"] == "" ||
+        appCredentials["sandbox_secrete_key"] == "null" ||
+        appCredentials["sandbox_secrete_key"] == null) {
+      _prepareConfigurationsErrorMap(
+          errorCode: ERROR_CODE_INVALID_APP_CONFIGURATION,
+          errorMsg: 'Invalid secrete Key',
+          errorDescription: 'Sandbox Secrete key can not empty or null');
+      return false;
+    }
+
 
     if (appCredentials["lang"] == "" ||
         appCredentials["lang"] == "null" ||
