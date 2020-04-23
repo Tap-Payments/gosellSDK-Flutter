@@ -47,9 +47,9 @@ class _MyAppState extends State<MyApp> {
   Future<void> setupSDKSession() async {
     try {
       GoSellSdkFlutter.sessionConfigurations(
-          trxMode: TransactionMode.AUTHORIZE_CAPTURE,
+          trxMode: TransactionMode.PURCHASE,
           transactionCurrency: "kwd",
-          amount: '10',
+          amount: '100',
           customer: Customer(
               customerId: "",
               email: "h@tap.company",
@@ -64,8 +64,6 @@ class _MyAppState extends State<MyApp> {
                 name: "item1",
                 amountPerUnit: 1,
                 quantity: Quantity(
-                    measurementGroup: "mass",
-                    measurementUnit: "kilograms",
                     value: 1),
                 discount: {
                   "type": "F",
@@ -137,30 +135,32 @@ class _MyAppState extends State<MyApp> {
           receipt: Receipt(true, false),
           // Authorize Action [Capture - Void]
           authorizeAction: AuthorizeAction(
-              type: AuthorizeActionType.CAPTURE, timeInHours: 1000),
+              type: AuthorizeActionType.CAPTURE, timeInHours: 10),
           // Destinations
-          destinations: Destinations(
-              amount: 200,
-              currency: 'kwd',
-              count: 2,
-              destinations: [
-                Destination(
-                    id: "dest_1212",
-                    amount: 10,
-                    currency: "kwd",
-                    description: "des",
-                    reference: "ref_121299"),
-                Destination(
-                    id: "dest_22222",
-                    amount: 20,
-                    currency: "kwd",
-                    description: "des",
-                    reference: "ref_22444444")
-              ]),
+          destinations: null
+          //Destinations(
+          //     amount: 100,
+          //     currency: 'kwd',
+          //     count: 2,
+          //     destinationlist: [
+          //       Destination(
+          //           id: "",
+          //           amount: 100,
+          //           currency: "kwd",
+          //           description: "des",
+          //           reference: "ref_121299"),
+          //       // Destination(
+          //       //     id: "",
+          //       //     amount: 100,
+          //       //     currency: "kwd",
+          //       //     description: "des",
+          //       //     reference: "ref_22444444")
+          //     ])
+          ,
           // merchant id
-          merchantID: "merchantID",
+          merchantID: "",
           // Allowed cards
-          allowedCadTypes: [CardType.CREDIT,CardType.DEBIT],
+          allowedCadTypes: CardType.CREDIT,
           applePayMerchantID: "applePayMerchantID",
           allowsToSaveSameCardMoreThanOnce:false,
           paymentType: PaymentType.ALL,  

@@ -62,7 +62,7 @@ class GoSellSdkFlutter {
       AuthorizeAction authorizeAction,
       Destinations destinations,
       String merchantID,
-      List<CardType> allowedCadTypes,
+      CardType allowedCadTypes,
       String applePayMerchantID,
       SDKMode sdkMode,
       PaymentType paymentType,
