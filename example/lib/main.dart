@@ -81,8 +81,8 @@ class _MyAppState extends State<MyApp> {
                       amount: Amount(
                           type: "F",
                           value: 10,
-                          minimum_fee: 1,
-                          maximum_fee: 10),
+                          minimumFee: 1,
+                          maximumFee: 10),
                       name: "tax1",
                       description: "tax describtion")
                 ],
@@ -92,12 +92,12 @@ class _MyAppState extends State<MyApp> {
           taxes: [
             Tax(
                 amount: Amount(
-                    type: "F", value: 10, minimum_fee: 1, maximum_fee: 10),
+                    type: "F", value: 10, minimumFee: 1, maximumFee: 10),
                 name: "tax1",
                 description: "tax describtion"),
             Tax(
                 amount: Amount(
-                    type: "F", value: 10, minimum_fee: 1, maximum_fee: 10),
+                    type: "F", value: 10, minimumFee: 1, maximumFee: 10),
                 name: "tax1",
                 description: "tax describtion")
           ],
@@ -141,25 +141,25 @@ class _MyAppState extends State<MyApp> {
           authorizeAction: AuthorizeAction(
               type: AuthorizeActionType.CAPTURE, timeInHours: 10),
           // Destinations
-          destinations: null
-          //Destinations(
-          //     amount: 100,
-          //     currency: 'kwd',
-          //     count: 2,
-          //     destinationlist: [
-          //       Destination(
-          //           id: "",
-          //           amount: 100,
-          //           currency: "kwd",
-          //           description: "des",
-          //           reference: "ref_121299"),
-          //       // Destination(
-          //       //     id: "",
-          //       //     amount: 100,
-          //       //     currency: "kwd",
-          //       //     description: "des",
-          //       //     reference: "ref_22444444")
-          //     ])
+          destinations: 
+          Destinations(
+              amount: 100,
+              currency: 'kwd',
+              count: 2,
+              destinationlist: [
+                Destination(
+                    id: "",
+                    amount: 100,
+                    currency: "kwd",
+                    description: "des",
+                    reference: "ref_121299"),
+                // Destination(
+                //     id: "",
+                //     amount: 100,
+                //     currency: "kwd",
+                //     description: "des",
+                //     reference: "ref_22444444")
+              ])
           ,
           // merchant id
           merchantID: "",

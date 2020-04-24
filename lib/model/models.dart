@@ -169,16 +169,16 @@ class PaymentItem {
 class Amount {
   String type;
   double value;
-  double maximum_fee;
-  double minimum_fee;
-  Amount({this.type, this.value, this.maximum_fee, this.minimum_fee});
+  double maximumFee;
+  double minimumFee;
+  Amount({this.type, this.value, this.maximumFee, this.minimumFee});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['type'] = this.type;
     data['value'] = this.value;
-    data['maximum_fee'] = this.maximum_fee;
-    data['minimum_fee'] = this.minimum_fee;
+    data['maximum_fee'] = this.maximumFee;
+    data['minimum_fee'] = this.minimumFee;
     return data;
   }
 }
