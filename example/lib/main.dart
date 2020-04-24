@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> setupSDKSession() async {
     try {
       GoSellSdkFlutter.sessionConfigurations(
-          trxMode: TransactionMode.PURCHASE,
+          trxMode: TransactionMode.TOKENIZE_CARD,
           transactionCurrency: "kwd",
           amount: '100',
           customer: Customer(
