@@ -22,7 +22,7 @@ class _MyAppState extends State<MyApp> {
   String sdkErrorMessage;
   String sdkErrorDescription;
   bool _showLoader;
-
+  AwesomeLoaderController loaderController = AwesomeLoaderController();
   Color _buttonColor;
   double _bottom;
 
@@ -186,10 +186,13 @@ class _MyAppState extends State<MyApp> {
   Future<void> startSDK() async {
     setState(() {
       _showLoader = true;
+      loaderController.start();
     });
 
     tapSDKResult = await GoSellSdkFlutter.startPaymentSDK;
     _showLoader = false;
+    loaderController.stopWhenFull();
+
     print('>>>> ${tapSDKResult['sdk_result']}');
     setState(() {
       switch (tapSDKResult['sdk_result']) {
@@ -315,14 +318,12 @@ class _MyAppState extends State<MyApp> {
                                 Container(
                                   width: 25,
                                   height: 25,
-                                  child: !_showLoader
-                                      ? Container()
-                                      : AwesomeLoader(
-                                          outerColor: Colors.white,
-                                          innerColor: Colors.white,
-                                          // duration: 2,
-                                          strokeWidth: 3.0,
-                                        ),
+                                  child: AwesomeLoader(
+                                    outerColor: Colors.white,
+                                    innerColor: Colors.white,
+                                    strokeWidth: 3.0,
+                                    controller: loaderController,
+                                  ),
                                 ),
                                 Spacer(),
                                 Text('PAY',
