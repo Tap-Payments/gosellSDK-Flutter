@@ -38,6 +38,7 @@ public class SwiftGoSellSdkFlutterPlugin: NSObject, FlutterPlugin {
     GoSellSDK.language = sdkLang
     session.delegate = self
     session.dataSource = self
+    session.appearance = self
     session.start()
     flutterResult = result
 //    result(["key": "iOS  + sssssssssss "])
@@ -426,6 +427,12 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDelegate {
             flutterResult(resultMap)
         }
     }
+}
+
+extension SwiftGoSellSdkFlutterPlugin: SessionAppearance {
+    public func sessionShouldShowStatusPopup(_ session: SessionProtocol) -> Bool {
+    return false
+  }
 }
 
 
