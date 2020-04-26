@@ -57,8 +57,8 @@ To use the SDK the following requirements must be met:
  */
 GoSellSdkFlutter.configureApp(
   bundleId: "company.tap.goSellSDKExample",
-  productionSecreteKey: "sk_live_kovrMB0mupFJXfNZWx6Etg5y",
-  sandBoxsecretKey: "sk_test_kovrMB0mupFJXfNZWx6Etg5y",
+  productionSecreteKey: Platform.isAndroid? "sk_live_kovrMB0mupFJXfNZWx6Etg5y" : "sk_live_V4UDhitI0r7sFwHCfNB6xMKp",
+  sandBoxsecretKey: Platform.isAndroid?"sk_test_kovrMB0mupFJXfNZWx6Etg5y":"sk_test_cvSHaplrPNkJO7dhoUxDYjqA",
   lang: "en");
 ```
 ---
