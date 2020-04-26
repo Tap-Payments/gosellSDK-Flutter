@@ -153,7 +153,7 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
       if let applePayMerchantIDString:String = argsSessionParameters?["applePayMerchantID"] as? String {
         return applePayMerchantIDString
       }
-      return " "
+      return ""
     }
     public var sdkMode: SDKMode {
       if let sdkModeString:String = argsSessionParameters?["SDKMode"] as? String {
