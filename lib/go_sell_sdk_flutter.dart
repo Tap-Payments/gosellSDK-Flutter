@@ -15,13 +15,13 @@ class GoSellSdkFlutter {
   static Future<dynamic> get startPaymentSDK async {
     if (!_validateSessionArge() || _validateAppConfig()) return _tapSDKResult;
 
-    // prepare sdk configurations
+    /// prepare sdk configurations
     sdkConfigurations = {
       "appCredentials": appCredentials,
       "sessionParameters": sessionParameters
     };
 
-    // forward call to channel
+    // /forward call to channel
     dynamic result =
         await _channel.invokeMethod('start_sdk', sdkConfigurations);
     print('result in dart : $result');
@@ -32,8 +32,12 @@ class GoSellSdkFlutter {
   static Map<String, dynamic> appCredentials;
   static Map<String, dynamic> sessionParameters;
 
-// App configurations
-  static void configureApp({String productionSecreteKey, String sandBoxsecretKey,String bundleId, String lang}) {
+  /// App configurations
+  static void configureApp(
+      {String productionSecreteKey,
+      String sandBoxsecretKey,
+      String bundleId,
+      String lang}) {
     appCredentials = <String, dynamic>{
       "production_secrete_key": productionSecreteKey,
       "sandbox_secrete_key": sandBoxsecretKey,
@@ -42,32 +46,32 @@ class GoSellSdkFlutter {
     };
   }
 
-  // session configurations
-  static void   sessionConfigurations(
-      {TransactionMode trxMode,
-      String transactionCurrency,
-      String amount,
-      Customer customer,
-      List<PaymentItem> paymentItems,
-      List<Tax> taxes,
-      List<Shipping> shippings,
-      String postURL,
-      String paymentDescription,
-      Map<String, String> paymentMetaData,
-      Reference paymentReference,
-      String paymentStatementDescriptor,
-      bool isUserAllowedToSaveCard,
-      bool isRequires3DSecure,
-      Receipt receipt,
-      AuthorizeAction authorizeAction,
-      Destinations destinations,
-      String merchantID,
-      CardType allowedCadTypes,
-      String applePayMerchantID,
-      SDKMode sdkMode,
-      PaymentType paymentType,
-      bool allowsToSaveSameCardMoreThanOnce,
-      }) {
+  /// session configurations
+  static void sessionConfigurations({
+    TransactionMode trxMode,
+    String transactionCurrency,
+    String amount,
+    Customer customer,
+    List<PaymentItem> paymentItems,
+    List<Tax> taxes,
+    List<Shipping> shippings,
+    String postURL,
+    String paymentDescription,
+    Map<String, String> paymentMetaData,
+    Reference paymentReference,
+    String paymentStatementDescriptor,
+    bool isUserAllowedToSaveCard,
+    bool isRequires3DSecure,
+    Receipt receipt,
+    AuthorizeAction authorizeAction,
+    Destinations destinations,
+    String merchantID,
+    CardType allowedCadTypes,
+    String applePayMerchantID,
+    SDKMode sdkMode,
+    PaymentType paymentType,
+    bool allowsToSaveSameCardMoreThanOnce,
+  }) {
     sessionParameters = <String, dynamic>{
       'trxMode': trxMode.toString(),
       'transactionCurrency': transactionCurrency,
@@ -88,14 +92,14 @@ class GoSellSdkFlutter {
       "destinations": jsonEncode(destinations),
       "merchantID": merchantID,
       "allowedCadTypes": allowedCadTypes.toString(),
-      "applePayMerchantID":applePayMerchantID,
-      "SDKMode":sdkMode.toString(),
-      "paymentType":paymentType.toString(),
-      "allowsToSaveSameCardMoreThanOnce":allowsToSaveSameCardMoreThanOnce,
+      "applePayMerchantID": applePayMerchantID,
+      "SDKMode": sdkMode.toString(),
+      "paymentType": paymentType.toString(),
+      "allowsToSaveSameCardMoreThanOnce": allowsToSaveSameCardMoreThanOnce,
     };
   }
 
-  // validate app configurations
+  /// validate app configurations
   static bool _validateAppConfig() {
     if (appCredentials["bundleId"] == "" ||
         appCredentials["bundleId"] == "null" ||
@@ -117,7 +121,7 @@ class GoSellSdkFlutter {
       return false;
     }
 
-      if (appCredentials["sandbox_secrete_key"] == "" ||
+    if (appCredentials["sandbox_secrete_key"] == "" ||
         appCredentials["sandbox_secrete_key"] == "null" ||
         appCredentials["sandbox_secrete_key"] == null) {
       _prepareConfigurationsErrorMap(
@@ -126,7 +130,6 @@ class GoSellSdkFlutter {
           errorDescription: 'Sandbox Secrete key can not empty or null');
       return false;
     }
-
 
     if (appCredentials["lang"] == "" ||
         appCredentials["lang"] == "null" ||
@@ -195,13 +198,13 @@ class GoSellSdkFlutter {
     return true;
   }
 
-  static void _validateBooleanValues(String param){
+  static void _validateBooleanValues(String param) {
     if (sessionParameters[param] == "null" ||
         sessionParameters[param] == null ||
         sessionParameters[param] == "") {
       sessionParameters[param] = false;
     }
-  } 
+  }
 
   static void _prepareConfigurationsErrorMap(
       {String errorCode, String errorMsg, String errorDescription}) {
@@ -213,5 +216,5 @@ class GoSellSdkFlutter {
 }
 
 enum TransactionMode { PURCHASE, AUTHORIZE_CAPTURE, SAVE_CARD, TOKENIZE_CARD }
-enum SDKMode{Sandbox,Production}
-enum PaymentType {ALL,CARD,WEB,APPLE_PAY}
+enum SDKMode { Sandbox, Production }
+enum PaymentType { ALL, CARD, WEB, APPLE_PAY }
