@@ -1,9 +1,11 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:go_sell_sdk_flutter/go_sell_sdk_flutter.dart';
 import 'package:go_sell_sdk_flutter/model/models.dart';
+import 'package:go_sell_sdk_flutter_example/tap_loader/awesome_loader.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,10 +21,13 @@ class _MyAppState extends State<MyApp> {
   String sdkErrorCode;
   String sdkErrorMessage;
   String sdkErrorDescription;
+  AwesomeLoaderController loaderController = AwesomeLoaderController();
+  Color _buttonColor;
 
   @override
   void initState() {
     super.initState();
+    _buttonColor = Color(0xff2ace00);
     configureSDK();
   }
 
@@ -39,7 +44,7 @@ class _MyAppState extends State<MyApp> {
     GoSellSdkFlutter.configureApp(
         bundleId: "company.tap.goSellSDKExample",
         productionSecreteKey: "sk_live_kovrMB0mupFJXfNZWx6Etg5y",
-        sandBoxsecretKey:  "sk_test_kovrMB0mupFJXfNZWx6Etg5y",
+        sandBoxsecretKey: "sk_test_kovrMB0mupFJXfNZWx6Etg5y",
         lang: "en");
   }
 
@@ -47,7 +52,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> setupSDKSession() async {
     try {
       GoSellSdkFlutter.sessionConfigurations(
-          trxMode: TransactionMode.PURCHASE,
+          trxMode: TransactionMode.TOKENIZE_CARD,
           transactionCurrency: "kwd",
           amount: '100',
           customer: Customer(
@@ -63,8 +68,7 @@ class _MyAppState extends State<MyApp> {
             PaymentItem(
                 name: "item1",
                 amountPerUnit: 1,
-                quantity: Quantity(
-                    value: 1),
+                quantity: Quantity(value: 1),
                 discount: {
                   "type": "F",
                   "value": 10,
@@ -77,8 +81,8 @@ class _MyAppState extends State<MyApp> {
                       amount: Amount(
                           type: "F",
                           value: 10,
-                          minimum_fee: 1,
-                          maximum_fee: 10),
+                          minimumFee: 1,
+                          maximumFee: 10),
                       name: "tax1",
                       description: "tax describtion")
                 ],
@@ -88,12 +92,12 @@ class _MyAppState extends State<MyApp> {
           taxes: [
             Tax(
                 amount: Amount(
-                    type: "F", value: 10, minimum_fee: 1, maximum_fee: 10),
+                    type: "F", value: 10, minimumFee: 1, maximumFee: 10),
                 name: "tax1",
                 description: "tax describtion"),
             Tax(
                 amount: Amount(
-                    type: "F", value: 10, minimum_fee: 1, maximum_fee: 10),
+                    type: "F", value: 10, minimumFee: 1, maximumFee: 10),
                 name: "tax1",
                 description: "tax describtion")
           ],
@@ -137,33 +141,33 @@ class _MyAppState extends State<MyApp> {
           authorizeAction: AuthorizeAction(
               type: AuthorizeActionType.CAPTURE, timeInHours: 10),
           // Destinations
-          destinations: null
-          //Destinations(
-          //     amount: 100,
-          //     currency: 'kwd',
-          //     count: 2,
-          //     destinationlist: [
-          //       Destination(
-          //           id: "",
-          //           amount: 100,
-          //           currency: "kwd",
-          //           description: "des",
-          //           reference: "ref_121299"),
-          //       // Destination(
-          //       //     id: "",
-          //       //     amount: 100,
-          //       //     currency: "kwd",
-          //       //     description: "des",
-          //       //     reference: "ref_22444444")
-          //     ])
+          destinations: 
+          Destinations(
+              amount: 100,
+              currency: 'kwd',
+              count: 2,
+              destinationlist: [
+                Destination(
+                    id: "",
+                    amount: 100,
+                    currency: "kwd",
+                    description: "des",
+                    reference: "ref_121299"),
+                // Destination(
+                //     id: "",
+                //     amount: 100,
+                //     currency: "kwd",
+                //     description: "des",
+                //     reference: "ref_22444444")
+              ])
           ,
           // merchant id
           merchantID: "",
           // Allowed cards
           allowedCadTypes: CardType.CREDIT,
           applePayMerchantID: "applePayMerchantID",
-          allowsToSaveSameCardMoreThanOnce:false,
-          paymentType: PaymentType.ALL,  
+          allowsToSaveSameCardMoreThanOnce: false,
+          paymentType: PaymentType.ALL,
           sdkMode: SDKMode.Sandbox);
     } on PlatformException {
       // platformVersion = 'Failed to get platform version.';
@@ -177,7 +181,13 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> startSDK() async {
+    setState(() {
+      loaderController.start();
+    });
+
     tapSDKResult = await GoSellSdkFlutter.startPaymentSDK;
+    loaderController.stopWhenFull();
+
     print('>>>> ${tapSDKResult['sdk_result']}');
     setState(() {
       switch (tapSDKResult['sdk_result']) {
@@ -262,18 +272,68 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(child: Text('$sdkStatus  $responseID ')),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            startSDK();
-          },
-          child: Text('Pay'),
-        ),
-      ),
-    );
+        home: Scaffold(
+            appBar: AppBar(
+              title: const Text('Plugin example app'),
+              backgroundColor: Colors.grey,
+            ),
+            body: SafeArea(
+              child: Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  Positioned(
+                    top: 300,
+                    left: 18,
+                    right: 18,
+                    child: Text("Status: [$sdkStatus $responseID ]",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: "Roboto",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 15.0),
+                        textAlign: TextAlign.center),
+                  ),
+                  Positioned(
+                    bottom: Platform.isIOS ? 0 : 10,
+                    left: 18,
+                    right: 18,
+                    child: SizedBox(
+                        height: 45,
+                        child: RaisedButton(
+                          color: _buttonColor,
+                          clipBehavior: Clip.hardEdge,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadiusDirectional.all(
+                                  Radius.circular(30))),
+                          onPressed: startSDK,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 25,
+                                  height: 25,
+                                  child: AwesomeLoader(
+                                    outerColor: Colors.white,
+                                    innerColor: Colors.white,
+                                    strokeWidth: 3.0,
+                                    controller: loaderController,
+                                  ),
+                                ),
+                                Spacer(),
+                                Text('PAY',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 16.0)),
+                                Spacer(),
+                                Icon(
+                                  Icons.lock_outline,
+                                  color: Colors.white,
+                                ),
+                              ]),
+                        )),
+                  ),
+                ],
+              ),
+            )));
   }
 }

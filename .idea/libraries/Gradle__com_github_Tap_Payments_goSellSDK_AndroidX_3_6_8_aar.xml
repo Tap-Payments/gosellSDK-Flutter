@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.Tap-Payments:goSellSDK-AndroidX:3.6.8@aar" type="AndroidModuleLibraryType">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/1a97a9b63f99f2c9d55f1e29f9a2203c/jetified-goSellSDK-AndroidX-3.6.8/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
