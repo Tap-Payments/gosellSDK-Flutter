@@ -77,7 +77,7 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
       return merchantIDString
     }
     public var sandBoxSecretKey: String{
-      if let sandBoxSecretKeyString:String = argsAppCredentials?["secrete_key"] {
+      if let sandBoxSecretKeyString:String = argsAppCredentials?["sandbox_secrete_key"] {
         return sandBoxSecretKeyString
       }
       return ""
@@ -418,7 +418,7 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDelegate {
     public func cardTokenizationFailed(with error: TapSDKError, on session: SessionProtocol) {
       var resultMap:[String:Any] = [:]
       resultMap["sdk_result"] = "SDK_ERROR"
-      resultMap["sdk_error_code"] = error.type
+      resultMap["sdk_error_code"] = ""//error.type
       resultMap["sdk_error_message"] = error.description
       resultMap["sdk_error_description"] = error.description
 //      result.success(resultMap)
