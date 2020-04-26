@@ -1,4 +1,4 @@
-## 1.0.2 - 2020-04-26
+## 1.1.0 - 2020-04-26
 
 * Fix iOS crash when receive unmaped data.
   
