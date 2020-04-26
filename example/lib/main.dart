@@ -43,8 +43,8 @@ class _MyAppState extends State<MyApp> {
   Future<void> configureApp() async {
     GoSellSdkFlutter.configureApp(
         bundleId: "company.tap.goSellSDKExample",
-        productionSecreteKey: "YOUR_PRODUCTION_SECRET_KEY",
-        sandBoxsecretKey: "YOUR_SANDBOX_SECRET_KEY",
+        productionSecreteKey: Platform.isAndroid? "YOUR_PRODUCTION_SECRET_KEY" : "YOUR_PRODUCTION_SECRET_KEY",
+        sandBoxsecretKey: Platform.isAndroid?"YOUR_SANDBOX_SECRET_KEY":"YOUR_SANDBOX_SECRET_KEY",
         lang: "en");
   }
 
