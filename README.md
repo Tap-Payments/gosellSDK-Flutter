@@ -42,7 +42,7 @@ To use the SDK the following requirements must be met:
 
 ```dart
  dependencies:
-     go_sell_sdk_flutter: ^1.0.0
+     go_sell_sdk_flutter: ^1.1.0
 ```
 
 ---
