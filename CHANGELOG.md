@@ -1,3 +1,7 @@
+## 1.0.2 - 2020-04-26
+
+* Fix iOS crash when receive unmaped data.
+  
 ## 1.0.2 - 2020-04-25
 
 * Integrate both Android and iOS SDK / Add changlog version
