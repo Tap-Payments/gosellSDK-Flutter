@@ -48,9 +48,6 @@ public class SwiftGoSellSdkFlutterPlugin: NSObject, FlutterPlugin {
 extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
 
     public var customer: Customer?{
-      return newCustomer
-    }
-    public var newCustomer: Customer {
       if let customerString:String = argsSessionParameters?["customer"] as? String {
         if let data = customerString.data(using: .utf8) {
           do {
@@ -61,15 +58,8 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
           }
         }
       }
-      let emailAddress = try! EmailAddress(emailAddressString: "customer@mail.com")
-      let phoneNumber = try! PhoneNumber(isdNumber: "965", phoneNumber: "96512345")
-      return try! Customer(emailAddress: emailAddress,
-                 phoneNumber:  phoneNumber,
-                 firstName:   "Steve",
-                 middleName:  nil,
-                 lastName:   "Jobs")
+      return nil
     }
-    
     
     public var currency: Currency? {
       if let currencyString:String = argsSessionParameters?["transactionCurrency"] as? String {
@@ -81,16 +71,16 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
     
     public var merchantID: String?
     {
-      if let merchantIDString:String = argsSessionParameters?["merchantID"] as? String {
-        //  return merchantIDString
+      guard let merchantIDString:String = argsSessionParameters?["merchantID"] as? String else {
+          return ""
       }
-      return "599424"
+      return merchantIDString
     }
     public var sandBoxSecretKey: String{
       if let sandBoxSecretKeyString:String = argsAppCredentials?["secrete_key"] {
         return sandBoxSecretKeyString
       }
-      return "sk_test_cvSHaplrPNkJO7dhoUxDYjqA"
+      return ""
     }
     public var sdkLang: String{
       if let sdkLangString:String = argsAppCredentials?["language"] {
@@ -102,7 +92,7 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
       if let productionSecretKeyString:String = argsAppCredentials?["production_secrete_key"] {
         return productionSecretKeyString
       }
-      return "sk_test_cvSHaplrPNkJO7dhoUxDYjqA"
+      return ""
     }
     public var isSaveCardSwitchOnByDefault: Bool{
       if let isUserAllowedToSaveCard:Bool = argsSessionParameters?["isUserAllowedToSaveCard"] as? Bool {
@@ -140,7 +130,7 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
         let amountDecimal: Decimal = Decimal(string:amountString) {
         return amountDecimal
       }
-      return 100
+      return 0
     }
     public var mode: TransactionMode{
       if let modeString:String = argsSessionParameters?["trxMode"] as? String {
@@ -163,7 +153,7 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
       if let applePayMerchantIDString:String = argsSessionParameters?["applePayMerchantID"] as? String {
         return applePayMerchantIDString
       }
-      return "merchant.tap.gosell"
+      return " "
     }
     public var sdkMode: SDKMode {
       if let sdkModeString:String = argsSessionParameters?["SDKMode"] as? String {
@@ -233,7 +223,7 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
           }
         }
       }
-      return Receipt(email: true, sms: true)
+      return Receipt(email: false, sms: false)
     }
     public var authorizeAction: AuthorizeAction {
       if let authorizeActionString:String = argsSessionParameters?["authorizeAction"] as? String {
@@ -247,7 +237,7 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
           }
         }
       }
-      return .capture(after: 8)
+        return .void(after: 0)
     }
     public var destinations: [Destination]? {
       if let destinationsGroupString:String = argsSessionParameters?["destinations"] as? String {
