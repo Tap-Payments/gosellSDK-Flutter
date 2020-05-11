@@ -245,13 +245,15 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
         if let data = destinationsGroupString.data(using: .utf8) {
           do {
             if let destinationsGroupJson:[String:Any] = try JSONSerialization.jsonObject(with: data, options: [.allowFragments]) as? [String : Any],
-              let destinationsJson:[[String:Any]] = destinationsGroupJson["destinations"] as? [[String:Any]] {
+              let destinationsJson:[[String:Any]] = destinationsGroupJson["destination"] as? [[String:Any]] {
               let destinationData = try JSONSerialization.data(withJSONObject: destinationsJson, options: [.fragmentsAllowed])
               let decoder = JSONDecoder()
               let destinationsItems:[Destination] = try decoder.decode([Destination].self, from: destinationData)
               return destinationsItems
             }
-          } catch {}
+          } catch {
+            print("error: \(error.localizedDescription)")
+          }
         }
       }
       return nil
