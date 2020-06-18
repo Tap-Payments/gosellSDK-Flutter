@@ -39,12 +39,14 @@ class _MyAppState extends State<MyApp> {
     setupSDKSession();
   }
 
-  // configure app key and bundle-id
+  // configure app key and bundle-id (You must get those keys from tap)
   Future<void> configureApp() async {
     GoSellSdkFlutter.configureApp(
-        bundleId: "company.tap.goSellSDKExample",
-        productionSecreteKey: Platform.isAndroid? "sk_live_kovrMB0mupFJXfNZWx6Etg5y" : "sk_live_V4UDhitI0r7sFwHCfNB6xMKp",
-        sandBoxsecretKey: Platform.isAndroid?"sk_test_kovrMB0mupFJXfNZWx6Etg5y":"sk_test_cvSHaplrPNkJO7dhoUxDYjqA",
+        bundleId: Platform.isAndroid ? "Android-Package-Name" : "iOS-Bundle-ID",
+        productionSecreteKey:
+            Platform.isAndroid ? "Android-Live-Key" : "iOS-Live-Key",
+        sandBoxsecretKey:
+            Platform.isAndroid ? "Android-SandBox-Key" : "iOS-SandBox-Key",
         lang: "en");
   }
 
@@ -52,14 +54,14 @@ class _MyAppState extends State<MyApp> {
   Future<void> setupSDKSession() async {
     try {
       GoSellSdkFlutter.sessionConfigurations(
-          trxMode: TransactionMode.TOKENIZE_CARD,
+          trxMode: TransactionMode.PURCHASE,
           transactionCurrency: "kwd",
           amount: '100',
           customer: Customer(
               customerId: "",
-              email: "h@tap.company",
-              isdNumber: "965",
-              number: "65562630",
+              email: "xxx@xxxxx.xxx",
+              isdNumber: "000",
+              number: "000000000",
               firstName: "Haitham",
               middleName: "Mohammad",
               lastName: "Elsheshtawy",
@@ -79,10 +81,7 @@ class _MyAppState extends State<MyApp> {
                 taxes: [
                   Tax(
                       amount: Amount(
-                          type: "F",
-                          value: 10,
-                          minimumFee: 1,
-                          maximumFee: 10),
+                          type: "F", value: 10, minimumFee: 1, maximumFee: 10),
                       name: "tax1",
                       description: "tax describtion")
                 ],
@@ -91,13 +90,13 @@ class _MyAppState extends State<MyApp> {
           // List of taxes
           taxes: [
             Tax(
-                amount: Amount(
-                    type: "F", value: 10, minimumFee: 1, maximumFee: 10),
+                amount:
+                    Amount(type: "F", value: 10, minimumFee: 1, maximumFee: 10),
                 name: "tax1",
                 description: "tax describtion"),
             Tax(
-                amount: Amount(
-                    type: "F", value: 10, minimumFee: 1, maximumFee: 10),
+                amount:
+                    Amount(type: "F", value: 10, minimumFee: 1, maximumFee: 10),
                 name: "tax1",
                 description: "tax describtion")
           ],
@@ -141,26 +140,18 @@ class _MyAppState extends State<MyApp> {
           authorizeAction: AuthorizeAction(
               type: AuthorizeActionType.CAPTURE, timeInHours: 10),
           // Destinations
-          destinations: 
-          Destinations(
+          destinations: Destinations(
               amount: 100,
               currency: 'kwd',
-              count: 2,
+              count: 1,
               destinationlist: [
                 Destination(
-                    id: "",
+                    id: "35353535335",
                     amount: 100,
                     currency: "kwd",
                     description: "des",
                     reference: "ref_121299"),
-                // Destination(
-                //     id: "",
-                //     amount: 100,
-                //     currency: "kwd",
-                //     description: "des",
-                //     reference: "ref_22444444")
-              ])
-          ,
+              ]),
           // merchant id
           merchantID: "",
           // Allowed cards
