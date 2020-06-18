@@ -53,12 +53,12 @@ To use the SDK the following requirements must be met:
 `goSellSDK` should be set up. To set it up, add the following lines of code somewhere in your project and make sure they will be called before any usage of `goSellSDK`.
 ```dart
 /**
- * Configure App.
+ * Configure App. (You must get those keys from tap)
  */
 GoSellSdkFlutter.configureApp(
-  bundleId: "company.tap.goSellSDKExample",
-  productionSecreteKey: Platform.isAndroid? "YOUR_PRODUCTION_SECRET_KEY" : "YOUR_PRODUCTION_SECRET_KEY",
-  sandBoxsecretKey: Platform.isAndroid?"YOUR_SANDBOX_SECRET_KEY":"YOUR_SANDBOX_SECRET_KEY",
+  bundleId: "ANDROIID-PACKAGE-NAME",
+  productionSecreteKey: Platform.isAndroid? "Android-Live-Key" : "iOS-Live-Key",
+  sandBoxsecretKey: Platform.isAndroid?"Android-SANDBOX-Key" : "iOS-SANDBOX-Key",
   lang: "en");
 ```
 ---
