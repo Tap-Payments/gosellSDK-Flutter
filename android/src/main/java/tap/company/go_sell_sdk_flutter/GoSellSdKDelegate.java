@@ -283,12 +283,12 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
             resultMap.put("card_last_four", charge.getCard().getLast4());
             resultMap.put("card_object", charge.getCard().getObject());
             resultMap.put("card_brand", charge.getCard().getBrand());
-            if(charge.getCard().getExpiry()!=null){
+            if (charge.getCard().getExpiry() != null) {
                 resultMap.put("card_exp_month", charge.getCard().getExpiry().getMonth());
                 resultMap.put("card_exp_year", charge.getCard().getExpiry().getYear());
-            }else{
-                    resultMap.put("card_exp_month", charge.getCard().getExp_month());
-                    resultMap.put("card_exp_year", charge.getCard().getExp_year());
+            } else {
+                resultMap.put("card_exp_month", charge.getCard().getExp_month());
+                resultMap.put("card_exp_year", charge.getCard().getExp_year());
             }
         }
         if (charge.getAcquirer() != null) {
@@ -401,6 +401,10 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
     @Override
     public void sessionCancelled() {
         Log.d("MainActivity", "Session Cancelled.........");
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("sdk_result", "CANCELLED");
+        pendingResult.success(resultMap);
+        pendingResult = null;
     }
 
     @Override

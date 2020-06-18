@@ -395,7 +395,13 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDelegate {
             flutterResult(resultMap)
         }
     }
-    
+      public func sessionCancelled(_ session: SessionProtocol) {
+        var resultMap:[String:Any] = [:]
+        resultMap["sdk_result"] = "CANCELLED"
+        if let flutterResult = flutterResult {
+            flutterResult(resultMap)
+        }
+    }
     
     
     public func cardTokenized(_ token: Token, on session: SessionProtocol, customerRequestedToSaveTheCard saveCard: Bool) {

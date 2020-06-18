@@ -1,3 +1,10 @@
+## 1.2.0 - 2020-06-18
+
+* Update iOS SDK 2.2.21.
+* Update ios platform to 10
+* Update Android SDK 3.7.0
+* Add delegate for sessionCancelled
+  
 ## 1.1.0 - 2020-04-26
 
 * Fix iOS crash when receive unmaped data.
