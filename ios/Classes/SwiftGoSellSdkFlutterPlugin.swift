@@ -53,7 +53,12 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
         if let data = customerString.data(using: .utf8) {
           do {
             let customerDictionary:[String:String] = try JSONSerialization.jsonObject(with: data, options: []) as! [String : String]
-            return try Customer.init(emailAddress: EmailAddress(emailAddressString: customerDictionary["email"] ?? ""), phoneNumber: PhoneNumber(isdNumber: customerDictionary["isdNumber"] ?? "", phoneNumber: customerDictionary["number"] ?? ""), firstName: customerDictionary["first_name"] ?? "", middleName: customerDictionary["middle_name"] ?? "", lastName: customerDictionary["last_name"] ?? "")
+           if let customerIdentifier = customerDictionary["customerId"], !customerIdentifier.isEmpty,
+            customerIdentifier.lowercased() != "null",customerIdentifier.lowercased() != "nil" {
+              return try Customer.init(identifier: customerIdentifier)
+            } else {
+              return try Customer.init(emailAddress: EmailAddress(emailAddressString: customerDictionary["email"] ?? ""), phoneNumber: PhoneNumber(isdNumber: customerDictionary["isdNumber"] ?? "", phoneNumber: customerDictionary["number"] ?? ""), firstName: customerDictionary["first_name"] ?? "", middleName: customerDictionary["middle_name"] ?? "", lastName: customerDictionary["last_name"] ?? "")
+            }
           } catch {
             print(error.localizedDescription)
           }
