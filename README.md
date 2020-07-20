@@ -42,7 +42,7 @@ To use the SDK the following requirements must be met:
 
 ```dart
  dependencies:
-     go_sell_sdk_flutter: ^1.2.0
+     go_sell_sdk_flutter: ^1.3.0
 ```
 
 ---
@@ -57,8 +57,8 @@ To use the SDK the following requirements must be met:
  */
 GoSellSdkFlutter.configureApp(
   bundleId: "ANDROIID-PACKAGE-NAME",
-  productionSecreteKey: Platform.isAndroid? "Android-Live-Key" : "iOS-Live-Key",
-  sandBoxsecretKey: Platform.isAndroid?"Android-SANDBOX-Key" : "iOS-SANDBOX-Key",
+  productionSecreteKey: Platform.isAndroid? "Android-Live-KEY" : "iOS-Live-KEY",
+  sandBoxsecretKey: Platform.isAndroid?"Android-SANDBOX-KEY" : "iOS-SANDBOX-KEY",
   lang: "en");
 ```
 ---
@@ -75,7 +75,7 @@ Future<void> setupSDKSession() async {
             customerId: "",
             email: "h@tap.company",
             isdNumber: "965",
-            number: "65562630",
+            number: "000000",
             firstName: "Haitham",
             middleName: "Mohammad",
             lastName: "Elsheshtawy",
@@ -182,6 +182,10 @@ Future<void> setupSDKSession() async {
         allowedCadTypes: CardType.CREDIT,
         applePayMerchantID: "applePayMerchantID",
         allowsToSaveSameCardMoreThanOnce: false,
+        // pass the card holder name to the SDK
+        cardHolderName: "Card Holder NAME",
+        // disable changing the card holder name by the user
+        allowsToEditCardHolderName: false,
         paymentType: PaymentType.ALL,
         sdkMode: SDKMode.Sandbox);
     } on PlatformException {

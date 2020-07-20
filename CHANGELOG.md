@@ -1,3 +1,10 @@
+## 1.3.0 - 2020-07-20
+
+* Allow paasing card holder name to the SDK
+* Allow disable editing the card holder name
+* Update iOS SDK 2.2.22.
+* Update Android SDK 3.8.0
+  
 ## 1.2.1 - 2020-06-18
 
 * Update README.md

@@ -88,7 +88,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         String activeKey = sandboxKey;
         if ("SDKMode.Production".equalsIgnoreCase(sessionParameters.get("SDKMode").toString()))
             activeKey = productionKey;
-        System.out.println("activeKey : " + activeKey);
+        // System.out.println("activeKey : " + activeKey);
         configureApp(activeKey, appConfigurations.get("bundleID"), appConfigurations.get("language"));
 
         // configureSDKThemeObject();
@@ -267,6 +267,19 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
                                                                                                                       // id
 
         sdkSession.setPaymentType(DeserializationUtil.getPaymentType(sessionParameters.get("paymentType").toString()));
+
+        sdkSession.setDefaultCardHolderName(sessionParameters.get("cardHolderName").toString()); // ** Optional ** you
+                                                                                                 // can pass default
+                                                                                                 // CardHolderName of
+                                                                                                 // the
+        // user .So you don't need to type it.
+        sdkSession.isUserAllowedToEnableCardHolderName((boolean) sessionParameters.get("editCardHolderName")); // **
+                                                                                                               // Optional
+                                                                                                               // **
+        // you
+        // can enable/ disable
+        // default
+        // CardHolderName .
 
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
