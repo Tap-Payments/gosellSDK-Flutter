@@ -66,6 +66,22 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
       }
       return nil
     }
+
+    public var cardHolderName: String?{
+       if let cardHolderNameValue:String = argsSessionParameters?["cardHolderName"] as? String {
+        return cardHolderNameValue
+      }
+      return ""
+    }
+
+  public var cardHolderNameIsEditable: Bool{
+       if let cardHolderNameIsEditableValue:Bool = argsSessionParameters?["editCardHolderName"] as? Bool {
+        return cardHolderNameIsEditableValue
+      }
+      return true
+    }
+
+
     
     public var currency: Currency? {
       if let currencyString:String = argsSessionParameters?["transactionCurrency"] as? String {

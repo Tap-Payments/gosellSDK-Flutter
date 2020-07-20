@@ -6,10 +6,10 @@ PODS:
   - Flutter (1.0.0)
   - go_sell_sdk_flutter (0.0.1):
     - Flutter
-    - goSellSDK (= 2.2.21)
-  - goSellSDK (2.2.21):
-    - goSellSDK/Core (= 2.2.21)
-  - goSellSDK/Core (2.2.21):
+    - goSellSDK (= 2.2.22)
+  - goSellSDK (2.2.22):
+    - goSellSDK/Core (= 2.2.22)
+  - goSellSDK/Core (2.2.22):
     - CardIODynamic (>= 5.4.1)
     - EditableTextInsetsTextField (>= 1.0.6)
     - TapAdditionsKit/Foundation/Bundle (>= 1.3.6)
@@ -52,7 +52,7 @@ PODS:
     - TapSearchView (>= 1.0.4)
     - TapSwiftFixes/Threading (>= 1.0.9)
     - TapVisualEffectView (>= 1.1.2)
-  - SDWebImage/Core (5.8.1)
+  - SDWebImage/Core (5.8.4)
   - TapAdditionsKit/CoreGraphics/CGContext (1.3.6)
   - TapAdditionsKit/CoreGraphics/CGImage (1.3.6):
     - TapAdditionsKit/CoreGraphics/CGContext
@@ -237,9 +237,9 @@ SPEC CHECKSUMS:
   CardIODynamic: 4a0d2d0e7b82993ceca67491564934c3475fbe79
   EditableTextInsetsTextField: 7298bfd622a614307dc3b0de74c28ae19c9d7753
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  go_sell_sdk_flutter: ebdbd5a998819094b047a57db7e196e386f19f40
-  goSellSDK: faa4666d96da48cb3a389c036995971d58a66c78
-  SDWebImage: e3eae2eda88578db0685a0c88597fdadd9433f05
+  go_sell_sdk_flutter: e218248887b7ebce3231abe9c995e742b97926f5
+  goSellSDK: 16a0958012fbeebdb95361bdf90fb12c25117113
+  SDWebImage: cf6922231e95550934da2ada0f20f2becf2ceba9
   TapAdditionsKit: 136b2174e775b105f8fd17eac6a4da2951e0f05b
   TapApplication: bed1013cb48402e39fea913a6096ebd2d326cd36
   TapBundleLocalization: c7d7c14850223b0ef447aca1269d7308f78d54f9
