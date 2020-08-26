@@ -27,6 +27,7 @@ Original SDKS
 # Requirements
 
 ---
+
 To use the SDK the following requirements must be met:
 
 1. **Visual Studio - InteliJ Idea**
@@ -34,23 +35,28 @@ To use the SDK the following requirements must be met:
 3. **Flutter: 1.12.13+hotfix.9** or newer
 
 <a name="installation"></a>
+
 # Installation
+
 ---
+
 <a name="installation_with_pubspec"></a>
 
-### Include goSellSDK plugin as a dependency  in your pubspec.yaml
+### Include goSellSDK plugin as a dependency in your pubspec.yaml
 
 ```dart
  dependencies:
-     go_sell_sdk_flutter: ^1.3.0
+     go_sell_sdk_flutter: ^1.3.1
 ```
 
 ---
+
 <a name="configure_your_app"></a>
 
 ## Configure your app
 
 `goSellSDK` should be set up. To set it up, add the following lines of code somewhere in your project and make sure they will be called before any usage of `goSellSDK`.
+
 ```dart
 /**
  * Configure App. (You must get those keys from tap)
@@ -61,9 +67,12 @@ GoSellSdkFlutter.configureApp(
   sandBoxsecretKey: Platform.isAndroid?"Android-SANDBOX-KEY" : "iOS-SANDBOX-KEY",
   lang: "en");
 ```
+
 ---
+
 <a name="configure_your_app"></a>
 **Configure SDK Session Example**
+
 ```dart
 Future<void> setupSDKSession() async {
     try {
@@ -193,8 +202,10 @@ Future<void> setupSDKSession() async {
 ```
 
 ---
+
 <a name="tap_pay_button"></a>
 **Use Tap Pay Button**
+
 ```dart
 Positioned(
     bottom: Platform.isIOS ? 0 : 10,
@@ -237,13 +248,18 @@ Positioned(
 ```
 
 ---
+
 <a name="handle_sdk_result"></a>
 **Handle SDK Result**
+
 - Start SDK
+
 ```dart
    tapSDKResult = await GoSellSdkFlutter.startPaymentSDK;
 ```
-- Hnadle SDK result  
+
+- Hnadle SDK result
+
 ```dart
 setState(() {
   switch (tapSDKResult['sdk_result']) {
@@ -303,4 +319,5 @@ void extractSDKResultKeysAndValues() {
     responseID                     = tapSDKResult['charge_id'];
 }
 ```
+
 ---
