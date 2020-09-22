@@ -23,6 +23,10 @@ class GoSellSdkFlutter {
     return result;
   }
 
+  static Future<Null> terminateSession() async {
+    _channel.invokeMethod('terminate_session');
+  }
+
   static Map<String, dynamic> sdkConfigurations;
   static Map<String, dynamic> appCredentials;
   static Map<String, dynamic> sessionParameters;

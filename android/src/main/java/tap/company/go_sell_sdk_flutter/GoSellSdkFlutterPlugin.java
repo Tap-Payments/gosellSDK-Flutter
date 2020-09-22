@@ -294,6 +294,12 @@ public class GoSellSdkFlutterPlugin implements MethodChannel.MethodCallHandler, 
             rawResult.error("no_activity", "SDK plugin requires a foreground activity.", null);
             return;
         }
+
+        if (call.method.equals("terminate_session")) {
+            // session.cancelSession();
+            System.out.println("terminate session!");
+            return;
+        }
         MethodChannel.Result result = new MethodResultWrapper(rawResult);
         delegate.startSDK(call, result, args);
 

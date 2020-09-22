@@ -29,6 +29,13 @@ public class SwiftGoSellSdkFlutterPlugin: NSObject, FlutterPlugin {
     // var secrete_key = call.arguments.flatMap { $0.AnyObject as [String : String]}.flatMap { $0 }
     // print("Flatmap: \(flatCars)")
     
+    print("method is: \(call.method)")
+    if call.method == "terminate_session" {
+        print("terminate function!!")
+        terminateSession()
+        return
+    }
+    
     let dict = call.arguments as? [String: Any]
     argsDataSource = dict
     GoSellSDK.reset()
@@ -44,6 +51,11 @@ public class SwiftGoSellSdkFlutterPlugin: NSObject, FlutterPlugin {
 //    result(["key": "iOS  + sssssssssss "])
     
   }
+    
+    func terminateSession() {
+        session.stop()
+        print("inside terminate session swift")
+    }
 }
 
 extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
