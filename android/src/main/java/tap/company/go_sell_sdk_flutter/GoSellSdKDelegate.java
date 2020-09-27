@@ -60,6 +60,12 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         showSDK(sdkConfigurations, result);
     }
 
+    public void terminateSDKSession() {
+        if (activity != null) {
+            sdkSession.cancelSession(activity);
+        }
+    }
+
     private void finishWithAlreadyActiveError(MethodChannel.Result result) {
         result.error("already_active", "SDK is already active", null);
     }
@@ -99,6 +105,8 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         configureSDKSession(sessionParameters, result);
         sdkSession.start(activity);
     }
+
+
 
     private void configureApp(String secrete_key, String bundleID, String language) {
         GoSellSDK.init(activity, secrete_key, bundleID); // to be replaced by merchant

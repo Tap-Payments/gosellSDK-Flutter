@@ -296,8 +296,8 @@ public class GoSellSdkFlutterPlugin implements MethodChannel.MethodCallHandler, 
         }
 
         if (call.method.equals("terminate_session")) {
-            // session.cancelSession();
             System.out.println("terminate session!");
+            delegate.terminateSDKSession();
             return;
         }
         MethodChannel.Result result = new MethodResultWrapper(rawResult);
