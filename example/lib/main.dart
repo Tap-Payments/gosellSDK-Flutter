@@ -45,7 +45,7 @@ class _MyAppState extends State<MyApp> {
         bundleId: Platform.isAndroid ? "ANDROIID-PACKAGE-NAME" : "iOS-BUNDLE-ID",
         productionSecreteKey: Platform.isAndroid ? "Android-Live-Key" : "iOS-Live-Key",
         sandBoxsecretKey: Platform.isAndroid ? "Android-SANDBOX-KEY" : "iOS-SANDBOX-KEY",
-        lang: "en");
+        lang: "ar");
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -117,7 +117,7 @@ class _MyAppState extends State<MyApp> {
           // pass the card holder name to the SDK
           cardHolderName: "Card Holder NAME",
           // disable changing the card holder name by the user
-          allowsToEditCardHolderName: false,
+          allowsToEditCardHolderName: true,
           // select payments you need to show [Default is all, and you can choose between WEB-CARD-APPLEPAY ]
           paymentType: PaymentType.ALL,
           // Transaction mode
