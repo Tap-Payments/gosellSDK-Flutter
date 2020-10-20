@@ -1,3 +1,10 @@
+## 2.0.0 - 2020-10-20
+
+- Update Flutter version  >>> Flutter 1.22.1 • channel stable • https://github.com/flutter/flutter.git
+- Change to the new flutter plugin scheme 
+- Fix AR for Android
+
+
 ## 1.3.1 - 2020-08-26
 
 - Fix iOS issue in case of customer details are empty
