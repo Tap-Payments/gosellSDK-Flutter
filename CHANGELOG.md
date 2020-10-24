@@ -1,10 +1,16 @@
-## 2.0.0 - 2020-10-20
-
+## 2.0.1 - 2020-10-24
+ # Works with platform 12+
 - Update Flutter version  >>> Flutter 1.22.1 • channel stable • https://github.com/flutter/flutter.git
 - Change to the new flutter plugin scheme 
 - Fix AR for Android
-
-
+  
+  
+## 1.3.2 - 2020-10-19
+ # Works with platform prior to 12
+- Update Flutter version  >>> Flutter 1.22.1 • channel stable • https://github.com/flutter/flutter.git
+- Change to the new flutter plugin scheme 
+- Fix AR for Android
+ 
 ## 1.3.1 - 2020-08-26
 
 - Fix iOS issue in case of customer details are empty
