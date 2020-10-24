@@ -33,6 +33,7 @@ To use the SDK the following requirements must be met:
 1. **Visual Studio - InteliJ Idea**
 2. **Dart 2.7.1** or newer
 3. **Flutter: >=1.10.0** or newer
+4. **XCodePlatform 12+**
 
 <a name="installation"></a>
 
@@ -46,7 +47,7 @@ To use the SDK the following requirements must be met:
 
 ```dart
  dependencies:
-     go_sell_sdk_flutter: ^2.0.0
+     go_sell_sdk_flutter: ^2.0.1
 ```
 
 ---
