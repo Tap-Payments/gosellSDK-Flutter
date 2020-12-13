@@ -1,3 +1,7 @@
+## 2.0.2 - 2020-12-13
+
+- Update iOS SDK 2.2.41.
+
 ## 2.0.0 - 2020-10-20
 
 - Update Flutter version  >>> Flutter 1.22.1 • channel stable • https://github.com/flutter/flutter.git
