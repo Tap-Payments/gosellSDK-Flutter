@@ -28,6 +28,11 @@ android {
     defaultConfig {
         minSdkVersion 17
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'proguard-rules.pro'
+//        ndk {
+//            abiFilters "armeabi-v7a"
+//            abiFilters "armeabi-v7a", "armeabi", "mips", 'mips64', "arm64-v8a", "x86_64", "x86"
+//        }
     }
     lintOptions {
         disable 'InvalidPackage'
@@ -36,8 +41,13 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles 'proguard-rules.pro'
+             proguardFiles 'proguard-rules.pro'
+            
         }
+
+//        customDebugType {
+//            debuggable true
+//        }
     }
 
     compileOptions {
