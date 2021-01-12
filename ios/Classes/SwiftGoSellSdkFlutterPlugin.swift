@@ -70,7 +70,19 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
               return try Customer.init(identifier: customerIdentifier)
             } else {
                 if let customerDictionary = customerDictionary as? [String: String] {
-                    return try Customer.init(emailAddress: EmailAddress(emailAddressString: customerDictionary["email"] ?? ""), phoneNumber: PhoneNumber(isdNumber: customerDictionary["isdNumber"] ?? "", phoneNumber: customerDictionary["number"] ?? ""), firstName: customerDictionary["first_name"] ?? "", middleName: customerDictionary["middle_name"] ?? "", lastName: customerDictionary["last_name"] ?? "")
+                    
+                    var email: EmailAddress?
+                    var phoneNumber: PhoneNumber?
+                    
+                    if let emailString = customerDictionary["email"], !emailString.isEmpty {
+                        email = try EmailAddress(emailAddressString: emailString)
+                    }
+                    
+                    if let isdNumberString = customerDictionary["isdNumber"], let phoneString = customerDictionary["number"], !isdNumberString.isEmpty, !phoneString.isEmpty {
+                        phoneNumber = try PhoneNumber(isdNumber: isdNumberString, phoneNumber: phoneString)
+                    }
+                    
+                    return try Customer.init(emailAddress: email, phoneNumber: phoneNumber, firstName: customerDictionary["first_name"] ?? "", middleName: customerDictionary["middle_name"] ?? "", lastName: customerDictionary["last_name"] ?? "")
                 } else {
                     throw NSError()
                 }
