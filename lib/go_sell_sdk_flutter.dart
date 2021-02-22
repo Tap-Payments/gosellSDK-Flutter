@@ -197,4 +197,4 @@ class GoSellSdkFlutter {
 
 enum TransactionMode { PURCHASE, AUTHORIZE_CAPTURE, SAVE_CARD, TOKENIZE_CARD }
 enum SDKMode { Sandbox, Production }
-enum PaymentType { ALL, CARD, WEB, APPLE_PAY }
+enum PaymentType { ALL, CARD, WEB, APPLE_PAY, DEVICE }

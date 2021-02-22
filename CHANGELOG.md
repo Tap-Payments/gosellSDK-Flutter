@@ -1,3 +1,12 @@
+## 2.0.4 - 2021-02-22
+
+- Allow to set payment type as ApplePay only.
+- Update iOS SDK 2.2.45.
+
+## 2.0.3 - 2021-01-12
+
+- Allow new customer to be initialized using either Email or (Phone Number and IsdNumber).
+
 ## 2.0.2 - 2020-12-13
 
 - Update iOS SDK 2.2.41.

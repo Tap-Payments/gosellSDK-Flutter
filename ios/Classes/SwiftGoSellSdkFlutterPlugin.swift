@@ -324,7 +324,7 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
     
     public var paymentType: PaymentType {
       if let paymentTypeString:String = argsSessionParameters?["paymentType"] as? String {
-        let paymentTypeComponents: [String] = paymentTypeString.components(separatedBy: ".")
+        let paymentTypeComponents: [String] = paymentTypeString.lowercased().components(separatedBy: ".")
         if paymentTypeComponents.count == 2 {
         do {
             let data = try JSONEncoder().encode(paymentTypeComponents[1])
