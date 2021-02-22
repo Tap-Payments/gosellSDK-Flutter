@@ -19,8 +19,9 @@ Original SDKS
 3. [Usage](#usage)
    1. [Configure Your App](#configure_your_app)
    2. [Configure SDK Session](#configure_sdk_session)
-   3. [Use Tap Pay Button](#tap_pay_button)
-   4. [Handle SDK Result](#handle_sdk_result)
+   3. [Configure Payment Type](#configure_payment_type)
+   4. [Use Tap Pay Button](#tap_pay_button)
+   5. [Handle SDK Result](#handle_sdk_result)
 
 <a href="requirements"></a>
 
@@ -72,7 +73,7 @@ GoSellSdkFlutter.configureApp(
 
 ---
 
-<a name="configure_your_app"></a>
+<a name="configure_sdk_session"></a>
 **Configure SDK Session Example**
 
 ```dart
@@ -202,6 +203,19 @@ Future<void> setupSDKSession() async {
     } on PlatformException {
     }
 ```
+---
+
+<a name="configure_payment_type"></a>
+**Configure Payment Type**
+- Set the payment type inside the [sessionConfigurations](#configure_sdk_session)
+```dart
+paymentType: PaymentType.ALL
+```
+| Payment Type  | Description |
+| ------------- | ------------- |
+| ALL  | Shows all the available payment methods  |
+| CARD  | Shows only cards payment methods  |
+| DEVICE  | Shows payment methods depending on the device, for iOS it shows ApplePay only  |
 
 ---
 
