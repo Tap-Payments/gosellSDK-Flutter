@@ -381,6 +381,16 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDelegate {
             resultMap["card_exp_year"] = card.expirationYear
         }
         
+        resultMap["customer_id"] = charge.customer.identifier ?? ""
+        resultMap["customer_first_name"] = charge.customer.firstName ?? ""
+        resultMap["customer_middle_name"] = charge.customer.middleName ?? ""
+        resultMap["customer_last_name"] = charge.customer.lastName ?? ""
+        
+        if let emailAddress = charge.customer.emailAddress {
+            resultMap["customer_email"] = emailAddress.value
+        }
+            
+        
         if let acquirer = charge.acquirer {
             if let response = acquirer.response {
                 resultMap["acquirer_id"] = ""
