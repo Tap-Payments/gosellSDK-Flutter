@@ -1,3 +1,7 @@
+## 2.0.5 - 2021-03-17
+
+- Added customer details in the results
+
 ## 2.0.4 - 2021-02-22
 
 - Allow to set payment type as ApplePay only.
