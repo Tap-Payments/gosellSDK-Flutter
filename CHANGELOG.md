@@ -1,3 +1,7 @@
+## 2.0.6 - 2021-04-22
+
+- Fix Back button click Crash in android
+
 ## 2.0.5 - 2021-03-17
 
 - Added customer details in the results
