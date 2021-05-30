@@ -1,3 +1,7 @@
+## 2.0.7 - 2021-05-30
+
+- Added ALL for allowedCardTypes to allow both Credit and Debit cards.
+
 ## 2.0.6 - 2021-04-22
 
 - Fix Back button click Crash in android
