@@ -191,7 +191,7 @@ Future<void> setupSDKSession() async {
         // merchant id
         merchantID: "",
         // Allowed cards
-        allowedCadTypes: CardType.CREDIT,
+        allowedCadTypes: CardType.ALL,
         applePayMerchantID: "applePayMerchantID",
         allowsToSaveSameCardMoreThanOnce: false,
         // pass the card holder name to the SDK
