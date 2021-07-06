@@ -65,30 +65,46 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
         if let data = customerString.data(using: .utf8) {
           do {
             let customerDictionary:[String:Any] = try JSONSerialization.jsonObject(with: data, options: []) as! [String : Any]
+            
+            //Checking if the customer ID is already given
             if let customerIdentifier = customerDictionary["customerId"] as? String, !customerIdentifier.isEmpty,
                 customerIdentifier.lowercased() != "null",customerIdentifier.lowercased() != "nil" {
               return try Customer.init(identifier: customerIdentifier)
             } else {
-                if let customerDictionary = customerDictionary as? [String: String] {
-                    
-                    var email: EmailAddress?
-                    var phoneNumber: PhoneNumber?
-                    
-                    if let emailString = customerDictionary["email"], !emailString.isEmpty {
-                        email = try EmailAddress(emailAddressString: emailString)
-                    }
-                    
-                    if let isdNumberString = customerDictionary["isdNumber"], let phoneString = customerDictionary["number"], !isdNumberString.isEmpty, !phoneString.isEmpty {
-                        phoneNumber = try PhoneNumber(isdNumber: isdNumberString, phoneNumber: phoneString)
-                    }
-                    
-                    return try Customer.init(emailAddress: email, phoneNumber: phoneNumber, firstName: customerDictionary["first_name"] ?? "", middleName: customerDictionary["middle_name"] ?? "", lastName: customerDictionary["last_name"] ?? "")
-                } else {
-                    throw NSError()
+                
+                //customerId == nil in this case
+                
+                var email: EmailAddress?
+                var phoneNumber: PhoneNumber?
+                
+                if let emailString = customerDictionary["email"] as? String, !emailString.isEmpty {
+                    email = try EmailAddress(emailAddressString: emailString)
                 }
+                
+                if let isdNumberString = customerDictionary["isdNumber"] as? String, !isdNumberString.isEmpty,
+                   let phoneString = customerDictionary["number"] as? String, !phoneString.isEmpty {
+                    phoneNumber = try PhoneNumber(isdNumber: isdNumberString, phoneNumber: phoneString)
+                }
+                
+                return try Customer.init(
+                    emailAddress: email,
+                    phoneNumber: phoneNumber,
+                    firstName: (customerDictionary["first_name"] as? String) ?? "",
+                    middleName: (customerDictionary["middle_name"] as? String) ?? "",
+                    lastName: (customerDictionary["last_name"] as? String) ?? ""
+                )
+                
             }
           } catch {
             print(error.localizedDescription)
+            
+            var resultMap = [String: Any]()
+
+            resultMap["sdk_result"] = "FAILED"
+             
+            if let flutterResult = flutterResult {
+                flutterResult(resultMap)
+            }
           }
         }
       }
