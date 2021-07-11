@@ -224,10 +224,8 @@ public class GoSellSdkFlutterPlugin implements MethodChannel.MethodCallHandler, 
         activityBinding.removeActivityResultListener(delegate);
         activityBinding.removeRequestPermissionsResultListener(delegate);
         activityBinding = null;
-        if(lifecycle!=null)
-        {
+        if(lifecycle != null)
             lifecycle.removeObserver(observer);
-        }
         lifecycle = null;
         delegate = null;
         channel.setMethodCallHandler(null);

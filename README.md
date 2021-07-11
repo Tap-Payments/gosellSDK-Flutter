@@ -49,7 +49,7 @@ To use the SDK the following requirements must be met:
 
 ```dart
  dependencies:
-     go_sell_sdk_flutter: ^2.0.5
+     go_sell_sdk_flutter: ^2.0.6
 ```
 
 ---
@@ -191,7 +191,7 @@ Future<void> setupSDKSession() async {
         // merchant id
         merchantID: "",
         // Allowed cards
-        allowedCadTypes: CardType.CREDIT,
+        allowedCadTypes: CardType.ALL,
         applePayMerchantID: "applePayMerchantID",
         allowsToSaveSameCardMoreThanOnce: false,
         // pass the card holder name to the SDK
