@@ -65,30 +65,46 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
         if let data = customerString.data(using: .utf8) {
           do {
             let customerDictionary:[String:Any] = try JSONSerialization.jsonObject(with: data, options: []) as! [String : Any]
+            
+            //Checking if the customer ID is already given
             if let customerIdentifier = customerDictionary["customerId"] as? String, !customerIdentifier.isEmpty,
                 customerIdentifier.lowercased() != "null",customerIdentifier.lowercased() != "nil" {
               return try Customer.init(identifier: customerIdentifier)
             } else {
-                if let customerDictionary = customerDictionary as? [String: String] {
-                    
-                    var email: EmailAddress?
-                    var phoneNumber: PhoneNumber?
-                    
-                    if let emailString = customerDictionary["email"], !emailString.isEmpty {
-                        email = try EmailAddress(emailAddressString: emailString)
-                    }
-                    
-                    if let isdNumberString = customerDictionary["isdNumber"], let phoneString = customerDictionary["number"], !isdNumberString.isEmpty, !phoneString.isEmpty {
-                        phoneNumber = try PhoneNumber(isdNumber: isdNumberString, phoneNumber: phoneString)
-                    }
-                    
-                    return try Customer.init(emailAddress: email, phoneNumber: phoneNumber, firstName: customerDictionary["first_name"] ?? "", middleName: customerDictionary["middle_name"] ?? "", lastName: customerDictionary["last_name"] ?? "")
-                } else {
-                    throw NSError()
+                
+                //customerId == nil in this case
+                
+                var email: EmailAddress?
+                var phoneNumber: PhoneNumber?
+                
+                if let emailString = customerDictionary["email"] as? String, !emailString.isEmpty {
+                    email = try EmailAddress(emailAddressString: emailString)
                 }
+                
+                if let isdNumberString = customerDictionary["isdNumber"] as? String, !isdNumberString.isEmpty,
+                   let phoneString = customerDictionary["number"] as? String, !phoneString.isEmpty {
+                    phoneNumber = try PhoneNumber(isdNumber: isdNumberString, phoneNumber: phoneString)
+                }
+                
+                return try Customer.init(
+                    emailAddress: email,
+                    phoneNumber: phoneNumber,
+                    firstName: (customerDictionary["first_name"] as? String) ?? "",
+                    middleName: (customerDictionary["middle_name"] as? String) ?? "",
+                    lastName: (customerDictionary["last_name"] as? String) ?? ""
+                )
+                
             }
           } catch {
             print(error.localizedDescription)
+            
+            var resultMap = [String: Any]()
+
+            resultMap["sdk_result"] = "FAILED"
+             
+            if let flutterResult = flutterResult {
+                flutterResult(resultMap)
+            }
           }
         }
       }
@@ -490,6 +506,95 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDelegate {
       resultMap["sdk_error_message"] = error.description
       resultMap["sdk_error_description"] = error.description
 //      result.success(resultMap)
+        if let flutterResult = flutterResult {
+            flutterResult(resultMap)
+        }
+    }
+    
+    public func authorizationSucceed(_ authorize: Authorize, on session: SessionProtocol) {
+          var resultMap = [String: Any]()
+//          resultMap["status"] = authorize.status.textValue
+          resultMap["charge_id"] = authorize.identifier
+//          resultMap["description"] = authorize.description
+//          resultMap["message"] = authorize.response?.message
+//
+//          if let card = authorize.card {
+//              resultMap["card_first_six"] = card.firstSixDigits
+//              resultMap["card_last_four"] = card.lastFourDigits
+//              resultMap["card_object"] = card.object
+//  //            let cardBrand = CardBrand(rawValue: card.brand.rawValue)
+//              resultMap["card_brand"] = card.brand.textValue
+//              resultMap["card_exp_month"] = card.expirationMonth
+//              resultMap["card_exp_year"] = card.expirationYear
+//          }
+//
+//          resultMap["customer_id"] = authorize.customer.identifier ?? ""
+//          resultMap["customer_first_name"] = authorize.customer.firstName ?? ""
+//          resultMap["customer_middle_name"] = authorize.customer.middleName ?? ""
+//          resultMap["customer_last_name"] = authorize.customer.lastName ?? ""
+//
+//          if let emailAddress = authorize.customer.emailAddress {
+//              resultMap["customer_email"] = emailAddress.value
+//          }
+//
+//
+//          if let acquirer = authorize.acquirer {
+//              if let response = acquirer.response {
+//                  resultMap["acquirer_id"] = ""
+//                  resultMap["acquirer_response_code"] = response.code
+//                  resultMap["acquirer_response_message"] = response.message
+//              }
+//
+//          }
+//
+//          resultMap["source_id"] = authorize.source.identifier
+//          resultMap["source_channel"] = authorize.source.channel.textValue
+//          resultMap["source_object"] = authorize.source.object.textValue
+//          resultMap["source_payment_type"] = authorize.source.paymentType.textValue
+//
+          resultMap["sdk_result"] = "SUCCESS"
+          resultMap["trx_mode"] = "AUTHORIZE"
+          
+        if let flutterResult = flutterResult {
+            flutterResult(resultMap)
+        }
+    }
+    
+    public func authorizationFailed(with authorize: Authorize?, error: TapSDKError?, on session: SessionProtocol) {
+        var resultMap = [String: Any]()
+//        if let authorize = authorize {
+//            resultMap["status"] = authorize.status.textValue
+//            resultMap["charge_id"] = authorize.identifier
+//            resultMap["description"] = authorize.description
+//            resultMap["message"] = authorize.response?.message
+//
+//            if let card = authorize.card {
+//                resultMap["card_first_six"] = card.firstSixDigits
+//                resultMap["card_last_four"] = card.lastFourDigits
+//                resultMap["card_object"] = card.object
+//                resultMap["card_brand"] = card.brand.textValue
+//                resultMap["card_exp_month"] = card.expirationMonth
+//                resultMap["card_exp_year"] = card.expirationYear
+//            }
+//
+//            if let acquirer = authorize.acquirer {
+//                if let response = acquirer.response {
+//                    resultMap["acquirer_id"] = ""
+//                    resultMap["acquirer_response_code"] = response.code
+//                    resultMap["acquirer_response_message"] = response.message
+//                }
+//
+//            }
+//
+//            resultMap["source_id"] = authorize.source.identifier
+//            resultMap["source_channel"] = authorize.source.channel.textValue
+//            resultMap["source_object"] = authorize.source.object.textValue
+//            resultMap["source_payment_type"] = authorize.source.paymentType.textValue
+//        }
+                
+        resultMap["sdk_result"] = "FAILED"
+        resultMap["trx_mode"] = "AUTHORIZE"
+        
         if let flutterResult = flutterResult {
             flutterResult(resultMap)
         }

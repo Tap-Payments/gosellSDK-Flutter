@@ -7,14 +7,7 @@ class Reference {
   String order;
   String gosellID;
 
-  Reference(
-      {this.acquirer,
-      this.gateway,
-      this.order,
-      this.payment,
-      this.track,
-      this.transaction,
-      this.gosellID});
+  Reference({this.acquirer, this.gateway, this.order, this.payment, this.track, this.transaction, this.gosellID});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -56,21 +49,23 @@ class Customer {
   String customerId;
   String metaData;
 
-  Customer(
-      {this.isdNumber,
-      this.number,
-      this.customerId,
-      this.email,
-      this.firstName,
-      this.middleName,
-      this.lastName,
-      this.metaData});
+  Customer({
+    this.isdNumber,
+    this.number,
+    this.customerId,
+    this.email,
+    this.firstName,
+    this.middleName,
+    this.lastName,
+    this.metaData,
+  });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (data['customerId'] != null) data['customerId'] = this.customerId;
+
     data['isdNumber'] = this.isdNumber;
     data['number'] = this.number;
-    data['customerId'] = this.customerId;
     data['first_name'] = this.firstName;
     data['middle_name'] = this.middleName;
     data['last_name'] = this.lastName;
@@ -97,8 +92,7 @@ class Destinations {
     data['count'] = this.count;
 
     if (this.destinationlist != null) {
-      data['destination'] =
-          this.destinationlist.map((v) => v.toJson()).toList();
+      data['destination'] = this.destinationlist.map((v) => v.toJson()).toList();
     }
 
     return data;
@@ -112,8 +106,7 @@ class Destination {
   String description;
   String reference;
 
-  Destination(
-      {this.id, this.amount, this.currency, this.description, this.reference});
+  Destination({this.id, this.amount, this.currency, this.description, this.reference});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -136,13 +129,7 @@ class PaymentItem {
   int totalAmount;
 
   PaymentItem(
-      {this.amountPerUnit,
-      this.description,
-      this.discount,
-      this.name,
-      this.quantity,
-      this.taxes,
-      this.totalAmount});
+      {this.amountPerUnit, this.description, this.discount, this.name, this.quantity, this.taxes, this.totalAmount});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
