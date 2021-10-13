@@ -127,13 +127,13 @@ class Destination {
 }
 
 class PaymentItem {
-  int amountPerUnit;
+  double amountPerUnit;
   String description;
   Map<String, Object> discount;
   String name;
   Quantity quantity;
   List<Tax> taxes;
-  int totalAmount;
+  double totalAmount;
 
   PaymentItem(
       {this.amountPerUnit,
