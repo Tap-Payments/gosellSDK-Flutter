@@ -254,4 +254,4 @@ class AuthorizeAction {
 
 enum AuthorizeActionType { CAPTURE, VOID }
 
-enum CardType { DEBIT, CREDIT }
+enum CardType { DEBIT, CREDIT , ALL}
