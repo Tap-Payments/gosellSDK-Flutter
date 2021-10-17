@@ -261,6 +261,25 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
       }
       return nil
     }
+
+
+    public var paymentMetadata: Metadata? {
+        if let paymentMetadataString:String = argsSessionParameters?["paymentMetadata"] as? String {
+          if let data = paymentMetadataString.data(using: .utf8) {
+            do {
+              let decoder = JSONDecoder()
+              let paymentMetadataObject:Metadata = try decoder.decode(Metadata.self, from: data)
+              return paymentMetadataObject
+            } catch {
+              print(error.localizedDescription)
+            }
+          }
+        }
+        return nil
+  }
+
+
+
     public var receiptSettings: Receipt? {
       if let receiptSettingsString:String = argsSessionParameters?["receiptSettings"] as? String {
         if let data = receiptSettingsString.data(using: .utf8) {

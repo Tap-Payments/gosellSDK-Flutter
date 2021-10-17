@@ -89,7 +89,7 @@ class _MyAppState extends State<MyApp> {
           // Payment description
           paymentDescription: "paymentDescription",
           // Payment Metadata
-          paymentMetaData: {
+          paymentMetadata: {
             "a": "a meta",
             "b": "b meta",
           },
