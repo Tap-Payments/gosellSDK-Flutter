@@ -195,7 +195,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         sdkSession.setPaymentDescription(sessionParameters.get("paymentDescription").toString()); // ** Optional **
 
         // Payment Extra Info
-        sdkSession.setPaymentMetadata(DeserializationUtil.getMetaData(sessionParameters.get("paymenMetaData")));// **
+        sdkSession.setPaymentMetadata(DeserializationUtil.getMetaData(sessionParameters.get("paymentMetadata")));// **
                                                                                                                 // Optional
                                                                                                                 // **
                                                                                                                 // you
