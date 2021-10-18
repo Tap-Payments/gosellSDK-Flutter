@@ -79,7 +79,7 @@ class GoSellSdkFlutter {
       "shipping": jsonEncode(shippings),
       "postURL": postURL,
       "paymentDescription": paymentDescription,
-      "paymenMetaData": jsonEncode(paymentMetaData),
+      "paymentMetaData": jsonEncode(paymentMetaData),
       "paymentReference": jsonEncode(paymentReference),
       "paymentStatementDescriptor": paymentStatementDescriptor,
       "isUserAllowedToSaveCard": isUserAllowedToSaveCard,

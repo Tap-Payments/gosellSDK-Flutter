@@ -127,7 +127,7 @@ class Destination {
 }
 
 class PaymentItem {
-  int amountPerUnit;
+  double amountPerUnit;
   String description;
   Map<String, Object> discount;
   String name;
