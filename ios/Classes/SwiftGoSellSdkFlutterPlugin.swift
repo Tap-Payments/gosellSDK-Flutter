@@ -359,6 +359,35 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
       }
       return [CardType(cardType: .Debit), CardType(cardType: .Credit)]
     }
+    
+    public var paymentMetadata: Metadata? {
+        
+        if let paymentMetaDataString = argsSessionParameters?["paymentMetaData"] as? String, let data = paymentMetaDataString.data(using: .utf8) {
+            
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let paymentMetaDataValue:Metadata = try decoder.decode(Metadata.self, from: data)
+                    return paymentMetaDataValue
+                  } catch {
+                    print(error.localizedDescription)
+                    return nil
+                  }
+            
+        }
+        
+        
+        if let paymentMetaDataString = argsSessionParameters?["paymentMetaData"] as? [String: Any] {
+            
+            let converted = paymentMetaDataString.compactMapValues { $0 as? String }
+            return converted
+              
+        }
+        
+        return nil
+       
+
+    }
 }
 
 extension SwiftGoSellSdkFlutterPlugin: SessionDelegate {

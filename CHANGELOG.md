@@ -1,3 +1,10 @@
+## 2.0.9 - 2021-10-18
+
+- Fixed reading payment meta data issue in iOS.
+## 2.0.8 - 2021-09-26
+
+- Accepting amount per unit as double.
+
 ## 2.0.7 - 2021-05-30
 
 - Added ALL for allowedCardTypes to allow both Credit and Debit cards.

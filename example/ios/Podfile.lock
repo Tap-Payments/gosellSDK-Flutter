@@ -25,9 +25,9 @@ PODS:
     - TapResponderChainInputViewV2
     - TapSearchViewV2
     - TapVisualEffectViewV2
-  - SwiftyRSA (1.6.0):
-    - SwiftyRSA/ObjC (= 1.6.0)
-  - SwiftyRSA/ObjC (1.6.0)
+  - SwiftyRSA (1.7.0):
+    - SwiftyRSA/ObjC (= 1.7.0)
+  - SwiftyRSA/ObjC (1.7.0)
   - TapAdditionsKitV2 (0.0.8):
     - TapSwiftFixesV2
   - TapApplicationV2 (0.0.2):
@@ -96,10 +96,10 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   CardIODynamic: 4a0d2d0e7b82993ceca67491564934c3475fbe79
   EditableTextInsetsTextFieldV2: 09a945c086dbcef688fe4fbb8302b408c146c391
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   go_sell_sdk_flutter: 1efbbfe466527d12f23a4934d8c1c81111e16084
   goSellSDK: 162580e64573cccd61fd38c1f5e220db42df9519
-  SwiftyRSA: 3b9c9179744217951facc6a3e9ae8d8c97061ffa
+  SwiftyRSA: 8c6dd1ea7db1b8dc4fb517a202f88bb1354bc2c6
   TapAdditionsKitV2: ba369802e9575c3475ce6d5af228cf60c68edfc9
   TapApplicationV2: aee3d046c4272778431e1535de6cab34e1269f8c
   TapBundleLocalization: c7d7c14850223b0ef447aca1269d7308f78d54f9
