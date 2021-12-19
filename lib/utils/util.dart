@@ -1,5 +1,7 @@
+
+
 mixin Util{
-static bool isNumeric(String s) {
+static bool isNumeric(String? s) {
     
     if (s == null || s.contains('-')) {
       return false;

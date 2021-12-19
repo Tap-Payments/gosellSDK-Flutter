@@ -34,7 +34,7 @@ PODS:
     - TapAdditionsKitV2
   - TapBundleLocalization (1.0.3)
   - TapCardValidator (1.2.6)
-  - TapEditableViewV2 (0.0.2):
+  - TapEditableViewV2 (1.0.1):
     - TapAdditionsKitV2
   - TapFontsKitV2 (0.0.3):
     - TapAdditionsKitV2
@@ -104,7 +104,7 @@ SPEC CHECKSUMS:
   TapApplicationV2: aee3d046c4272778431e1535de6cab34e1269f8c
   TapBundleLocalization: c7d7c14850223b0ef447aca1269d7308f78d54f9
   TapCardValidator: 8d43b6e8a1a78276c03116a5b625041adeffeb0d
-  TapEditableViewV2: 8f817337714ee2e89199a02aa2feaad009865ff2
+  TapEditableViewV2: 00370b2b6c967c382fa944be8c04156d584d630b
   TapFontsKitV2: f2a5b342c18784dd2068c1885313057780c49a3d
   TapGLKitV2: d3ef8bc5d1655a1d46e1696cfdcf19ae6e6d4d35
   TapKeychain: 143aa70bb2d1b094e0298e944660264034c79849
@@ -117,4 +117,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2
