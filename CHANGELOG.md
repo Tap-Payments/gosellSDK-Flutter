@@ -1,3 +1,6 @@
+## 2.1.0 - 2021-12-23
+
+- Supporting null-safety.
 ## 2.0.9 - 2021-10-18
 
 - Fixed reading payment meta data issue in iOS.
