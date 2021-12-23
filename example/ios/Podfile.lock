@@ -5,10 +5,10 @@ PODS:
   - Flutter (1.0.0)
   - go_sell_sdk_flutter (0.0.1):
     - Flutter
-    - goSellSDK (= 2.2.45)
-  - goSellSDK (2.2.45):
-    - goSellSDK/Core (= 2.2.45)
-  - goSellSDK/Core (2.2.45):
+    - goSellSDK (= 2.3.1)
+  - goSellSDK (2.3.1):
+    - goSellSDK/Core (= 2.3.1)
+  - goSellSDK/Core (2.3.1):
     - CardIODynamic
     - EditableTextInsetsTextFieldV2
     - SwiftyRSA
@@ -34,7 +34,7 @@ PODS:
     - TapAdditionsKitV2
   - TapBundleLocalization (1.0.3)
   - TapCardValidator (1.2.6)
-  - TapEditableViewV2 (0.0.2):
+  - TapEditableViewV2 (1.0.1):
     - TapAdditionsKitV2
   - TapFontsKitV2 (0.0.3):
     - TapAdditionsKitV2
@@ -96,15 +96,15 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   CardIODynamic: 4a0d2d0e7b82993ceca67491564934c3475fbe79
   EditableTextInsetsTextFieldV2: 09a945c086dbcef688fe4fbb8302b408c146c391
-  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
-  go_sell_sdk_flutter: 1efbbfe466527d12f23a4934d8c1c81111e16084
-  goSellSDK: 162580e64573cccd61fd38c1f5e220db42df9519
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  go_sell_sdk_flutter: f1daa866708568660ea68f3288d4cb4e6244dbb9
+  goSellSDK: 5e3fe6795b2cf8a2c4abc73a59c736abc75a93f7
   SwiftyRSA: 8c6dd1ea7db1b8dc4fb517a202f88bb1354bc2c6
   TapAdditionsKitV2: ba369802e9575c3475ce6d5af228cf60c68edfc9
   TapApplicationV2: aee3d046c4272778431e1535de6cab34e1269f8c
   TapBundleLocalization: c7d7c14850223b0ef447aca1269d7308f78d54f9
   TapCardValidator: 8d43b6e8a1a78276c03116a5b625041adeffeb0d
-  TapEditableViewV2: 8f817337714ee2e89199a02aa2feaad009865ff2
+  TapEditableViewV2: 00370b2b6c967c382fa944be8c04156d584d630b
   TapFontsKitV2: f2a5b342c18784dd2068c1885313057780c49a3d
   TapGLKitV2: d3ef8bc5d1655a1d46e1696cfdcf19ae6e6d4d35
   TapKeychain: 143aa70bb2d1b094e0298e944660264034c79849
@@ -115,6 +115,6 @@ SPEC CHECKSUMS:
   TapSwiftFixesV2: a8623a7273c6790b9754ec7e272e96fce7d3a800
   TapVisualEffectViewV2: b612ffee4d05004c449d433fe45aba9563c8a508
 
-PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d
+PODFILE CHECKSUM: 7a1d0292dd9975aab49d6649cb35cc0766ff3c34
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2
