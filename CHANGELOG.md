@@ -1,3 +1,6 @@
+## 2.1.1 - 2022-01-11
+
+- Upgraded android sdk to 3.14.1
 ## 2.1.0 - 2021-12-23
 
 - Supporting null-safety.

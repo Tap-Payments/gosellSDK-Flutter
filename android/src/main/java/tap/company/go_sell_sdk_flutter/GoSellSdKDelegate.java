@@ -2,10 +2,12 @@ package tap.company.go_sell_sdk_flutter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -399,6 +401,11 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
 
     @Override
     public void cardTokenizedSuccessfully(@NonNull Token token) {
+        sendTokenResult(token, "SUCCESS");
+    }
+
+    @Override
+    public void cardTokenizedSuccessfully(@NonNull Token token, boolean saveCardEnabled) {
         sendTokenResult(token, "SUCCESS");
     }
 
