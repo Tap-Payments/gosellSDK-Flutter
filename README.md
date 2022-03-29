@@ -80,18 +80,18 @@ GoSellSdkFlutter.configureApp(
 Future<void> setupSDKSession() async {
     try {
     GoSellSdkFlutter.sessionConfigurations(
-        trxMode: TransactionMode.TOKENIZE_CARD,
+        trxMode: TransactionMode.PURCHASE,
         transactionCurrency: "kwd",
         amount: '100',
         customer: Customer(
-            customerId: "",
-            email: "h@tap.company",
-            isdNumber: "965",
-            number: "000000",
-            firstName: "Haitham",
-            middleName: "Mohammad",
-            lastName: "Elsheshtawy",
-            metaData: null),
+              customerId: "", // customer id is important to retrieve cards saved for this customer
+              email: "test@test.com",
+              isdNumber: "965",
+              number: "00000000",
+              firstName: "test",
+              middleName: "test",
+              lastName: "test",
+              metaData: null),
         paymentItems: <PaymentItem>[
             PaymentItem(
                 name: "item1",
