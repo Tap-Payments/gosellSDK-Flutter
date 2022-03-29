@@ -19,9 +19,10 @@ Original SDKS
 3. [Usage](#usage)
    1. [Configure Your App](#configure_your_app)
    2. [Configure SDK Session](#configure_sdk_session)
-   3. [Configure Payment Type](#configure_payment_type)
-   4. [Use Tap Pay Button](#tap_pay_button)
-   5. [Handle SDK Result](#handle_sdk_result)
+   3. [Transaction Modes](#transaction_modes)
+   4. [Configure Payment Type](#configure_payment_type)
+   5. [Use Tap Pay Button](#tap_pay_button)
+   6. [Handle SDK Result](#handle_sdk_result)
 
 <a href="requirements"></a>
 
@@ -203,6 +204,30 @@ Future<void> setupSDKSession() async {
     } on PlatformException {
     }
 ```
+---
+
+<a name="transaction_modes"></a>
+**Transaction Modes**
+
+``` dart 
+trxMode: TransactionMode.PURCHASE
+```
+
+
+You can set the transaction mode into one of the following modes:
+- **Purchase** 
+   - ``` dart TransactionMode.PURCHASE ```<br/>
+   > Normal customer charge.
+- **Authorize** 
+   - ``` dart TransactionMode.AUTHORIZE_CAPTURE ```<br/>
+   > Only authorization is happening. You should specify an action after successful authorization: either capture the amount or void the charge after specific period of time.
+- **Save Card** 
+   - ``` dart TransactionMode.SAVE_CARD ```<br/>
+   > Use this mode to save the card of the customer with Tap and use it later.
+- **Tokenize Card** 
+   - ``` dart TransactionMode.TOKENIZE_CARD ```<br/>
+   > Use this mode if you are willing to perform the charging/authorization manually. The purpose of this mode is only to collect and tokenize card information details of your customer if you don't have PCI compliance certificate but willing to process the payment manually using our services.
+
 ---
 
 <a name="configure_payment_type"></a>
