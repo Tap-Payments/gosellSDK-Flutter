@@ -1,7 +1,7 @@
 import Flutter
 import UIKit
 import goSellSDK
-import TapCardValidator
+import TapCardVlidatorKit_iOS
 
 public class SwiftGoSellSdkFlutterPlugin: NSObject, FlutterPlugin {
     let session = Session()
@@ -343,18 +343,10 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
       if let cardTypeString:String = argsSessionParameters?["allowedCadTypes"] as? String {
         let cardTypeComponents: [String] = cardTypeString.components(separatedBy: ".")
         if cardTypeComponents.count == 2 {
-          var cardType:cardTypes = .All
-          cardTypes.allCases.forEach{
-            if $0.description.lowercased() == cardTypeComponents[1].lowercased() {
-              cardType = $0
+            let cardType = CardType(cardTypeString: cardTypeComponents[1])
+            if !cardType.isEqual(CardType.init(cardType:.All)) {
+                return [cardType]
             }
-          }
-          if cardType == .All {
-            return [CardType(cardType: .Debit), CardType(cardType: .Credit)]
-          }else
-          {
-            return [CardType(cardType: cardType)]
-          }
         }
       }
       return [CardType(cardType: .Debit), CardType(cardType: .Credit)]
