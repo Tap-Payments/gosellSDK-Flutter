@@ -1,3 +1,6 @@
+## 2.1.2 - 2022-03-15
+
+- Upgraded iOS sdk to 2.3.6
 ## 2.1.1 - 2022-01-11
 
 - Upgraded android sdk to 3.14.1

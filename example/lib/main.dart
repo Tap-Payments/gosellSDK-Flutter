@@ -42,9 +42,9 @@ class _MyAppState extends State<MyApp> {
   // configure app key and bundle-id (You must get those keys from tap)
   Future<void> configureApp() async {
     GoSellSdkFlutter.configureApp(
-        bundleId: Platform.isAndroid ? "ANDROIID-PACKAGE-NAME" : "iOS-BUNDLE-ID",
-        productionSecreteKey: Platform.isAndroid ? "Android-Live-Key" : "iOS-Live-Key",
-        sandBoxsecretKey: Platform.isAndroid ? "Android-SANDBOX-KEY" : "iOS-SANDBOX-KEY",
+        productionSecreteKey: "sk_test_4l6mcOw9dKfj03koShCDA7LZ",
+        sandBoxsecretKey: "sk_test_4l6mcOw9dKfj03koShCDA7LZ",
+        bundleId: "com.farh.farhah",//"com.farhahh.farhah",
         lang: "ar");
   }
 
@@ -111,7 +111,7 @@ class _MyAppState extends State<MyApp> {
           // merchant id
           merchantID: "",
           // Allowed cards
-          allowedCadTypes: CardType.ALL,
+          allowedCadTypes: CardType.CREDIT,
           applePayMerchantID: "applePayMerchantID",
           allowsToSaveSameCardMoreThanOnce: false,
           // pass the card holder name to the SDK
