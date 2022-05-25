@@ -20,10 +20,11 @@ Original SDKS
    1. [Configure Your App](#configure_your_app)
    2. [Configure SDK Session](#configure_sdk_session)
    3. [Transaction Modes](#transaction_modes)
-   4. [Configure Payment Type](#configure_payment_type)
-   5. [Use Tap Pay Button](#tap_pay_button)
-   6. [Handle SDK Result](#handle_sdk_result)
-   7. [Apple Pay Setup](#apple_pay)
+   4. [Customer](#customer)
+   5. [Configure Payment Type](#configure_payment_type)
+   6. [Use Tap Pay Button](#tap_pay_button)
+   7. [Handle SDK Result](#handle_sdk_result)
+   8. [Apple Pay Setup](#apple_pay)
 
 <a href="requirements"></a>
 
@@ -228,6 +229,42 @@ You can set the transaction mode into one of the following modes:
 - **Tokenize Card** 
    - ``` dart TransactionMode.TOKENIZE_CARD ```<br/>
    > Use this mode if you are willing to perform the charging/authorization manually. The purpose of this mode is only to collect and tokenize card information details of your customer if you don't have PCI compliance certificate but willing to process the payment manually using our services.
+
+---
+
+<a name="customer"></a>
+
+ ###### Customer
+ 
+- New Customer (First time to pay using goSell SDK)
+``` dart
+Customer(
+  customerId: "",
+  email: "test@test.com",
+  isdNumber: "965",
+  number: "00000000",
+  firstName: "test",
+  middleName: "test",
+  lastName: "test",
+  metaData: null)
+```
+> After the first transaction success, you receive the customerId in the response. Save it to be used in the next transaction.
+- Existed Customer (paid before using goSell SDK)
+ You need to set the customerId only and you can see the customer saved cards if the user has.
+``` dart
+Customer(
+  customerId: "cus_smdnd3346nd3dks3jd9drd7d",
+  email: "",
+  isdNumber: "965",
+  number: "00000000",
+  firstName: "",
+  middleName: "",
+  lastName: "",
+  metaData: null)
+```
+
+> Please note that goSell SDK using the customerId only if it's not Empty ('').
+
 
 ---
 
