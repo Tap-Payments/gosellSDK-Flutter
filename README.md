@@ -23,6 +23,7 @@ Original SDKS
    4. [Configure Payment Type](#configure_payment_type)
    5. [Use Tap Pay Button](#tap_pay_button)
    6. [Handle SDK Result](#handle_sdk_result)
+   7. [Apple Pay Setup](#apple_pay)
 
 <a href="requirements"></a>
 
@@ -362,3 +363,12 @@ void extractSDKResultKeysAndValues() {
 ```
 
 ---
+
+<a name="apple_pay"></a>
+**Apple pay setup**
+
+Follow the steps shared in the following link to setup apple pay:<br/>
+https://github.com/Tap-Payments/goSellSDK-ios#apple-pay
+
+---
+
