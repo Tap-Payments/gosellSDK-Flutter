@@ -1,3 +1,6 @@
+## 2.1.3 - 2022-07-28
+
+- Upgraded iOS sdk to 2.3.13
 ## 2.1.2 - 2022-03-15
 
 - Upgraded iOS sdk to 2.3.6
