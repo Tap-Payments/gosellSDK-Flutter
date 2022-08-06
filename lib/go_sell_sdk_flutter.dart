@@ -1,3 +1,5 @@
+
+
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/services.dart';
@@ -27,12 +29,12 @@ class GoSellSdkFlutter {
     _channel.invokeMethod('terminate_session');
   }
 
-  static Map<String, dynamic> sdkConfigurations;
-  static Map<String, dynamic> appCredentials;
-  static Map<String, dynamic> sessionParameters;
+  static Map<String, dynamic> sdkConfigurations = {};
+  static Map<String, dynamic> appCredentials = {};
+  static Map<String, dynamic> sessionParameters = {};
 
   /// App configurations
-  static void configureApp({String productionSecreteKey, String sandBoxsecretKey, String bundleId, String lang}) {
+  static void configureApp({required String productionSecreteKey, required String sandBoxsecretKey, required String bundleId, required String lang}) {
     appCredentials = <String, dynamic>{
       "production_secrete_key": productionSecreteKey,
       "sandbox_secrete_key": sandBoxsecretKey,
@@ -43,31 +45,31 @@ class GoSellSdkFlutter {
 
   /// session configurations
   static void sessionConfigurations({
-    TransactionMode trxMode,
-    String transactionCurrency,
-    String amount,
-    Customer customer,
-    List<PaymentItem> paymentItems,
-    List<Tax> taxes,
-    List<Shipping> shippings,
-    String postURL,
-    String paymentDescription,
-    Map<String, String> paymentMetaData,
-    Reference paymentReference,
-    String paymentStatementDescriptor,
-    bool isUserAllowedToSaveCard,
-    bool isRequires3DSecure,
-    Receipt receipt,
-    AuthorizeAction authorizeAction,
-    Destinations destinations,
-    String merchantID,
-    CardType allowedCadTypes,
-    String applePayMerchantID,
-    SDKMode sdkMode,
-    PaymentType paymentType,
-    bool allowsToSaveSameCardMoreThanOnce,
-    String cardHolderName,
-    bool allowsToEditCardHolderName,
+    required TransactionMode trxMode,
+    required String transactionCurrency,
+    required String amount,
+    required Customer customer,
+    required List<PaymentItem> paymentItems,
+    required List<Tax> taxes,
+    required List<Shipping> shippings,
+    required String postURL,
+    required String paymentDescription,
+    required Map<String, String> paymentMetaData,
+    required Reference paymentReference,
+    required String paymentStatementDescriptor,
+    required bool isUserAllowedToSaveCard,
+    required bool isRequires3DSecure,
+    required Receipt receipt,
+    required AuthorizeAction authorizeAction,
+    Destinations? destinations,
+    required String merchantID,
+    required CardType allowedCadTypes,
+    String? applePayMerchantID,
+    required SDKMode sdkMode,
+    required PaymentType paymentType,
+    required bool allowsToSaveSameCardMoreThanOnce,
+    required String cardHolderName,
+    required bool allowsToEditCardHolderName,
   }) {
     sessionParameters = <String, dynamic>{
       'trxMode': trxMode.toString(),
@@ -79,7 +81,7 @@ class GoSellSdkFlutter {
       "shipping": jsonEncode(shippings),
       "postURL": postURL,
       "paymentDescription": paymentDescription,
-      "paymenMetaData": jsonEncode(paymentMetaData),
+      "paymentMetaData": jsonEncode(paymentMetaData),
       "paymentReference": jsonEncode(paymentReference),
       "paymentStatementDescriptor": paymentStatementDescriptor,
       "isUserAllowedToSaveCard": isUserAllowedToSaveCard,
@@ -187,7 +189,7 @@ class GoSellSdkFlutter {
     }
   }
 
-  static void _prepareConfigurationsErrorMap({String errorCode, String errorMsg, String errorDescription}) {
+  static void _prepareConfigurationsErrorMap({required String errorCode, required String errorMsg, required String errorDescription}) {
     _tapSDKResult.putIfAbsent('sdk_result', () => 'SDK_ERROR');
     _tapSDKResult.putIfAbsent('sdk_error_code', () => errorCode);
     _tapSDKResult.putIfAbsent('sdk_error_message', () => errorMsg);

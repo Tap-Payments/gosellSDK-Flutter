@@ -1,11 +1,13 @@
+
+
 class Reference {
-  String acquirer;
-  String gateway;
-  String payment;
-  String track;
-  String transaction;
-  String order;
-  String gosellID;
+  String? acquirer;
+  String? gateway;
+  String? payment;
+  String? track;
+  String? transaction;
+  String? order;
+  String? gosellID;
 
   Reference(
       {this.acquirer,
@@ -32,7 +34,7 @@ class Reference {
 class Receipt {
   bool sms;
   bool email;
-  String id;
+  String? id;
   Receipt(this.sms, this.email, {this.id});
 
   Map<String, dynamic> toJson() {
@@ -54,16 +56,16 @@ class Customer {
   String isdNumber;
   String number;
   String customerId;
-  String metaData;
+  String? metaData;
 
   Customer(
-      {this.isdNumber,
-      this.number,
-      this.customerId,
-      this.email,
-      this.firstName,
-      this.middleName,
-      this.lastName,
+      {required this.isdNumber,
+      required this.number,
+      required this.customerId,
+      required this.email,
+      required this.firstName,
+      required this.middleName,
+      required this.lastName,
       this.metaData});
 
   Map<String, dynamic> toJson() {
@@ -83,12 +85,12 @@ class Customer {
 }
 
 class Destinations {
-  double amount;
+  double? amount;
   String currency;
-  int count;
-  List<Destination> destinationlist;
+  int? count;
+  List<Destination>? destinationlist;
 
-  Destinations({this.amount, this.currency, this.count, this.destinationlist});
+  Destinations({this.amount, required this.currency, this.count, this.destinationlist});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -98,7 +100,7 @@ class Destinations {
 
     if (this.destinationlist != null) {
       data['destination'] =
-          this.destinationlist.map((v) => v.toJson()).toList();
+          this.destinationlist!.map((v) => v.toJson()).toList();
     }
 
     return data;
@@ -109,11 +111,11 @@ class Destination {
   String id;
   double amount;
   String currency;
-  String description;
-  String reference;
+  String? description;
+  String? reference;
 
   Destination(
-      {this.id, this.amount, this.currency, this.description, this.reference});
+      {required this.id, required this.amount, required this.currency, this.description, this.reference});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -135,14 +137,15 @@ class PaymentItem {
   List<Tax> taxes;
   double totalAmount;
 
+
   PaymentItem(
-      {this.amountPerUnit,
+      {required this.amountPerUnit,
       this.description,
       this.discount,
-      this.name,
-      this.quantity,
+      required this.name,
+      required this.quantity,
       this.taxes,
-      this.totalAmount});
+      required this.totalAmount});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -157,7 +160,7 @@ class PaymentItem {
     }
 
     if (this.taxes != null) {
-      data['taxes'] = this.taxes.map((v) => v.toJson()).toList();
+      data['taxes'] = this.taxes!.map((v) => v.toJson()).toList();
     }
 
     data['total_amount'] = this.totalAmount;
@@ -171,7 +174,7 @@ class Amount {
   double value;
   double maximumFee;
   double minimumFee;
-  Amount({this.type, this.value, this.maximumFee, this.minimumFee});
+  Amount({required this.type, required this.value, required this.maximumFee, required this.minimumFee});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -186,7 +189,7 @@ class Amount {
 class Quantity {
   int value;
 
-  Quantity({this.value});
+  Quantity({required this.value});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -197,10 +200,10 @@ class Quantity {
 
 class Tax {
   String name;
-  String description;
+  String? description;
   Amount amount;
 
-  Tax({this.amount, this.name, this.description});
+  Tax({required this.amount, required this.name, this.description});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -215,10 +218,10 @@ class Tax {
 
 class Shipping {
   String name;
-  String description;
+  String? description;
   double amount;
 
-  Shipping({this.name, this.description, this.amount});
+  Shipping({required this.name, this.description, required this.amount});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -233,7 +236,7 @@ class AuthorizeAction {
   AuthorizeActionType type;
   int timeInHours;
 
-  AuthorizeAction({this.type, this.timeInHours});
+  AuthorizeAction({required this.type, required this.timeInHours});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -255,3 +258,4 @@ class AuthorizeAction {
 enum AuthorizeActionType { CAPTURE, VOID }
 
 enum CardType { DEBIT, CREDIT , ALL}
+

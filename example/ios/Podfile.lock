@@ -5,17 +5,17 @@ PODS:
   - Flutter (1.0.0)
   - go_sell_sdk_flutter (0.0.1):
     - Flutter
-    - goSellSDK (= 2.2.45)
-  - goSellSDK (2.2.45):
-    - goSellSDK/Core (= 2.2.45)
-  - goSellSDK/Core (2.2.45):
+    - goSellSDK (= 2.3.6)
+  - goSellSDK (2.3.6):
+    - goSellSDK/Core (= 2.3.6)
+  - goSellSDK/Core (2.3.6):
     - CardIODynamic
     - EditableTextInsetsTextFieldV2
     - SwiftyRSA
     - TapAdditionsKitV2
     - TapApplicationV2
     - TapBundleLocalization
-    - TapCardValidator
+    - TapCardVlidatorKit-iOS
     - TapEditableViewV2
     - TapFontsKitV2
     - TapGLKitV2
@@ -25,18 +25,18 @@ PODS:
     - TapResponderChainInputViewV2
     - TapSearchViewV2
     - TapVisualEffectViewV2
-  - SwiftyRSA (1.6.0):
-    - SwiftyRSA/ObjC (= 1.6.0)
-  - SwiftyRSA/ObjC (1.6.0)
+  - SwiftyRSA (1.7.0):
+    - SwiftyRSA/ObjC (= 1.7.0)
+  - SwiftyRSA/ObjC (1.7.0)
   - TapAdditionsKitV2 (0.0.8):
     - TapSwiftFixesV2
   - TapApplicationV2 (0.0.2):
     - TapAdditionsKitV2
   - TapBundleLocalization (1.0.3)
-  - TapCardValidator (1.2.6)
-  - TapEditableViewV2 (0.0.2):
+  - TapCardVlidatorKit-iOS (1.0.14)
+  - TapEditableViewV2 (1.0.1):
     - TapAdditionsKitV2
-  - TapFontsKitV2 (0.0.3):
+  - TapFontsKitV2 (0.0.4):
     - TapAdditionsKitV2
   - TapGLKitV2 (0.0.2):
     - TapAdditionsKitV2
@@ -75,7 +75,7 @@ SPEC REPOS:
     - TapAdditionsKitV2
     - TapApplicationV2
     - TapBundleLocalization
-    - TapCardValidator
+    - TapCardVlidatorKit-iOS
     - TapEditableViewV2
     - TapFontsKitV2
     - TapGLKitV2
@@ -96,16 +96,16 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   CardIODynamic: 4a0d2d0e7b82993ceca67491564934c3475fbe79
   EditableTextInsetsTextFieldV2: 09a945c086dbcef688fe4fbb8302b408c146c391
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  go_sell_sdk_flutter: 1efbbfe466527d12f23a4934d8c1c81111e16084
-  goSellSDK: 162580e64573cccd61fd38c1f5e220db42df9519
-  SwiftyRSA: 3b9c9179744217951facc6a3e9ae8d8c97061ffa
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  go_sell_sdk_flutter: b1b434359d7be8e802ccfe48d5e1bdf1c6a8c53d
+  goSellSDK: 8f2df820a7139ed8eafc7a55d436867be7ac105a
+  SwiftyRSA: 8c6dd1ea7db1b8dc4fb517a202f88bb1354bc2c6
   TapAdditionsKitV2: ba369802e9575c3475ce6d5af228cf60c68edfc9
   TapApplicationV2: aee3d046c4272778431e1535de6cab34e1269f8c
   TapBundleLocalization: c7d7c14850223b0ef447aca1269d7308f78d54f9
-  TapCardValidator: 8d43b6e8a1a78276c03116a5b625041adeffeb0d
-  TapEditableViewV2: 8f817337714ee2e89199a02aa2feaad009865ff2
-  TapFontsKitV2: f2a5b342c18784dd2068c1885313057780c49a3d
+  TapCardVlidatorKit-iOS: fbf1c9adc629a0d822ca429c2e51feda9684a45b
+  TapEditableViewV2: 00370b2b6c967c382fa944be8c04156d584d630b
+  TapFontsKitV2: b05e5ed03fc182c227f0660a0b318f44934d353c
   TapGLKitV2: d3ef8bc5d1655a1d46e1696cfdcf19ae6e6d4d35
   TapKeychain: 143aa70bb2d1b094e0298e944660264034c79849
   TapNetworkManagerV2: 857339ae980c9fb495ec9a4c609beabaeeeb5999
@@ -117,4 +117,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2

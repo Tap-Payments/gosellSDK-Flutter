@@ -177,13 +177,16 @@ public class DeserializationUtil {
     }
 
     public static CardType getCardType(String jsonString) {
-        if (jsonString == null ||
+        if (jsonString == null || jsonString == CardType.ALL.toString() ||
                 "null".equalsIgnoreCase(jsonString) ||
                 "".equalsIgnoreCase(jsonString.trim())
-        ) return null;
+        ) return CardType.ALL;
         System.out.println("card type >>>> " + jsonString);
-        if ("CardType.CREDIT".equalsIgnoreCase(jsonString)) return CardType.CREDIT;
-        return CardType.DEBIT;
+        if ("CardType.CREDIT".equalsIgnoreCase(jsonString)) {
+            return CardType.CREDIT;
+        }
+        else if ("CardType.DEBIT".equalsIgnoreCase(jsonString)) return CardType.DEBIT;
+        return CardType.ALL;
     }
 
     public static String getPaymentType(String jsonString) {

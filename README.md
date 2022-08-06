@@ -19,9 +19,12 @@ Original SDKS
 3. [Usage](#usage)
    1. [Configure Your App](#configure_your_app)
    2. [Configure SDK Session](#configure_sdk_session)
-   3. [Configure Payment Type](#configure_payment_type)
-   4. [Use Tap Pay Button](#tap_pay_button)
-   5. [Handle SDK Result](#handle_sdk_result)
+   3. [Transaction Modes](#transaction_modes)
+   4. [Customer](#customer)
+   5. [Configure Payment Type](#configure_payment_type)
+   6. [Use Tap Pay Button](#tap_pay_button)
+   7. [Handle SDK Result](#handle_sdk_result)
+   8. [Apple Pay Setup](#apple_pay)
 
 <a href="requirements"></a>
 
@@ -49,7 +52,7 @@ To use the SDK the following requirements must be met:
 
 ```dart
  dependencies:
-     go_sell_sdk_flutter: ^2.0.6
+     go_sell_sdk_flutter: ^2.1.3
 ```
 
 ---
@@ -80,18 +83,18 @@ GoSellSdkFlutter.configureApp(
 Future<void> setupSDKSession() async {
     try {
     GoSellSdkFlutter.sessionConfigurations(
-        trxMode: TransactionMode.TOKENIZE_CARD,
+        trxMode: TransactionMode.PURCHASE,
         transactionCurrency: "kwd",
         amount: '100',
         customer: Customer(
-            customerId: "",
-            email: "h@tap.company",
-            isdNumber: "965",
-            number: "000000",
-            firstName: "Haitham",
-            middleName: "Mohammad",
-            lastName: "Elsheshtawy",
-            metaData: null),
+              customerId: "", // customer id is important to retrieve cards saved for this customer
+              email: "test@test.com",
+              isdNumber: "965",
+              number: "00000000",
+              firstName: "test",
+              middleName: "test",
+              lastName: "test",
+              metaData: null),
         paymentItems: <PaymentItem>[
             PaymentItem(
                 name: "item1",
@@ -191,7 +194,7 @@ Future<void> setupSDKSession() async {
         // merchant id
         merchantID: "",
         // Allowed cards
-        allowedCadTypes: CardType.CREDIT,
+        allowedCadTypes: CardType.ALL,
         applePayMerchantID: "applePayMerchantID",
         allowsToSaveSameCardMoreThanOnce: false,
         // pass the card holder name to the SDK
@@ -203,6 +206,66 @@ Future<void> setupSDKSession() async {
     } on PlatformException {
     }
 ```
+---
+
+<a name="transaction_modes"></a>
+**Transaction Modes**
+
+``` dart 
+trxMode: TransactionMode.PURCHASE
+```
+
+
+You can set the transaction mode into one of the following modes:
+- **Purchase** 
+   - ``` dart TransactionMode.PURCHASE ```<br/>
+   > Normal customer charge.
+- **Authorize** 
+   - ``` dart TransactionMode.AUTHORIZE_CAPTURE ```<br/>
+   > Only authorization is happening. You should specify an action after successful authorization: either capture the amount or void the charge after specific period of time.
+- **Save Card** 
+   - ``` dart TransactionMode.SAVE_CARD ```<br/>
+   > Use this mode to save the card of the customer with Tap and use it later.
+- **Tokenize Card** 
+   - ``` dart TransactionMode.TOKENIZE_CARD ```<br/>
+   > Use this mode if you are willing to perform the charging/authorization manually. The purpose of this mode is only to collect and tokenize card information details of your customer if you don't have PCI compliance certificate but willing to process the payment manually using our services.
+
+---
+
+<a name="customer"></a>
+
+ ###### Customer
+ 
+- New Customer (First time to pay using goSell SDK)
+``` dart
+Customer(
+  customerId: "",
+  email: "test@test.com",
+  isdNumber: "965",
+  number: "00000000",
+  firstName: "test",
+  middleName: "test",
+  lastName: "test",
+  metaData: null)
+```
+> After the first transaction success, you receive the customerId in the response. Save it to be used in the next transaction.
+- Existed Customer (paid before using goSell SDK)
+ You need to set the customerId only and you can see the customer saved cards if the user has.
+``` dart
+Customer(
+  customerId: "cus_smdnd3346nd3dks3jd9drd7d",
+  email: "",
+  isdNumber: "965",
+  number: "00000000",
+  firstName: "",
+  middleName: "",
+  lastName: "",
+  metaData: null)
+```
+
+> Please note that goSell SDK using the customerId only if it's not Empty ('').
+
+
 ---
 
 <a name="configure_payment_type"></a>
@@ -337,3 +400,12 @@ void extractSDKResultKeysAndValues() {
 ```
 
 ---
+
+<a name="apple_pay"></a>
+**Apple pay setup**
+
+Follow the steps shared in the following link to setup apple pay:<br/>
+https://github.com/Tap-Payments/goSellSDK-ios#apple-pay
+
+---
+

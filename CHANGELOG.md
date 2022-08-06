@@ -1,3 +1,26 @@
+## 2.1.3 - 2022-07-28
+
+- Upgraded iOS sdk to 2.3.13
+## 2.1.2 - 2022-03-15
+
+- Upgraded iOS sdk to 2.3.6
+## 2.1.1 - 2022-01-11
+
+- Upgraded android sdk to 3.14.1
+## 2.1.0 - 2021-12-23
+
+- Supporting null-safety.
+## 2.0.9 - 2021-10-18
+
+- Fixed reading payment meta data issue in iOS.
+## 2.0.8 - 2021-09-26
+
+- Accepting amount per unit as double.
+
+## 2.0.7 - 2021-05-30
+
+- Added ALL for allowedCardTypes to allow both Credit and Debit cards.
+
 ## 2.0.6 - 2021-04-22
 
 - Fix Back button click Crash in android
