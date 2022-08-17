@@ -42,9 +42,12 @@ class _MyAppState extends State<MyApp> {
   // configure app key and bundle-id (You must get those keys from tap)
   Future<void> configureApp() async {
     GoSellSdkFlutter.configureApp(
-        bundleId: Platform.isAndroid ? "ANDROIID-PACKAGE-NAME" : "iOS-BUNDLE-ID",
-        productionSecreteKey: Platform.isAndroid ? "Android-Live-Key" : "iOS-Live-Key",
-        sandBoxsecretKey: Platform.isAndroid ? "Android-SANDBOX-KEY" : "iOS-SANDBOX-KEY",
+        bundleId:
+            Platform.isAndroid ? "ANDROIID-PACKAGE-NAME" : "iOS-BUNDLE-ID",
+        productionSecreteKey:
+            Platform.isAndroid ? "Android-Live-Key" : "iOS-Live-Key",
+        sandBoxsecretKey:
+            Platform.isAndroid ? "Android-SANDBOX-KEY" : "iOS-SANDBOX-KEY",
         lang: "ar");
   }
 
@@ -56,7 +59,8 @@ class _MyAppState extends State<MyApp> {
           transactionCurrency: "kwd",
           amount: '100',
           customer: Customer(
-              customerId: "", // customer id is important to retrieve cards saved for this customer
+              customerId: "",
+              // customer id is important to retrieve cards saved for this customer
               email: "test@test.com",
               isdNumber: "965",
               number: "00000000",
@@ -69,20 +73,45 @@ class _MyAppState extends State<MyApp> {
                 name: "item1",
                 amountPerUnit: 1,
                 quantity: Quantity(value: 1),
-                discount: {"type": "F", "value": 10, "maximum_fee": 10, "minimum_fee": 1},
+                discount: {
+                  "type": "F",
+                  "value": 10,
+                  "maximum_fee": 10,
+                  "minimum_fee": 1
+                },
                 description: "Item 1 Apple",
-                taxes: [Tax(amount: Amount(type: "F", value: 10, minimumFee: 1, maximumFee: 10), name: "tax1", description: "tax describtion")],
+                taxes: [
+                  Tax(
+                      amount: Amount(
+                          type: "F", value: 10, minimumFee: 1, maximumFee: 10),
+                      name: "tax1",
+                      description: "tax describtion")
+                ],
                 totalAmount: 100),
           ],
           // List of taxes
           taxes: [
-            Tax(amount: Amount(type: "F", value: 10, minimumFee: 1, maximumFee: 10), name: "tax1", description: "tax describtion"),
-            Tax(amount: Amount(type: "F", value: 10, minimumFee: 1, maximumFee: 10), name: "tax1", description: "tax describtion")
+            Tax(
+                amount:
+                    Amount(type: "F", value: 10, minimumFee: 1, maximumFee: 10),
+                name: "tax1",
+                description: "tax describtion"),
+            Tax(
+                amount:
+                    Amount(type: "F", value: 10, minimumFee: 1, maximumFee: 10),
+                name: "tax1",
+                description: "tax describtion")
           ],
           // List of shippnig
           shippings: [
-            Shipping(name: "shipping 1", amount: 100, description: "shiping description 1"),
-            Shipping(name: "shipping 2", amount: 150, description: "shiping description 2")
+            Shipping(
+                name: "shipping 1",
+                amount: 100,
+                description: "shiping description 1"),
+            Shipping(
+                name: "shipping 2",
+                amount: 150,
+                description: "shiping description 2")
           ],
           // Post URL
           postURL: "https://tap.company",
@@ -95,7 +124,12 @@ class _MyAppState extends State<MyApp> {
           },
           // Payment Reference
           paymentReference: Reference(
-              acquirer: "acquirer", gateway: "gateway", payment: "payment", track: "track", transaction: "trans_910101", order: "order_262625"),
+              acquirer: "acquirer",
+              gateway: "gateway",
+              payment: "payment",
+              track: "track",
+              transaction: "trans_910101",
+              order: "order_262625"),
           // payment Descriptor
           paymentStatementDescriptor: "paymentStatementDescriptor",
           // Save Card Switch
@@ -105,7 +139,8 @@ class _MyAppState extends State<MyApp> {
           // Receipt SMS/Email
           receipt: Receipt(true, false),
           // Authorize Action [Capture - Void]
-          authorizeAction: AuthorizeAction(type: AuthorizeActionType.CAPTURE, timeInHours: 10),
+          authorizeAction: AuthorizeAction(
+              type: AuthorizeActionType.CAPTURE, timeInHours: 10),
           // Destinations
           destinations: null,
           // merchant id
@@ -210,12 +245,15 @@ class _MyAppState extends State<MyApp> {
     print('$trx_mode  card_exp_month  : ${tapSDKResult['card_exp_month']}');
     print('$trx_mode  card_exp_year: ${tapSDKResult['card_exp_year']}');
     print('$trx_mode  acquirer_id  : ${tapSDKResult['acquirer_id']}');
-    print('$trx_mode  acquirer_response_code : ${tapSDKResult['acquirer_response_code']}');
-    print('$trx_mode  acquirer_response_message: ${tapSDKResult['acquirer_response_message']}');
+    print(
+        '$trx_mode  acquirer_response_code : ${tapSDKResult['acquirer_response_code']}');
+    print(
+        '$trx_mode  acquirer_response_message: ${tapSDKResult['acquirer_response_message']}');
     print('$trx_mode  source_id: ${tapSDKResult['source_id']}');
     print('$trx_mode  source_channel     : ${tapSDKResult['source_channel']}');
     print('$trx_mode  source_object      : ${tapSDKResult['source_object']}');
-    print('$trx_mode source_payment_type : ${tapSDKResult['source_payment_type']}');
+    print(
+        '$trx_mode source_payment_type : ${tapSDKResult['source_payment_type']}');
     responseID = tapSDKResult['charge_id'];
   }
 
@@ -237,7 +275,11 @@ class _MyAppState extends State<MyApp> {
                     right: 18,
                     child: Text("Status: [$sdkStatus $responseID ]",
                         style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.w400, fontFamily: "Roboto", fontStyle: FontStyle.normal, fontSize: 15.0),
+                            color: Colors.black,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: "Roboto",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 15.0),
                         textAlign: TextAlign.center),
                   ),
                   Positioned(
@@ -249,27 +291,33 @@ class _MyAppState extends State<MyApp> {
                         child: RaisedButton(
                           color: _buttonColor,
                           clipBehavior: Clip.hardEdge,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadiusDirectional.all(Radius.circular(30))),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadiusDirectional.all(
+                                  Radius.circular(30))),
                           onPressed: startSDK,
-                          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                            Container(
-                              width: 25,
-                              height: 25,
-                              child: AwesomeLoader(
-                                outerColor: Colors.white,
-                                innerColor: Colors.white,
-                                strokeWidth: 3.0,
-                                controller: loaderController,
-                              ),
-                            ),
-                            Spacer(),
-                            Text('PAY', style: TextStyle(color: Colors.white, fontSize: 16.0)),
-                            Spacer(),
-                            Icon(
-                              Icons.lock_outline,
-                              color: Colors.white,
-                            ),
-                          ]),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 25,
+                                  height: 25,
+                                  child: AwesomeLoader(
+                                    outerColor: Colors.white,
+                                    innerColor: Colors.white,
+                                    strokeWidth: 3.0,
+                                    controller: loaderController,
+                                  ),
+                                ),
+                                Spacer(),
+                                Text('PAY',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 16.0)),
+                                Spacer(),
+                                Icon(
+                                  Icons.lock_outline,
+                                  color: Colors.white,
+                                ),
+                              ]),
                         )),
                   ),
                 ],
