@@ -68,7 +68,7 @@ To use the SDK the following requirements must be met:
  * Configure App. (You must get those keys from tap)
  */
 GoSellSdkFlutter.configureApp(
-  bundleId: "ANDROIID-PACKAGE-NAME",
+  bundleId: Platform.isAndroid? "ANDROID-PACKAGE-NAME" : "IOS-APP-ID",
   productionSecreteKey: Platform.isAndroid? "Android-Live-KEY" : "iOS-Live-KEY",
   sandBoxsecretKey: Platform.isAndroid?"Android-SANDBOX-KEY" : "iOS-SANDBOX-KEY",
   lang: "en");
