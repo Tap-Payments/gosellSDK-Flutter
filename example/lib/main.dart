@@ -42,12 +42,22 @@ class _MyAppState extends State<MyApp> {
   // configure app key and bundle-id (You must get those keys from tap)
   Future<void> configureApp() async {
     GoSellSdkFlutter.configureApp(
+<<<<<<< HEAD
         bundleId: Platform.isAndroid ? "ANDROID-PACKAGE-NAME" : "IOS-APP-ID",
         productionSecreteKey:
             Platform.isAndroid ? "Android-Live-KEY" : "iOS-Live-KEY",
         sandBoxsecretKey:
             Platform.isAndroid ? "Android-SANDBOX-KEY" : "iOS-SANDBOX-KEY",
         lang: "en");
+=======
+        bundleId:
+            Platform.isAndroid ? "ANDROIID-PACKAGE-NAME" : "iOS-BUNDLE-ID",
+        productionSecreteKey:
+            Platform.isAndroid ? "Android-Live-Key" : "iOS-Live-Key",
+        sandBoxsecretKey:
+            Platform.isAndroid ? "Android-SANDBOX-KEY" : "iOS-SANDBOX-KEY",
+        lang: "ar");
+>>>>>>> e22cad519d2a75b942035263b288febe0fad3004
   }
   //
 
@@ -59,8 +69,13 @@ class _MyAppState extends State<MyApp> {
           transactionCurrency: "kwd",
           amount: '1',
           customer: Customer(
+<<<<<<< HEAD
               customerId: "",
               // customer id is important to retrieve cards saved for this customer
+=======
+              customerId:
+                  "", // customer id is important to retrieve cards saved for this customer
+>>>>>>> e22cad519d2a75b942035263b288febe0fad3004
               email: "test@test.com",
               isdNumber: "965",
               number: "00000000",
@@ -68,11 +83,59 @@ class _MyAppState extends State<MyApp> {
               middleName: "test",
               lastName: "test",
               metaData: null),
+<<<<<<< HEAD
           paymentItems: <PaymentItem>[],
           // List of taxes
           taxes: [],
           // List of shippnig
           shippings: [],
+=======
+          paymentItems: <PaymentItem>[
+            PaymentItem(
+                name: "item1",
+                amountPerUnit: 1,
+                quantity: Quantity(value: 1),
+                discount: {
+                  "type": "F",
+                  "value": 10,
+                  "maximum_fee": 10,
+                  "minimum_fee": 1
+                },
+                description: "Item 1 Apple",
+                taxes: [
+                  Tax(
+                      amount: Amount(
+                          type: "F", value: 10, minimumFee: 1, maximumFee: 10),
+                      name: "tax1",
+                      description: "tax describtion")
+                ],
+                totalAmount: 100),
+          ],
+          // List of taxes
+          taxes: [
+            Tax(
+                amount:
+                    Amount(type: "F", value: 10, minimumFee: 1, maximumFee: 10),
+                name: "tax1",
+                description: "tax describtion"),
+            Tax(
+                amount:
+                    Amount(type: "F", value: 10, minimumFee: 1, maximumFee: 10),
+                name: "tax1",
+                description: "tax describtion")
+          ],
+          // List of shippnig
+          shippings: [
+            Shipping(
+                name: "shipping 1",
+                amount: 100,
+                description: "shiping description 1"),
+            Shipping(
+                name: "shipping 2",
+                amount: 150,
+                description: "shiping description 2")
+          ],
+>>>>>>> e22cad519d2a75b942035263b288febe0fad3004
           // Post URL
           postURL: "https://tap.company",
           // Payment description
@@ -220,6 +283,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+<<<<<<< HEAD
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Plugin example app'),
@@ -279,6 +343,69 @@ class _MyAppState extends State<MyApp> {
                             ),
                           ]),
                     )),
+=======
+        home: Scaffold(
+            appBar: AppBar(
+              title: const Text('Plugin example app'),
+              backgroundColor: Colors.grey,
+            ),
+            body: SafeArea(
+              child: Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  Positioned(
+                    top: 300,
+                    left: 18,
+                    right: 18,
+                    child: Text("Status: [$sdkStatus $responseID ]",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: "Roboto",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 15.0),
+                        textAlign: TextAlign.center),
+                  ),
+                  Positioned(
+                    bottom: Platform.isIOS ? 0 : 10,
+                    left: 18,
+                    right: 18,
+                    child: SizedBox(
+                        height: 45,
+                        child: RaisedButton(
+                          color: _buttonColor,
+                          clipBehavior: Clip.hardEdge,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadiusDirectional.all(
+                                  Radius.circular(30))),
+                          onPressed: startSDK,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 25,
+                                  height: 25,
+                                  child: AwesomeLoader(
+                                    outerColor: Colors.white,
+                                    innerColor: Colors.white,
+                                    strokeWidth: 3.0,
+                                    controller: loaderController,
+                                  ),
+                                ),
+                                Spacer(),
+                                Text('PAY',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 16.0)),
+                                Spacer(),
+                                Icon(
+                                  Icons.lock_outline,
+                                  color: Colors.white,
+                                ),
+                              ]),
+                        )),
+                  ),
+                ],
+>>>>>>> e22cad519d2a75b942035263b288febe0fad3004
               ),
             ],
           ),

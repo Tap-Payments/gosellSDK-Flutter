@@ -73,7 +73,11 @@ packages:
       path: ".."
       relative: true
     source: path
+<<<<<<< HEAD
     version: "2.1.6"
+=======
+    version: "2.1.5"
+>>>>>>> e22cad519d2a75b942035263b288febe0fad3004
   matcher:
     dependency: transitive
     description:
