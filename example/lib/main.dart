@@ -42,14 +42,14 @@ class _MyAppState extends State<MyApp> {
   // configure app key and bundle-id (You must get those keys from tap)
   Future<void> configureApp() async {
     GoSellSdkFlutter.configureApp(
-        bundleId:
-            Platform.isAndroid ? "ANDROIID-PACKAGE-NAME" : "iOS-BUNDLE-ID",
+        bundleId: Platform.isAndroid ? "ANDROID-PACKAGE-NAME" : "IOS-APP-ID",
         productionSecreteKey:
-            Platform.isAndroid ? "Android-Live-Key" : "iOS-Live-Key",
+            Platform.isAndroid ? "Android-Live-KEY" : "iOS-Live-KEY",
         sandBoxsecretKey:
             Platform.isAndroid ? "Android-SANDBOX-KEY" : "iOS-SANDBOX-KEY",
-        lang: "ar");
+        lang: "en");
   }
+  //
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> setupSDKSession() async {
@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
       GoSellSdkFlutter.sessionConfigurations(
           trxMode: TransactionMode.PURCHASE,
           transactionCurrency: "kwd",
-          amount: '100',
+          amount: '1',
           customer: Customer(
               customerId: "",
               // customer id is important to retrieve cards saved for this customer
@@ -68,51 +68,11 @@ class _MyAppState extends State<MyApp> {
               middleName: "test",
               lastName: "test",
               metaData: null),
-          paymentItems: <PaymentItem>[
-            PaymentItem(
-                name: "item1",
-                amountPerUnit: 1,
-                quantity: Quantity(value: 1),
-                discount: {
-                  "type": "F",
-                  "value": 10,
-                  "maximum_fee": 10,
-                  "minimum_fee": 1
-                },
-                description: "Item 1 Apple",
-                taxes: [
-                  Tax(
-                      amount: Amount(
-                          type: "F", value: 10, minimumFee: 1, maximumFee: 10),
-                      name: "tax1",
-                      description: "tax describtion")
-                ],
-                totalAmount: 100),
-          ],
+          paymentItems: <PaymentItem>[],
           // List of taxes
-          taxes: [
-            Tax(
-                amount:
-                    Amount(type: "F", value: 10, minimumFee: 1, maximumFee: 10),
-                name: "tax1",
-                description: "tax describtion"),
-            Tax(
-                amount:
-                    Amount(type: "F", value: 10, minimumFee: 1, maximumFee: 10),
-                name: "tax1",
-                description: "tax describtion")
-          ],
+          taxes: [],
           // List of shippnig
-          shippings: [
-            Shipping(
-                name: "shipping 1",
-                amount: 100,
-                description: "shiping description 1"),
-            Shipping(
-                name: "shipping 2",
-                amount: 150,
-                description: "shiping description 2")
-          ],
+          shippings: [],
           // Post URL
           postURL: "https://tap.company",
           // Payment description
@@ -260,68 +220,70 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-            appBar: AppBar(
-              title: const Text('Plugin example app'),
-              backgroundColor: Colors.grey,
-            ),
-            body: SafeArea(
-              child: Stack(
-                alignment: Alignment.center,
-                children: <Widget>[
-                  Positioned(
-                    top: 300,
-                    left: 18,
-                    right: 18,
-                    child: Text("Status: [$sdkStatus $responseID ]",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: "Roboto",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 15.0),
-                        textAlign: TextAlign.center),
-                  ),
-                  Positioned(
-                    bottom: Platform.isIOS ? 0 : 10,
-                    left: 18,
-                    right: 18,
-                    child: SizedBox(
-                        height: 45,
-                        child: RaisedButton(
-                          color: _buttonColor,
-                          clipBehavior: Clip.hardEdge,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadiusDirectional.all(
-                                  Radius.circular(30))),
-                          onPressed: startSDK,
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 25,
-                                  height: 25,
-                                  child: AwesomeLoader(
-                                    outerColor: Colors.white,
-                                    innerColor: Colors.white,
-                                    strokeWidth: 3.0,
-                                    controller: loaderController,
-                                  ),
-                                ),
-                                Spacer(),
-                                Text('PAY',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 16.0)),
-                                Spacer(),
-                                Icon(
-                                  Icons.lock_outline,
-                                  color: Colors.white,
-                                ),
-                              ]),
-                        )),
-                  ),
-                ],
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Plugin example app'),
+          backgroundColor: Colors.grey,
+        ),
+        body: SafeArea(
+          child: Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              Positioned(
+                top: 300,
+                left: 18,
+                right: 18,
+                child: Text("Status: [$sdkStatus $responseID ]",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: "Roboto",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 15.0),
+                    textAlign: TextAlign.center),
               ),
-            )));
+              Positioned(
+                bottom: Platform.isIOS ? 0 : 10,
+                left: 18,
+                right: 18,
+                child: SizedBox(
+                    height: 45,
+                    child: RaisedButton(
+                      color: _buttonColor,
+                      clipBehavior: Clip.hardEdge,
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadiusDirectional.all(Radius.circular(30))),
+                      onPressed: startSDK,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 25,
+                              height: 25,
+                              child: AwesomeLoader(
+                                outerColor: Colors.white,
+                                innerColor: Colors.white,
+                                strokeWidth: 3.0,
+                                controller: loaderController,
+                              ),
+                            ),
+                            Spacer(),
+                            Text('PAY',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 16.0)),
+                            Spacer(),
+                            Icon(
+                              Icons.lock_outline,
+                              color: Colors.white,
+                            ),
+                          ]),
+                    )),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

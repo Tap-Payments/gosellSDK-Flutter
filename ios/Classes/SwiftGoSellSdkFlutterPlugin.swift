@@ -196,7 +196,7 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
           }
         }
       }
-      return TransactionMode.purchase
+      return TransactionMode.invalidTransactionMode
     }
     public var applePayMerchantID: String
     {
