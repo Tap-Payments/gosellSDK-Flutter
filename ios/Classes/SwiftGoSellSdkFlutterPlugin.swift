@@ -396,7 +396,7 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDelegate {
             resultMap["card_first_six"] = card.firstSixDigits
             resultMap["card_last_four"] = card.lastFourDigits
             resultMap["card_object"] = card.object
-//            let cardBrand = CardBrand(rawValue: card.brand.rawValue)
+            resultMap["card_id"] = card.card_id
             resultMap["card_brand"] = card.brand.textValue
             resultMap["card_exp_month"] = card.expirationMonth
             resultMap["card_exp_year"] = card.expirationYear
