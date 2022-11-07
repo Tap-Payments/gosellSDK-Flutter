@@ -1,3 +1,6 @@
+- Upgraded ios and android sdk for card id
+## 2.1.7 - 2022-11-07
+
 - Upgraded ios sdk to 2.3.18
 ## 2.1.6 - 2022-09-13
 

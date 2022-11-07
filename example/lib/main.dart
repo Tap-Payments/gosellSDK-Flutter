@@ -7,8 +7,6 @@ import 'package:go_sell_sdk_flutter/go_sell_sdk_flutter.dart';
 import 'package:go_sell_sdk_flutter/model/models.dart';
 import 'package:go_sell_sdk_flutter_example/tap_loader/awesome_loader.dart';
 
-import 'tap_loader/awesome_loader.dart';
-
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
@@ -59,7 +57,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> setupSDKSession() async {
     try {
       GoSellSdkFlutter.sessionConfigurations(
-          trxMode: TransactionMode.PURCHASE,
+          trxMode: TransactionMode.SAVE_CARD,
           transactionCurrency: "kwd",
           amount: '1',
           customer: Customer(
@@ -138,7 +136,7 @@ class _MyAppState extends State<MyApp> {
           // Save Card Switch
           isUserAllowedToSaveCard: true,
           // Enable/Disable 3DSecure
-          isRequires3DSecure: false,
+          isRequires3DSecure: true,
           // Receipt SMS/Email
           receipt: Receipt(true, false),
           // Authorize Action [Capture - Void]
@@ -151,7 +149,7 @@ class _MyAppState extends State<MyApp> {
           // Allowed cards
           allowedCadTypes: CardType.ALL,
           applePayMerchantID: "applePayMerchantID",
-          allowsToSaveSameCardMoreThanOnce: false,
+          allowsToSaveSameCardMoreThanOnce: true,
           // pass the card holder name to the SDK
           cardHolderName: "Card Holder NAME",
           // disable changing the card holder name by the user
@@ -176,10 +174,10 @@ class _MyAppState extends State<MyApp> {
       loaderController.start();
     });
 
-    tapSDKResult = await GoSellSdkFlutter.startPaymentSDK;
+    var tapSDKResult = await GoSellSdkFlutter.startPaymentSDK;
     loaderController.stopWhenFull();
-
     print('>>>> ${tapSDKResult['sdk_result']}');
+
     setState(() {
       switch (tapSDKResult['sdk_result']) {
         case "SUCCESS":
@@ -209,6 +207,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   void handleSDKResult() {
+    print('>>>> ${tapSDKResult['trx_mode']}');
+
     switch (tapSDKResult['trx_mode']) {
       case "CHARGE":
         printSDKResult('Charge');
@@ -257,6 +257,7 @@ class _MyAppState extends State<MyApp> {
     print('$trx_mode  source_object      : ${tapSDKResult['source_object']}');
     print(
         '$trx_mode source_payment_type : ${tapSDKResult['source_payment_type']}');
+
     responseID = tapSDKResult['charge_id'];
   }
 
@@ -291,12 +292,13 @@ class _MyAppState extends State<MyApp> {
               right: 18,
               child: SizedBox(
                   height: 45,
-                  child: RaisedButton(
-                    color: _buttonColor,
+                  child: ElevatedButton(
                     clipBehavior: Clip.hardEdge,
-                    shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadiusDirectional.all(Radius.circular(30))),
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(_buttonColor),
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)))),
                     onPressed: startSDK,
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
