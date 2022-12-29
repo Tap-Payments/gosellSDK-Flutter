@@ -52,7 +52,7 @@ To use the SDK the following requirements must be met:
 
 ```dart
  dependencies:
-     go_sell_sdk_flutter: ^2.1.8
+     go_sell_sdk_flutter: ^2.2.0
 ```
 
 ---
@@ -291,39 +291,49 @@ Positioned(
     left: 18,
     right: 18,
     child: SizedBox(
-        height: 45,
-        child: RaisedButton(
-          color: _buttonColor,
-          clipBehavior: Clip.hardEdge,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadiusDirectional.all(
-                  Radius.circular(30))),
-          onPressed: startSDK,
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 25,
-                  height: 25,
-                  child: AwesomeLoader(
+            height: 45,
+            child: ElevatedButton(
+            clipBehavior: Clip.hardEdge,
+            style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(_buttonColor),
+            shape: MaterialStateProperty.all(
+             RoundedRectangleBorder(
+                 borderRadius: BorderRadius.circular(30),
+                 ),
+                 ),
+               ),
+             onPressed: startSDK,
+             child: Row(
+             mainAxisAlignment: MainAxisAlignment.center,
+             children: [
+                 Container(
+                    width: 25,
+                    height: 25,
+                    child: AwesomeLoader(
                     outerColor: Colors.white,
                     innerColor: Colors.white,
                     strokeWidth: 3.0,
                     controller: loaderController,
                   ),
-                ),
-                Spacer(),
-                Text('PAY',
-                    style: TextStyle(
-                        color: Colors.white, fontSize: 16.0)),
-                Spacer(),
-                Icon(
-                  Icons.lock_outline,
-                  color: Colors.white,
-                ),
-              ]),
-        )),
-          ),
+               ),
+            Spacer(),
+            Text(
+               'PAY',
+                style: TextStyle(
+                color: Colors.white,
+                fontSize: 16.0,
+              ),
+           ),
+           Spacer(),
+           Icon(
+           Icons.lock_outline,
+           color: Colors.white,
+             ),
+           ],
+         ),
+       ),
+    ),
+),
 ```
 
 ---
