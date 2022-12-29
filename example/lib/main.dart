@@ -148,7 +148,7 @@ class _MyAppState extends State<MyApp> {
           merchantID: "",
           // Allowed cards
           allowedCadTypes: CardType.ALL,
-          applePayMerchantID: "applePayMerchantID",
+          applePayMerchantID: "merchant.applePayMerchantID",
           allowsToSaveSameCardMoreThanOnce: true,
           // pass the card holder name to the SDK
           cardHolderName: "Card Holder NAME",
@@ -264,70 +264,83 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-      appBar: AppBar(
-        title: const Text('Plugin example app'),
-        backgroundColor: Colors.grey,
-      ),
-      body: SafeArea(
-        child: Stack(
-          alignment: Alignment.center,
-          children: <Widget>[
-            Positioned(
-              top: 300,
-              left: 18,
-              right: 18,
-              child: Text("Status: [$sdkStatus $responseID ]",
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Plugin example app'),
+          backgroundColor: Colors.grey,
+        ),
+        body: SafeArea(
+          child: Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              Positioned(
+                top: 300,
+                left: 18,
+                right: 18,
+                child: Text(
+                  "Status: [$sdkStatus $responseID ]",
                   style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: "Roboto",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 15.0),
-                  textAlign: TextAlign.center),
-            ),
-            Positioned(
-              bottom: Platform.isIOS ? 0 : 10,
-              left: 18,
-              right: 18,
-              child: SizedBox(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "Roboto",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 15.0,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Positioned(
+                bottom: Platform.isIOS ? 0 : 10,
+                left: 18,
+                right: 18,
+                child: SizedBox(
                   height: 45,
                   child: ElevatedButton(
                     clipBehavior: Clip.hardEdge,
                     style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(_buttonColor),
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)))),
+                      backgroundColor: MaterialStateProperty.all(_buttonColor),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                    ),
                     onPressed: startSDK,
                     child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 25,
-                            height: 25,
-                            child: AwesomeLoader(
-                              outerColor: Colors.white,
-                              innerColor: Colors.white,
-                              strokeWidth: 3.0,
-                              controller: loaderController,
-                            ),
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 25,
+                          height: 25,
+                          child: AwesomeLoader(
+                            outerColor: Colors.white,
+                            innerColor: Colors.white,
+                            strokeWidth: 3.0,
+                            controller: loaderController,
                           ),
-                          Spacer(),
-                          Text('PAY',
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 16.0)),
-                          Spacer(),
-                          Icon(
-                            Icons.lock_outline,
+                        ),
+                        Spacer(),
+                        Text(
+                          'PAY',
+                          style: TextStyle(
                             color: Colors.white,
+                            fontSize: 16.0,
                           ),
-                        ]),
-                  )),
-            ),
-          ],
+                        ),
+                        Spacer(),
+                        Icon(
+                          Icons.lock_outline,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-    ));
+    );
   }
 }

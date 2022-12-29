@@ -345,7 +345,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         pendingResult = null;
     }
 
-    private void sendTokenResult(Token token, String paymentStatus) {
+    private void sendTokenResult(Token token, String paymentStatus, boolean saveCard) {
         Map<String, Object> resultMap = new HashMap<>();
 
         resultMap.put("token", token.getId());
@@ -356,6 +356,8 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
             resultMap.put("card_object", token.getCard().getObject());
             resultMap.put("card_exp_month", token.getCard().getExpirationYear());
             resultMap.put("card_exp_year", token.getCard().getExpirationMonth());
+            resultMap.put("save_card", saveCard);
+
         }
         resultMap.put("sdk_result", paymentStatus);
         resultMap.put("trx_mode", "TOKENIZE");
@@ -406,12 +408,16 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
 
     @Override
     public void cardTokenizedSuccessfully(@NonNull Token token) {
-        sendTokenResult(token, "SUCCESS");
+        sendTokenResult(token, "SUCCESS", false);
     }
 
     @Override
     public void cardTokenizedSuccessfully(@NonNull Token token, boolean saveCardEnabled) {
-        sendTokenResult(token, "SUCCESS");
+        sendTokenResult(token, "SUCCESS",saveCardEnabled);
+    }
+
+    @Override
+    public void asyncPaymentStarted(@NonNull Charge charge) {
     }
 
     @Override
