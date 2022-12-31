@@ -1,3 +1,9 @@
+- Upgraded android sdk dependencies
+## 2.2.0 - 2022-12-29
+
+- Upgraded ios and android sdk for tokenize mode
+## 2.1.9 - 2022-11-09
+
 - Upgraded ios and android sdk for card id
 ## 2.1.8 - 2022-11-07
 
