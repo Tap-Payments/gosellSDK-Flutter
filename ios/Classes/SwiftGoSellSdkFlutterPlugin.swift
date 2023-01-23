@@ -434,6 +434,10 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDelegate {
             flutterResult(resultMap)
         }
     }
+
+   public func paymentInitiated(with charge: Charge?, on session: SessionProtocol) {
+            print("CHARGE : \(charge?.identifier ?? "")")
+   }
     
     public func paymentFailed(with charge: Charge?, error: TapSDKError?, on session: SessionProtocol) {
                 

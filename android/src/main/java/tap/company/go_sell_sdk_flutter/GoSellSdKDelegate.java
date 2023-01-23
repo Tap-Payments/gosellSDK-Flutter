@@ -338,8 +338,6 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         resultMap.put("sdk_result", paymentStatus);
         resultMap.put("trx_mode", trx_mode);
         System.out.println("Card ID : " + charge.getCard().getId());
-        System.out.println("Card Expiry if not null My name is Axhar : " + charge.getCard().getExpiry());
-        System.out.println("Card Expiry If null : " + charge.getCard().getExp_month());
 
         pendingResult.success(resultMap);
         pendingResult = null;
@@ -433,6 +431,13 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         }
 
         sendSDKError(goSellError.getErrorCode(), goSellError.getErrorMessage(), goSellError.getErrorBody());
+    }
+
+    @Override
+    public void paymentInitiated(@Nullable Charge charge) {
+        System.out.println("paymentInitiated CallBack :  ");
+        System.out.println("Charge id:"+ charge.getId());
+        System.out.println("charge status:"+charge.getStatus());
     }
 
     @Override
