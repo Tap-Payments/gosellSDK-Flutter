@@ -1,3 +1,6 @@
+- Upgraded ios and android sdk for charge initiated callbacks
+## 2.2.1 - 2023-01-23
+
 - Upgraded android sdk dependencies
 ## 2.2.0 - 2022-12-29
 
