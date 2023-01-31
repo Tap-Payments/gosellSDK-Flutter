@@ -294,9 +294,10 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void sendChargeResult(Charge charge, String paymentStatus, String trx_mode) {
+
         Map<String, Object> resultMap = new HashMap<>();
         if (charge.getStatus() != null)
-            resultMap.put("status", charge.getStatus().name());
+        resultMap.put("status", charge.getStatus().name());
         resultMap.put("charge_id", charge.getId());
         resultMap.put("description", charge.getDescription());
         resultMap.put("message", charge.getResponse().getMessage());
@@ -337,8 +338,6 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         }
         resultMap.put("sdk_result", paymentStatus);
         resultMap.put("trx_mode", trx_mode);
-        System.out.println("Card ID : " + charge.getCard().getId());
-
         pendingResult.success(resultMap);
         pendingResult = null;
     }
@@ -436,8 +435,10 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
     @Override
     public void paymentInitiated(@Nullable Charge charge) {
         System.out.println("paymentInitiated CallBack :  ");
-        System.out.println("Charge id:"+ charge.getId());
-        System.out.println("charge status:"+charge.getStatus());
+        if (charge != null) {
+            System.out.println("Charge id:"+ charge.getId());
+            System.out.println("charge status:"+charge.getStatus());
+        }
     }
 
     @Override
