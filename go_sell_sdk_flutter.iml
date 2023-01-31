@@ -16,6 +16,7 @@
       <excludeFolder url="file://$MODULE_DIR$/example/ios/.symlinks/plugins/go_sell_sdk_flutter/build" />
       <excludeFolder url="file://$MODULE_DIR$/example/ios/.symlinks/plugins/go_sell_sdk_flutter/.pub" />
     </content>
+    <orderEntry type="jdk" jdkName="Android API 33, extension level 3 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Dart SDK" level="project" />
     <orderEntry type="library" name="Flutter Plugins" level="project" />

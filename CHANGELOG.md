@@ -1,3 +1,6 @@
+- Upgraded android sdk for Benefits change
+## 2.2.2 - 2023-01-31
+
 - Upgraded ios and android sdk for charge initiated callbacks
 ## 2.2.1 - 2023-01-23
 
