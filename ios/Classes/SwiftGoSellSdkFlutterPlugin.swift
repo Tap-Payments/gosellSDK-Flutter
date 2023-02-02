@@ -520,6 +520,41 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDelegate {
             flutterResult(resultMap)
         }
     }
+    
+
+ public func cardSaved(_ cardVerification: CardVerification, on session: SessionProtocol) {
+        var resultMap:[String:Any] = [:]
+        resultMap["card_first_six"] = cardVerification.card.firstSixDigits
+        resultMap["card_last_four"] = cardVerification.card.lastFourDigits
+        resultMap["card_object"] = cardVerification.card.object
+        resultMap["card_id"] = cardVerification.card.identifier
+        resultMap["card_brand"] = cardVerification.card.brand.textValue
+        resultMap["card_exp_month"] = cardVerification.card.expirationMonth
+        resultMap["card_exp_year"] = cardVerification.card.expirationYear
+        
+     
+        resultMap["customer_id"] = cardVerification.customer.identifier ?? ""
+        resultMap["customer_first_name"] = cardVerification.customer.firstName ?? ""
+        resultMap["customer_middle_name"] = cardVerification.customer.middleName ?? ""
+        resultMap["customer_last_name"] = cardVerification.customer.lastName ?? ""
+
+           resultMap["sdk_result"] = "SUCCESS"
+           resultMap["trx_mode"] = "SAVE_CARD"
+         if let flutterResult = flutterResult {
+             flutterResult(resultMap)
+         }
+    }
+    
+    public func cardSavedFailed(with error: TapSDKError, on session: SessionProtocol) {
+        var resultMap:[String:Any] = [:]
+        resultMap["sdk_result"] = "FAILED"
+        resultMap["sdk_error_code"] = ""//error.type
+        resultMap["sdk_error_message"] = error.description
+        resultMap["sdk_error_description"] = error.description
+          if let flutterResult = flutterResult {
+              flutterResult(resultMap)
+          }
+    }
 }
 
 extension SwiftGoSellSdkFlutterPlugin: SessionAppearance {
