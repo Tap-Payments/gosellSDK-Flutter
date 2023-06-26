@@ -15,14 +15,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Map<dynamic, dynamic> tapSDKResult;
+  Map<dynamic, dynamic>? tapSDKResult;
   String responseID = "";
   String sdkStatus = "";
-  String sdkErrorCode;
-  String sdkErrorMessage;
-  String sdkErrorDescription;
+  String sdkErrorCode = "";
+  String sdkErrorMessage = "";
+  String sdkErrorDescription = "";
   AwesomeLoaderController loaderController = AwesomeLoaderController();
-  Color _buttonColor;
+  late Color _buttonColor;
 
   @override
   void initState() {
@@ -57,108 +57,127 @@ class _MyAppState extends State<MyApp> {
   Future<void> setupSDKSession() async {
     try {
       GoSellSdkFlutter.sessionConfigurations(
-          trxMode: TransactionMode.PURCHASE,
-          transactionCurrency: "kwd",
-          amount: '1',
-          customer: Customer(
-            customerId: "",
-            // customer id is important to retrieve cards saved for this customer
-            email: "test@test.com",
-            isdNumber: "965",
-            number: "00000000",
-            firstName: "test",
-            middleName: "test",
-            lastName: "test",
-            metaData: null,
+        trxMode: TransactionMode.PURCHASE,
+        transactionCurrency: "kwd",
+        amount: '100',
+        customer: Customer(
+          customerId: "",
+          // customer id is important to retrieve cards saved for this customer
+          email: "test@test.com",
+          isdNumber: "965",
+          number: "00000000",
+          firstName: "test",
+          middleName: "test",
+          lastName: "test",
+          metaData: null,
+        ),
+        paymentItems: <PaymentItem>[
+          PaymentItem(
+            name: "item1",
+            amountPerUnit: 1,
+            quantity: Quantity(value: 1),
+            discount: {
+              "type": "F",
+              "value": 10,
+              "maximum_fee": 10,
+              "minimum_fee": 1
+            },
+            description: "Item 1 Apple",
+            taxes: [
+              Tax(
+                amount: Amount(
+                  type: "F",
+                  value: 10,
+                  minimumFee: 1,
+                  maximumFee: 10,
+                ),
+                name: "tax1",
+                description: "tax description",
+              )
+            ],
+            totalAmount: 100,
           ),
-          paymentItems: <PaymentItem>[
-            PaymentItem(
-                name: "item1",
-                amountPerUnit: 1,
-                quantity: Quantity(value: 1),
-                discount: {
-                  "type": "F",
-                  "value": 10,
-                  "maximum_fee": 10,
-                  "minimum_fee": 1
-                },
-                description: "Item 1 Apple",
-                taxes: [
-                  Tax(
-                      amount: Amount(
-                          type: "F", value: 10, minimumFee: 1, maximumFee: 10),
-                      name: "tax1",
-                      description: "tax describtion")
-                ],
-                totalAmount: 100),
-          ],
-          // List of taxes
-          taxes: [
-            Tax(
-                amount:
-                    Amount(type: "F", value: 10, minimumFee: 1, maximumFee: 10),
-                name: "tax1",
-                description: "tax describtion"),
-            Tax(
-                amount:
-                    Amount(type: "F", value: 10, minimumFee: 1, maximumFee: 10),
-                name: "tax1",
-                description: "tax describtion")
-          ],
-          // List of shippnig
-          shippings: [
-            Shipping(
-                name: "shipping 1",
-                amount: 100,
-                description: "shiping description 1"),
-            Shipping(
-                name: "shipping 2",
-                amount: 150,
-                description: "shiping description 2")
-          ],
-          postURL: "https://tap.company",
-          // Payment description
-          paymentDescription: "paymentDescription",
-          // Payment Metadata
-          paymentMetaData: {
-            "a": "a meta",
-            "b": "b meta",
-          },
-          // Payment Reference
-          paymentReference: Reference(
-              acquirer: "acquirer",
-              gateway: "gateway",
-              payment: "payment",
-              track: "track",
-              transaction: "trans_910101",
-              order: "order_262625"),
-          // payment Descriptor
-          paymentStatementDescriptor: "paymentStatementDescriptor",
-          // Save Card Switch
-          isUserAllowedToSaveCard: true,
-          // Enable/Disable 3DSecure
-          isRequires3DSecure: true,
-          // Receipt SMS/Email
-          receipt: Receipt(true, false),
-          // Authorize Action [Capture - Void]
-          authorizeAction: AuthorizeAction(
-              type: AuthorizeActionType.CAPTURE, timeInHours: 10),
-          // Destinations
-          destinations: null,
-          // merchant id
-          merchantID: "",
-          // Allowed cards
-          allowedCadTypes: CardType.ALL,
-          applePayMerchantID: "merchant.applePayMerchantID",
-          allowsToSaveSameCardMoreThanOnce: true,
-          // pass the card holder name to the SDK
-          cardHolderName: "Card Holder NAME",
-          // disable changing the card holder name by the user
-          allowsToEditCardHolderName: true,
-          // select payments you need to show [Default is all, and you can choose between WEB-CARD-APPLEPAY ]
-          paymentType: PaymentType.ALL,
-          // Transaction mode
-          sdkMode: SDKMode.Sandbox);
+        ],
+        // List of taxes
+        taxes: [
+          Tax(
+            amount: Amount(
+              type: "F",
+              value: 10,
+              minimumFee: 1,
+              maximumFee: 10,
+            ),
+            name: "tax1",
+            description: "tax description",
+          ),
+          Tax(
+            amount: Amount(
+              type: "F",
+              value: 10,
+              minimumFee: 1,
+              maximumFee: 10,
+            ),
+            name: "tax1",
+            description: "tax description",
+          )
+        ],
+        // List of shipping
+        shippings: [
+          Shipping(
+            name: "shipping 1",
+            amount: 100,
+            description: "shipping description 1",
+          ),
+          Shipping(
+            name: "shipping 2",
+            amount: 150,
+            description: "shipping description 2",
+          )
+        ],
+        postURL: "https://tap.company",
+        // Payment description
+        paymentDescription: "paymentDescription",
+        // Payment Metadata
+        paymentMetaData: {
+          "a": "a meta",
+          "b": "b meta",
+        },
+        // Payment Reference
+        paymentReference: Reference(
+            acquirer: "acquirer",
+            gateway: "gateway",
+            payment: "payment",
+            track: "track",
+            transaction: "trans_910101",
+            order: "order_262625"),
+        // payment Descriptor
+        paymentStatementDescriptor: "paymentStatementDescriptor",
+        // Save Card Switch
+        isUserAllowedToSaveCard: true,
+        // Enable/Disable 3DSecure
+        isRequires3DSecure: true,
+        // Receipt SMS/Email
+        receipt: Receipt(true, false),
+        // Authorize Action [Capture - Void]
+        authorizeAction:
+            AuthorizeAction(type: AuthorizeActionType.CAPTURE, timeInHours: 10),
+        // Destinations
+        destinations: null,
+        // merchant id
+        merchantID: "",
+        // Allowed cards
+        allowedCadTypes: CardType.ALL,
+        applePayMerchantID: "merchant.applePayMerchantID",
+        allowsToSaveSameCardMoreThanOnce: true,
+        // pass the card holder name to the SDK
+        cardHolderName: "Card Holder NAME",
+        // disable changing the card holder name by the user
+        allowsToEditCardHolderName: true,
+        // select payments you need to show [Default is all, and you can choose between WEB-CARD-APPLEPAY ]
+        paymentType: PaymentType.ALL,
+        // Transaction mode
+        sdkMode: SDKMode.Sandbox,
+      );
     } on PlatformException {
       // platformVersion = 'Failed to get platform version.';
     }
@@ -208,9 +227,9 @@ class _MyAppState extends State<MyApp> {
   }
 
   void handleSDKResult() {
-    print('>>>> ${tapSDKResult['trx_mode']}');
+    print('>>>> ${tapSDKResult!['trx_mode']}');
 
-    switch (tapSDKResult['trx_mode']) {
+    switch (tapSDKResult!['trx_mode']) {
       case "CHARGE":
         printSDKResult('Charge');
         break;
@@ -224,42 +243,42 @@ class _MyAppState extends State<MyApp> {
         break;
 
       case "TOKENIZE":
-        print('TOKENIZE token : ${tapSDKResult['token']}');
-        print('TOKENIZE token_currency  : ${tapSDKResult['token_currency']}');
-        print('TOKENIZE card_first_six : ${tapSDKResult['card_first_six']}');
-        print('TOKENIZE card_last_four : ${tapSDKResult['card_last_four']}');
-        print('TOKENIZE card_object  : ${tapSDKResult['card_object']}');
-        print('TOKENIZE card_exp_month : ${tapSDKResult['card_exp_month']}');
-        print('TOKENIZE card_exp_year    : ${tapSDKResult['card_exp_year']}');
+        print('TOKENIZE token : ${tapSDKResult!['token']}');
+        print('TOKENIZE token_currency  : ${tapSDKResult!['token_currency']}');
+        print('TOKENIZE card_first_six : ${tapSDKResult!['card_first_six']}');
+        print('TOKENIZE card_last_four : ${tapSDKResult!['card_last_four']}');
+        print('TOKENIZE card_object  : ${tapSDKResult!['card_object']}');
+        print('TOKENIZE card_exp_month : ${tapSDKResult!['card_exp_month']}');
+        print('TOKENIZE card_exp_year    : ${tapSDKResult!['card_exp_year']}');
 
-        responseID = tapSDKResult['token'];
+        responseID = tapSDKResult!['token'];
         break;
     }
   }
 
   void printSDKResult(String trx_mode) {
-    print('$trx_mode status                : ${tapSDKResult['status']}');
-    print('$trx_mode id               : ${tapSDKResult['charge_id']}');
-    print('$trx_mode  description        : ${tapSDKResult['description']}');
-    print('$trx_mode  message           : ${tapSDKResult['message']}');
-    print('$trx_mode  card_first_six : ${tapSDKResult['card_first_six']}');
-    print('$trx_mode  card_last_four   : ${tapSDKResult['card_last_four']}');
-    print('$trx_mode  card_object         : ${tapSDKResult['card_object']}');
-    print('$trx_mode  card_brand          : ${tapSDKResult['card_brand']}');
-    print('$trx_mode  card_exp_month  : ${tapSDKResult['card_exp_month']}');
-    print('$trx_mode  card_exp_year: ${tapSDKResult['card_exp_year']}');
-    print('$trx_mode  acquirer_id  : ${tapSDKResult['acquirer_id']}');
+    print('$trx_mode status                : ${tapSDKResult!['status']}');
+    print('$trx_mode id               : ${tapSDKResult!['charge_id']}');
+    print('$trx_mode  description        : ${tapSDKResult!['description']}');
+    print('$trx_mode  message           : ${tapSDKResult!['message']}');
+    print('$trx_mode  card_first_six : ${tapSDKResult!['card_first_six']}');
+    print('$trx_mode  card_last_four   : ${tapSDKResult!['card_last_four']}');
+    print('$trx_mode  card_object         : ${tapSDKResult!['card_object']}');
+    print('$trx_mode  card_brand          : ${tapSDKResult!['card_brand']}');
+    print('$trx_mode  card_exp_month  : ${tapSDKResult!['card_exp_month']}');
+    print('$trx_mode  card_exp_year: ${tapSDKResult!['card_exp_year']}');
+    print('$trx_mode  acquirer_id  : ${tapSDKResult!['acquirer_id']}');
     print(
-        '$trx_mode  acquirer_response_code : ${tapSDKResult['acquirer_response_code']}');
+        '$trx_mode  acquirer_response_code : ${tapSDKResult!['acquirer_response_code']}');
     print(
-        '$trx_mode  acquirer_response_message: ${tapSDKResult['acquirer_response_message']}');
-    print('$trx_mode  source_id: ${tapSDKResult['source_id']}');
-    print('$trx_mode  source_channel     : ${tapSDKResult['source_channel']}');
-    print('$trx_mode  source_object      : ${tapSDKResult['source_object']}');
+        '$trx_mode  acquirer_response_message: ${tapSDKResult!['acquirer_response_message']}');
+    print('$trx_mode  source_id: ${tapSDKResult!['source_id']}');
+    print('$trx_mode  source_channel     : ${tapSDKResult!['source_channel']}');
+    print('$trx_mode  source_object      : ${tapSDKResult!['source_object']}');
     print(
-        '$trx_mode source_payment_type : ${tapSDKResult['source_payment_type']}');
+        '$trx_mode source_payment_type : ${tapSDKResult!['source_payment_type']}');
 
-    responseID = tapSDKResult['charge_id'];
+    responseID = tapSDKResult!['charge_id'];
   }
 
   @override
