@@ -61,15 +61,16 @@ class _MyAppState extends State<MyApp> {
           transactionCurrency: "kwd",
           amount: '1',
           customer: Customer(
-              customerId: "",
-              // customer id is important to retrieve cards saved for this customer
-              email: "test@test.com",
-              isdNumber: "965",
-              number: "00000000",
-              firstName: "test",
-              middleName: "test",
-              lastName: "test",
-              metaData: null),
+            customerId: "",
+            // customer id is important to retrieve cards saved for this customer
+            email: "test@test.com",
+            isdNumber: "965",
+            number: "00000000",
+            firstName: "test",
+            middleName: "test",
+            lastName: "test",
+            metaData: null,
+          ),
           paymentItems: <PaymentItem>[
             PaymentItem(
                 name: "item1",
