@@ -15,16 +15,16 @@ Original SDKS
 
 1. [Requirements](#requirements)
 2. [Installation](#installation)
-   1. [Installation with pubspec.yaml](#installation_with_pubspec)
+    1. [Installation with pubspec.yaml](#installation_with_pubspec)
 3. [Usage](#usage)
-   1. [Configure Your App](#configure_your_app)
-   2. [Configure SDK Session](#configure_sdk_session)
-   3. [Transaction Modes](#transaction_modes)
-   4. [Customer](#customer)
-   5. [Configure Payment Type](#configure_payment_type)
-   6. [Use Tap Pay Button](#tap_pay_button)
-   7. [Handle SDK Result](#handle_sdk_result)
-   8. [Apple Pay Setup](#apple_pay)
+    1. [Configure Your App](#configure_your_app)
+    2. [Configure SDK Session](#configure_sdk_session)
+    3. [Transaction Modes](#transaction_modes)
+    4. [Customer](#customer)
+    5. [Configure Payment Type](#configure_payment_type)
+    6. [Use Tap Pay Button](#tap_pay_button)
+    7. [Handle SDK Result](#handle_sdk_result)
+    8. [Apple Pay Setup](#apple_pay)
 
 <a href="requirements"></a>
 
@@ -36,7 +36,7 @@ To use the SDK the following requirements must be met:
 
 1. **Visual Studio - InteliJ Idea**
 2. **Dart 2.7.1** or newer
-3. **Flutter: >=1.10.0** or newer
+3. **Flutter: >=2.5.0** or newer
 4. **iOS 11** or later
 5. **XCode 12** or later
 
@@ -52,7 +52,7 @@ To use the SDK the following requirements must be met:
 
 ```dart
  dependencies:
-     go_sell_sdk_flutter: ^2.2.2
+     go_sell_sdk_flutter: ^2.2.3
 ```
 
 ---
@@ -115,7 +115,7 @@ Future<void> setupSDKSession() async {
                         minimum_fee: 1,
                         maximum_fee: 10),
                     name: "tax1",
-                    description: "tax describtion")
+                    description: "tax description")
                 ],
                 totalAmount: 100),
         ],
@@ -125,23 +125,23 @@ Future<void> setupSDKSession() async {
                 amount: Amount(
                     type: "F", value: 10, minimum_fee: 1, maximum_fee: 10),
                 name: "tax1",
-                description: "tax describtion"),
+                description: "tax description"),
             Tax(
                 amount: Amount(
                     type: "F", value: 10, minimum_fee: 1, maximum_fee: 10),
                 name: "tax1",
-                description: "tax describtion")
+                description: "tax description")
         ],
-        // List of shippnig
+        // List of shipping
         shippings: [
             Shipping(
                 name: "shipping 1",
                 amount: 100,
-                description: "shiping description 1"),
+                description: "shipping description 1"),
             Shipping(
                 name: "shipping 2",
                 amount: 150,
-                description: "shiping description 2")
+                description: "shipping description 2")
         ],
         // Post URL
         postURL: "https://tap.company",
@@ -195,7 +195,7 @@ Future<void> setupSDKSession() async {
         merchantID: "",
         // Allowed cards
         allowedCadTypes: CardType.ALL,
-        applePayMerchantID: "applePayMerchantID",
+        applePayMerchantID: "merchant.applePayMerchantID",
         allowsToSaveSameCardMoreThanOnce: false,
         // pass the card holder name to the SDK
         cardHolderName: "Card Holder NAME",
@@ -217,25 +217,25 @@ trxMode: TransactionMode.PURCHASE
 
 
 You can set the transaction mode into one of the following modes:
-- **Purchase** 
-   - ``` dart TransactionMode.PURCHASE ```<br/>
-   > Normal customer charge.
-- **Authorize** 
-   - ``` dart TransactionMode.AUTHORIZE_CAPTURE ```<br/>
-   > Only authorization is happening. You should specify an action after successful authorization: either capture the amount or void the charge after specific period of time.
-- **Save Card** 
-   - ``` dart TransactionMode.SAVE_CARD ```<br/>
-   > Use this mode to save the card of the customer with Tap and use it later.
-- **Tokenize Card** 
-   - ``` dart TransactionMode.TOKENIZE_CARD ```<br/>
-   > Use this mode if you are willing to perform the charging/authorization manually. The purpose of this mode is only to collect and tokenize card information details of your customer if you don't have PCI compliance certificate but willing to process the payment manually using our services.
+- **Purchase**
+    - ``` dart TransactionMode.PURCHASE ```<br/>
+  > Normal customer charge.
+- **Authorize**
+    - ``` dart TransactionMode.AUTHORIZE_CAPTURE ```<br/>
+  > Only authorization is happening. You should specify an action after successful authorization: either capture the amount or void the charge after specific period of time.
+- **Save Card**
+    - ``` dart TransactionMode.SAVE_CARD ```<br/>
+  > Use this mode to save the card of the customer with Tap and use it later.
+- **Tokenize Card**
+    - ``` dart TransactionMode.TOKENIZE_CARD ```<br/>
+  > Use this mode if you are willing to perform the charging/authorization manually. The purpose of this mode is only to collect and tokenize card information details of your customer if you don't have PCI compliance certificate but willing to process the payment manually using our services.
 
 ---
 
 <a name="customer"></a>
 
- ###### Customer
- 
+###### Customer
+
 - New Customer (First time to pay using goSell SDK)
 ``` dart
 Customer(
@@ -250,7 +250,7 @@ Customer(
 ```
 > After the first transaction success, you receive the customerId in the response. Save it to be used in the next transaction.
 - Existed Customer (paid before using goSell SDK)
- You need to set the customerId only and you can see the customer saved cards if the user has.
+  You need to set the customerId only and you can see the customer saved cards if the user has.
 ``` dart
 Customer(
   customerId: "cus_smdnd3346nd3dks3jd9drd7d",
@@ -287,52 +287,52 @@ paymentType: PaymentType.ALL
 
 ```dart
 Positioned(
-    bottom: Platform.isIOS ? 0 : 10,
-    left: 18,
-    right: 18,
-    child: SizedBox(
-            height: 45,
-            child: ElevatedButton(
-            clipBehavior: Clip.hardEdge,
-            style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(_buttonColor),
-            shape: MaterialStateProperty.all(
-             RoundedRectangleBorder(
-                 borderRadius: BorderRadius.circular(30),
-                 ),
-                 ),
-               ),
-             onPressed: startSDK,
-             child: Row(
-             mainAxisAlignment: MainAxisAlignment.center,
-             children: [
-                 Container(
-                    width: 25,
-                    height: 25,
-                    child: AwesomeLoader(
-                    outerColor: Colors.white,
-                    innerColor: Colors.white,
-                    strokeWidth: 3.0,
-                    controller: loaderController,
-                  ),
-               ),
-            Spacer(),
-            Text(
-               'PAY',
-                style: TextStyle(
-                color: Colors.white,
-                fontSize: 16.0,
-              ),
-           ),
-           Spacer(),
-           Icon(
-           Icons.lock_outline,
-           color: Colors.white,
-             ),
-           ],
-         ),
-       ),
-    ),
+bottom: Platform.isIOS ? 0 : 10,
+left: 18,
+right: 18,
+child: SizedBox(
+height: 45,
+child: ElevatedButton(
+clipBehavior: Clip.hardEdge,
+style: ButtonStyle(
+backgroundColor: MaterialStateProperty.all(_buttonColor),
+shape: MaterialStateProperty.all(
+RoundedRectangleBorder(
+borderRadius: BorderRadius.circular(30),
+),
+),
+),
+onPressed: startSDK,
+child: Row(
+mainAxisAlignment: MainAxisAlignment.center,
+children: [
+Container(
+width: 25,
+height: 25,
+child: AwesomeLoader(
+outerColor: Colors.white,
+innerColor: Colors.white,
+strokeWidth: 3.0,
+controller: loaderController,
+),
+),
+Spacer(),
+Text(
+'PAY',
+style: TextStyle(
+color: Colors.white,
+fontSize: 16.0,
+),
+),
+Spacer(),
+Icon(
+Icons.lock_outline,
+color: Colors.white,
+),
+],
+),
+),
+),
 ),
 ```
 
@@ -351,61 +351,61 @@ Positioned(
 
 ```dart
 setState(() {
-  switch (tapSDKResult['sdk_result']) {
-    case "SUCCESS":
-      sdkStatus = "SUCCESS";
-      handleSDKResult();
-      break;
-    case "FAILED":
-      sdkStatus = "FAILED";
-      handleSDKResult();
-      break;
-    case "SDK_ERROR":
-      sdkErrorCode                  = tapSDKResult['sdk_error_code'].toString();
-      sdkErrorMessage               = tapSDKResult['sdk_error_message'];
-      sdkErrorDescription           = tapSDKResult['sdk_error_description'];
-      break;
-    case "NOT_IMPLEMENTED":
-      sdkStatus = "NOT_IMPLEMENTED";
-      break;
-  }
+switch (tapSDKResult['sdk_result']) {
+case "SUCCESS":
+sdkStatus = "SUCCESS";
+handleSDKResult();
+break;
+case "FAILED":
+sdkStatus = "FAILED";
+handleSDKResult();
+break;
+case "SDK_ERROR":
+sdkErrorCode                  = tapSDKResult['sdk_error_code'].toString();
+sdkErrorMessage               = tapSDKResult['sdk_error_message'];
+sdkErrorDescription           = tapSDKResult['sdk_error_description'];
+break;
+case "NOT_IMPLEMENTED":
+sdkStatus = "NOT_IMPLEMENTED";
+break;
+}
 });
 void handleSDKResult() {
   switch (tapSDKResult['trx_mode']) {
     case "CHARGE":
     case "AUTHORIZE":
     case "SAVE_CARD":
-        extractSDKResultKeysAndValues();
-        break;
+      extractSDKResultKeysAndValues();
+      break;
     case "TOKENIZE":
-        token :                          =tapSDKResult['token'];
-        token_currency                   =tapSDKResult['token_currency'];
-        card_first_six                   =tapSDKResult['card_first_six'];
-        card_last_four                   =tapSDKResult['card_last_four'];
-        card_object                      =tapSDKResult['card_object'];
-        card_exp_month                   =tapSDKResult['card_exp_month'];
-        card_exp_year                    =tapSDKResult['card_exp_year'];
-        break;
-  }
+  token :                          =tapSDKResult['token'];
+  token_currency                   =tapSDKResult['token_currency'];
+  card_first_six                   =tapSDKResult['card_first_six'];
+  card_last_four                   =tapSDKResult['card_last_four'];
+  card_object                      =tapSDKResult['card_object'];
+  card_exp_month                   =tapSDKResult['card_exp_month'];
+  card_exp_year                    =tapSDKResult['card_exp_year'];
+  break;
+}
 }
 void extractSDKResultKeysAndValues() {
-    id                             = tapSDKResult['charge_id'];
-    description                    = tapSDKResult['description'];
-    message                        = tapSDKResult['message'];
-    card_first_six                 = tapSDKResult['card_first_six'];
-    card_last_four                 = tapSDKResult['card_last_four'];
-    card_object                    = tapSDKResult['card_object'];
-    card_brand                     = tapSDKResult['card_brand'];
-    card_exp_month                 = tapSDKResult['card_exp_month'];
-    card_exp_year                  = tapSDKResult['card_exp_year'];
-    acquirer_id                    = tapSDKResult['acquirer_id'];
-    acquirer_response_code         = tapSDKResult['acquirer_response_code'];
-    acquirer_response_message      = tapSDKResult['acquirer_response_message'];
-    source_id                      = tapSDKResult['source_id'];
-    source_channel                 = tapSDKResult['source_channel'];
-    source_object                  = tapSDKResult['source_object'];
-    source_payment_type            = tapSDKResult['source_payment_type'];
-    responseID                     = tapSDKResult['charge_id'];
+  id                             = tapSDKResult['charge_id'];
+  description                    = tapSDKResult['description'];
+  message                        = tapSDKResult['message'];
+  card_first_six                 = tapSDKResult['card_first_six'];
+  card_last_four                 = tapSDKResult['card_last_four'];
+  card_object                    = tapSDKResult['card_object'];
+  card_brand                     = tapSDKResult['card_brand'];
+  card_exp_month                 = tapSDKResult['card_exp_month'];
+  card_exp_year                  = tapSDKResult['card_exp_year'];
+  acquirer_id                    = tapSDKResult['acquirer_id'];
+  acquirer_response_code         = tapSDKResult['acquirer_response_code'];
+  acquirer_response_message      = tapSDKResult['acquirer_response_message'];
+  source_id                      = tapSDKResult['source_id'];
+  source_channel                 = tapSDKResult['source_channel'];
+  source_object                  = tapSDKResult['source_object'];
+  source_payment_type            = tapSDKResult['source_payment_type'];
+  responseID                     = tapSDKResult['charge_id'];
 }
 ```
 

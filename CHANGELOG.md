@@ -1,3 +1,7 @@
+- Upgraded android sdk
+- Migrated to null safety
+## 2.2.3 - 2023-06-26
+
 - Upgraded android sdk for Benefits change
 ## 2.2.2 - 2023-01-31
 
@@ -72,7 +76,7 @@
 ## 2.0.0 - 2020-10-20
 
 - Update Flutter version  >>> Flutter 1.22.1 • channel stable • https://github.com/flutter/flutter.git
-- Change to the new flutter plugin scheme 
+- Change to the new flutter plugin scheme
 - Fix AR for Android
 
 

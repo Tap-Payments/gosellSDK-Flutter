@@ -1,11 +1,11 @@
 name: go_sell_sdk_flutter
 description: Flutter plugin compatible version of goSellSDK library for both Android and iOS.
-version: 2.2.2
+version: 2.2.3
 homepage: https://github.com/Tap-Payments/gosellSDK-Flutter.git
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
-  flutter: ">=1.10.0"
+  sdk: '>=2.19.0 <3.0.0'
+  flutter: ">=2.5.0"
 
 dependencies:
   flutter:

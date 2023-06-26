@@ -1,6 +1,7 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 
 /// TODOs:
 /// - expose these parameters:
@@ -18,7 +19,8 @@ class AwesomeLoader extends StatefulWidget {
       this.innerColor = const Color.fromARGB(255, 66, 62, 60),
       this.strokeWidth = 15,
       this.duration = 4000,
-      this.controller});
+      required this.controller});
+
   final Color outerColor;
   final Color innerColor;
   final double strokeWidth;
@@ -31,17 +33,17 @@ class AwesomeLoader extends StatefulWidget {
 
 class _AwesomeLoaderState extends State<AwesomeLoader>
     with TickerProviderStateMixin {
-  Animation<double> outerAnimation;
-  Animation<double> innerAnimation;
-  AnimationController outerController;
-  AnimationController innerController;
+  late Animation<double> outerAnimation;
+  late Animation<double> innerAnimation;
+  late AnimationController outerController;
+  late AnimationController innerController;
 
 // controls the minimum size of the arc
   static const int minimumArcSize = 5;
 
   // final int durationPortion = 40;
 
-  Timer timer;
+  Timer? timer;
   static const int TIME_PORTION = 10; // 40 milliseconds for each increment
 
   /// ranges are from 0-100
@@ -65,11 +67,12 @@ class _AwesomeLoaderState extends State<AwesomeLoader>
   int i = 1;
 
   // controls the smoothness of the arc animation
-  double arcIncrement;
+  late double arcIncrement;
 
   /// this swithc is controlled by start() and stop() functions
   /// it is used to wait till loader finishes full circle then stop
   bool isLoaderAskedToStop = false;
+
   @override
   void initState() {
     super.initState();
@@ -170,7 +173,7 @@ class _AwesomeLoaderState extends State<AwesomeLoader>
   }
 
   _startRotation() {
-    if (timer != null && timer.isActive) timer.cancel();
+    if (timer != null && timer!.isActive) timer?.cancel();
     timer = Timer.periodic(Duration(milliseconds: TIME_PORTION), (Timer t) {
       if (this.mounted)
         setState(() {
@@ -217,7 +220,7 @@ class _AwesomeLoaderState extends State<AwesomeLoader>
   }
 
   _stopRotation() {
-    timer.cancel();
+    timer?.cancel();
   }
 }
 
@@ -256,6 +259,7 @@ class InnerArcPainter extends CustomPainter {
     this.endRectSize,
     this.strokeWidth,
   );
+
   final Color color;
   final double endRectSize;
   final double startRectSize;
@@ -286,9 +290,10 @@ class InnerArcPainter extends CustomPainter {
 }
 
 class AwesomeLoaderController {
-  AwesomeLoaderController();
+  //AwesomeLoaderController();
 
-  _AwesomeLoaderState _awesomeLoaderState;
+  late _AwesomeLoaderState _awesomeLoaderState;
+
   void stopWhenFull() {
     _awesomeLoaderState.stopWhenFull();
   }
