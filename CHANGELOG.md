@@ -1,3 +1,7 @@
+- iOS Update
+- Success and failed callbacks added for Authorize mode
+## 2.2.4 - 2023-07-12
+
 - Upgraded android sdk
 - Migrated to null safety
 ## 2.2.3 - 2023-06-26
