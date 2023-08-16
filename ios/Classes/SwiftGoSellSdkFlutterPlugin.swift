@@ -594,11 +594,17 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDelegate {
     public func cardTokenized(_ token: Token, on session: SessionProtocol, customerRequestedToSaveTheCard saveCard: Bool) {
        var resultMap:[String:Any] = [:]
           resultMap["token"] = token.identifier
+          print("Result is: \(token.identifier)")
+
           if let tokenDataSource = session.dataSource,
             let tokenCurrency:Currency = tokenDataSource.currency as? Currency {
             resultMap["token_currency"] = tokenCurrency.isoCode
           }
-          resultMap["card_first_six"] = token.card.binNumber
+        resultMap["issuer_bank"] = token.card.issuer?.bank ?? ""
+        resultMap["issuer_country"] = token.card.issuer?.country ?? ""
+        resultMap["issuer_id"] = token.card.issuer?.id ?? ""
+
+        resultMap["card_first_six"] = token.card.binNumber
           resultMap["card_last_four"] = token.card.lastFourDigits
           resultMap["card_object"] = token.card.object
           resultMap["card_exp_month"] = token.card.expirationMonth
