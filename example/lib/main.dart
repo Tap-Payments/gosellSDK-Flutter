@@ -51,8 +51,6 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  //
-
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> setupSDKSession() async {
     try {
@@ -61,15 +59,16 @@ class _MyAppState extends State<MyApp> {
         transactionCurrency: "kwd",
         amount: '100',
         customer: Customer(
-            customerId: "",
-            // customer id is important to retrieve cards saved for this customer
-            email: "test@test.com",
-            isdNumber: "965",
-            number: "00000000",
-            firstName: "test",
-            middleName: "test",
-            lastName: "test",
-            metaData: null),
+          customerId: "",
+          // customer id is important to retrieve cards saved for this customer
+          email: "test@test.com",
+          isdNumber: "965",
+          number: "00000000",
+          firstName: "test",
+          middleName: "test",
+          lastName: "test",
+          metaData: null,
+        ),
         paymentItems: <PaymentItem>[
           PaymentItem(
             name: "item1",
@@ -193,12 +192,13 @@ class _MyAppState extends State<MyApp> {
       loaderController.start();
     });
 
-    var tapSDKResult = await GoSellSdkFlutter.startPaymentSDK;
+    tapSDKResult = await GoSellSdkFlutter.startPaymentSDK;
+
     loaderController.stopWhenFull();
-    print('>>>> ${tapSDKResult['sdk_result']}');
+    print('SDK Result>>>> ${tapSDKResult?['sdk_result']}');
 
     setState(() {
-      switch (tapSDKResult['sdk_result']) {
+      switch (tapSDKResult!['sdk_result']) {
         case "SUCCESS":
           sdkStatus = "SUCCESS";
           handleSDKResult();
@@ -209,13 +209,13 @@ class _MyAppState extends State<MyApp> {
           break;
         case "SDK_ERROR":
           print('sdk error............');
-          print(tapSDKResult['sdk_error_code']);
-          print(tapSDKResult['sdk_error_message']);
-          print(tapSDKResult['sdk_error_description']);
+          print(tapSDKResult!['sdk_error_code']);
+          print(tapSDKResult!['sdk_error_message']);
+          print(tapSDKResult!['sdk_error_description']);
           print('sdk error............');
-          sdkErrorCode = tapSDKResult['sdk_error_code'].toString();
-          sdkErrorMessage = tapSDKResult['sdk_error_message'];
-          sdkErrorDescription = tapSDKResult['sdk_error_description'];
+          sdkErrorCode = tapSDKResult!['sdk_error_code'].toString();
+          sdkErrorMessage = tapSDKResult!['sdk_error_message'];
+          sdkErrorDescription = tapSDKResult!['sdk_error_description'];
           break;
 
         case "NOT_IMPLEMENTED":
@@ -226,7 +226,9 @@ class _MyAppState extends State<MyApp> {
   }
 
   void handleSDKResult() {
-    print('>>>> ${tapSDKResult!['trx_mode']}');
+    print('SDK Result>>>> $tapSDKResult');
+
+    print('Transaction mode>>>> ${tapSDKResult!['trx_mode']}');
 
     switch (tapSDKResult!['trx_mode']) {
       case "CHARGE":
@@ -249,39 +251,43 @@ class _MyAppState extends State<MyApp> {
         print('TOKENIZE card_object  : ${tapSDKResult!['card_object']}');
         print('TOKENIZE card_exp_month : ${tapSDKResult!['card_exp_month']}');
         print('TOKENIZE card_exp_year    : ${tapSDKResult!['card_exp_year']}');
-
+        print('TOKENIZE issuer_id    : ${tapSDKResult!['issuer_id']}');
+        print('TOKENIZE issuer_bank    : ${tapSDKResult!['issuer_bank']}');
+        print(
+            'TOKENIZE issuer_country    : ${tapSDKResult!['issuer_country']}');
         responseID = tapSDKResult!['token'];
         break;
     }
   }
 
-  void printSDKResult(String trx_mode) {
-    print('$trx_mode status                : ${tapSDKResult!['status']}');
-    if (trx_mode == "Authorize") {
-      print('$trx_mode id              : ${tapSDKResult!['authorize_id']}');
+  void printSDKResult(String trxMode) {
+    print('$trxMode status                : ${tapSDKResult!['status']}');
+    if (trxMode == "Authorize") {
+      print('$trxMode id              : ${tapSDKResult!['authorize_id']}');
     } else {
-      print('$trx_mode id               : ${tapSDKResult!['charge_id']}');
+      print('$trxMode id               : ${tapSDKResult!['charge_id']}');
     }
-    print('$trx_mode  description        : ${tapSDKResult!['description']}');
-    print('$trx_mode  message           : ${tapSDKResult!['message']}');
-    print('$trx_mode  card_first_six : ${tapSDKResult!['card_first_six']}');
-    print('$trx_mode  card_last_four   : ${tapSDKResult!['card_last_four']}');
-    print('$trx_mode  card_object         : ${tapSDKResult!['card_object']}');
-    print('$trx_mode  card_brand          : ${tapSDKResult!['card_brand']}');
-    print('$trx_mode  card_exp_month  : ${tapSDKResult!['card_exp_month']}');
-    print('$trx_mode  card_exp_year: ${tapSDKResult!['card_exp_year']}');
-    print('$trx_mode  acquirer_id  : ${tapSDKResult!['acquirer_id']}');
+    print('$trxMode  description        : ${tapSDKResult!['description']}');
+    print('$trxMode  message           : ${tapSDKResult!['message']}');
+    print('$trxMode  card_first_six : ${tapSDKResult!['card_first_six']}');
+    print('$trxMode  card_last_four   : ${tapSDKResult!['card_last_four']}');
+    print('$trxMode  card_object         : ${tapSDKResult!['card_object']}');
+    print('$trxMode  card_id         : ${tapSDKResult!['card_id']}');
+    print('$trxMode  card_brand          : ${tapSDKResult!['card_brand']}');
+    print('$trxMode  card_exp_month  : ${tapSDKResult!['card_exp_month']}');
+    print('$trxMode  card_exp_year: ${tapSDKResult!['card_exp_year']}');
+    print('$trxMode  acquirer_id  : ${tapSDKResult!['acquirer_id']}');
     print(
-        '$trx_mode  acquirer_response_code : ${tapSDKResult!['acquirer_response_code']}');
+        '$trxMode  acquirer_response_code : ${tapSDKResult!['acquirer_response_code']}');
     print(
-        '$trx_mode  acquirer_response_message: ${tapSDKResult!['acquirer_response_message']}');
-    print('$trx_mode  source_id: ${tapSDKResult!['source_id']}');
-    print('$trx_mode  source_channel     : ${tapSDKResult!['source_channel']}');
-    print('$trx_mode  source_object      : ${tapSDKResult!['source_object']}');
+        '$trxMode  acquirer_response_message: ${tapSDKResult!['acquirer_response_message']}');
+    print('$trxMode  source_id: ${tapSDKResult!['source_id']}');
+    print('$trxMode  source_channel     : ${tapSDKResult!['source_channel']}');
+    print('$trxMode  source_object      : ${tapSDKResult!['source_object']}');
     print(
-        '$trx_mode source_payment_type : ${tapSDKResult!['source_payment_type']}');
+        '$trxMode source_payment_type : ${tapSDKResult!['source_payment_type']}');
 
-    if (trx_mode == "Authorize") {
+    if (trxMode == "Authorize") {
       responseID = tapSDKResult!['authorize_id'];
     } else {
       responseID = tapSDKResult!['charge_id'];
@@ -325,7 +331,9 @@ class _MyAppState extends State<MyApp> {
                   child: ElevatedButton(
                     clipBehavior: Clip.hardEdge,
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(_buttonColor),
+                      backgroundColor: MaterialStateProperty.all(
+                        _buttonColor,
+                      ),
                       shape: MaterialStateProperty.all(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),

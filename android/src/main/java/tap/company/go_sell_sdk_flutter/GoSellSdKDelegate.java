@@ -294,10 +294,10 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void sendChargeResult(Charge charge, String paymentStatus, String trx_mode) {
-
+        System.out.println("TRX_MODE : " +trx_mode);
         Map<String, Object> resultMap = new HashMap<>();
         if (charge.getStatus() != null)
-        resultMap.put("status", charge.getStatus().name());
+            resultMap.put("status", charge.getStatus().name());
         resultMap.put("charge_id", charge.getId());
         resultMap.put("description", charge.getDescription());
         resultMap.put("message", charge.getResponse().getMessage());
@@ -346,8 +346,17 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         Map<String, Object> resultMap = new HashMap<>();
 
         resultMap.put("token", token.getId());
+        System.out.println("Token id: " + token.getId());
         resultMap.put("token_currency", token.getCurrency());
         if (token.getCard() != null) {
+            resultMap.put("issuer_id", token.getCard().getIssuer().getId());
+            resultMap.put("issuer_bank", token.getCard().getIssuer().getBank());
+            resultMap.put("issuer_country", token.getCard().getIssuer().getCountry());
+
+            System.out.println("Issuer: " + token.getCard().getIssuer());
+            System.out.println("Issuer Bank: " + token.getCard().getIssuer().getBank());
+            System.out.println("Issuer ID: " + token.getCard().getIssuer().getId());
+            System.out.println("Issuer Country: " + token.getCard().getIssuer().getCountry());
             resultMap.put("card_first_six", token.getCard().getFirstSix());
             resultMap.put("card_last_four", token.getCard().getLastFour());
             resultMap.put("card_object", token.getCard().getObject());
@@ -410,11 +419,12 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
 
     @Override
     public void cardTokenizedSuccessfully(@NonNull Token token, boolean saveCardEnabled) {
-        sendTokenResult(token, "SUCCESS",saveCardEnabled);
+        sendTokenResult(token, "SUCCESS", saveCardEnabled);
     }
 
     @Override
     public void asyncPaymentStarted(@NonNull Charge charge) {
+
     }
 
     @Override
@@ -436,8 +446,8 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
     public void paymentInitiated(@Nullable Charge charge) {
         System.out.println("paymentInitiated CallBack :  ");
         if (charge != null) {
-            System.out.println("Charge id:"+ charge.getId());
-            System.out.println("charge status:"+charge.getStatus());
+            System.out.println("Charge id:" + charge.getId());
+            System.out.println("charge status:" + charge.getStatus());
         }
     }
 

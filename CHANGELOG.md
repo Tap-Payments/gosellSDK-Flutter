@@ -1,6 +1,11 @@
 - Upgraded iOS sdk
 - Upgraded android sdk
 - Bug fixes
+## 2.2.6 - 2023-08-16
+
+- Upgraded iOS sdk
+- Upgraded android sdk
+- Bug fixes
 ## 2.2.5 - 2023-07-12
 
 - iOS Update
