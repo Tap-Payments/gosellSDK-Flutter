@@ -43,9 +43,9 @@ class _MyAppState extends State<MyApp> {
   Future<void> configureApp() async {
     GoSellSdkFlutter.configureApp(
       bundleId: Platform.isAndroid ? "ANDROID-PACKAGE-NAME" : "IOS-APP-ID",
-      productionSecreteKey:
+      productionSecretKey:
           Platform.isAndroid ? "Android-Live-KEY" : "iOS-Live-KEY",
-      sandBoxsecretKey:
+      sandBoxSecretKey:
           Platform.isAndroid ? "Android-SANDBOX-KEY" : "iOS-SANDBOX-KEY",
       lang: "en",
     );
@@ -55,9 +55,9 @@ class _MyAppState extends State<MyApp> {
   Future<void> setupSDKSession() async {
     try {
       GoSellSdkFlutter.sessionConfigurations(
-        trxMode: TransactionMode.AUTHORIZE_CAPTURE,
+        trxMode: TransactionMode.PURCHASE,
         transactionCurrency: "kwd",
-        amount: '100',
+        amount: '1',
         customer: Customer(
           customerId: "",
           // customer id is important to retrieve cards saved for this customer
@@ -70,67 +70,67 @@ class _MyAppState extends State<MyApp> {
           metaData: null,
         ),
         paymentItems: <PaymentItem>[
-          PaymentItem(
-            name: "item1",
-            amountPerUnit: 1,
-            quantity: Quantity(value: 1),
-            discount: {
-              "type": "F",
-              "value": 10,
-              "maximum_fee": 10,
-              "minimum_fee": 1
-            },
-            description: "Item 1 Apple",
-            taxes: [
-              Tax(
-                amount: Amount(
-                  type: "F",
-                  value: 10,
-                  minimumFee: 1,
-                  maximumFee: 10,
-                ),
-                name: "tax1",
-                description: "tax description",
-              )
-            ],
-            totalAmount: 100,
-          ),
+          // PaymentItem(
+          //   name: "item1",
+          //   amountPerUnit: 1,
+          //   quantity: Quantity(value: 1),
+          //   discount: {
+          //     "type": "F",
+          //     "value": 10,
+          //     "maximum_fee": 10,
+          //     "minimum_fee": 1
+          //   },
+          //   description: "Item 1 Apple",
+          //   taxes: [
+          //     Tax(
+          //       amount: Amount(
+          //         type: "F",
+          //         value: 10,
+          //         minimumFee: 1,
+          //         maximumFee: 10,
+          //       ),
+          //       name: "tax1",
+          //       description: "tax description",
+          //     )
+          //   ],
+          //   totalAmount: 100,
+          // ),
         ],
         // List of taxes
         taxes: [
-          Tax(
-            amount: Amount(
-              type: "F",
-              value: 10,
-              minimumFee: 1,
-              maximumFee: 10,
-            ),
-            name: "tax1",
-            description: "tax description",
-          ),
-          Tax(
-            amount: Amount(
-              type: "F",
-              value: 10,
-              minimumFee: 1,
-              maximumFee: 10,
-            ),
-            name: "tax1",
-            description: "tax description",
-          )
+          // Tax(
+          //   amount: Amount(
+          //     type: "F",
+          //     value: 10,
+          //     minimumFee: 1,
+          //     maximumFee: 10,
+          //   ),
+          //   name: "tax1",
+          //   description: "tax description",
+          // ),
+          // Tax(
+          //   amount: Amount(
+          //     type: "F",
+          //     value: 10,
+          //     minimumFee: 1,
+          //     maximumFee: 10,
+          //   ),
+          //   name: "tax1",
+          //   description: "tax description",
+          // )
         ],
         // List of shipping
         shippings: [
-          Shipping(
-            name: "shipping 1",
-            amount: 100,
-            description: "shipping description 1",
-          ),
-          Shipping(
-            name: "shipping 2",
-            amount: 150,
-            description: "shipping description 2",
-          )
+          // Shipping(
+          //   name: "shipping 1",
+          //   amount: 100,
+          //   description: "shipping description 1",
+          // ),
+          // Shipping(
+          //   name: "shipping 2",
+          //   amount: 150,
+          //   description: "shipping description 2",
+          // )
         ],
         postURL: "https://tap.company",
         // Payment description

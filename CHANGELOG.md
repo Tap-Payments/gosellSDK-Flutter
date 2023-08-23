@@ -1,4 +1,8 @@
 - Upgraded iOS sdk
+- Upgraded flutter sdk
+## 2.2.7 - 2023-08-23
+
+- Upgraded iOS sdk
 - Upgraded android sdk
 - Bug fixes
 ## 2.2.6 - 2023-08-16
