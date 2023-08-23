@@ -38,13 +38,13 @@ class GoSellSdkFlutter {
 
   /// App configurations
   static void configureApp(
-      {required String productionSecreteKey,
-      required String sandBoxsecretKey,
+      {required String productionSecretKey,
+      required String sandBoxSecretKey,
       required String bundleId,
       required String lang}) {
     appCredentials = <String, dynamic>{
-      "production_secrete_key": productionSecreteKey,
-      "sandbox_secrete_key": sandBoxsecretKey,
+      "production_secrete_key": productionSecretKey,
+      "sandbox_secrete_key": sandBoxSecretKey,
       "bundleID": bundleId,
       "language": lang
     };
