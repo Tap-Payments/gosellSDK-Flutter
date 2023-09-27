@@ -7,7 +7,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -65,7 +64,6 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
     public void terminateSDKSession() {
         if (activity != null) {
             sdkSession.cancelSession(activity);
-            PaymentDataManager.getInstance().setSDKSettings(null);
         }
     }
 
@@ -112,7 +110,9 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
 
     private void configureApp(String secrete_key, String bundleID, String language) {
         GoSellSDK.init(activity, secrete_key, bundleID); // to be replaced by merchant
-        GoSellSDK.setLocale(language); // to be replaced by merchant
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            GoSellSDK.setLocale(language); // to be replaced by merchant
+        }
     }
 
     /**

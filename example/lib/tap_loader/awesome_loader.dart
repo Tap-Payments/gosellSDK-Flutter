@@ -76,9 +76,7 @@ class _AwesomeLoaderState extends State<AwesomeLoader>
   @override
   void initState() {
     super.initState();
-    if (widget.controller != null) {
-      widget.controller._awesomeLoaderState = this;
-    }
+    widget.controller._awesomeLoaderState = this;
 
     // TODO(khaled): clarify this equation and exctract a constant
     // controls the smoothness of the arc animation
