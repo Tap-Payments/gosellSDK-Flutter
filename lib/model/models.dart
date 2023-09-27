@@ -154,9 +154,7 @@ class PaymentItem {
     data['discount'] = this.discount;
     data['name'] = this.name;
 
-    if (this.quantity != null) {
-      data['quantity'] = this.quantity.toJson();
-    }
+    data['quantity'] = this.quantity.toJson();
 
     if (this.taxes != null) {
       data['taxes'] = this.taxes!.map((v) => v.toJson()).toList();
@@ -208,10 +206,8 @@ class Tax {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['name'] = this.name;
     data['description'] = this.description;
-    if (this.amount != null) {
-      data['amount'] = this.amount.toJson();
-    }
-    return data;
+    data['amount'] = this.amount.toJson();
+      return data;
   }
 }
 
