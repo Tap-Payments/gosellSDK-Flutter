@@ -65,6 +65,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
     public void terminateSDKSession() {
         if (activity != null) {
             sdkSession.cancelSession(activity);
+            PaymentDataManager.getInstance().setSDKSettings(null);
         }
     }
 
@@ -294,7 +295,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void sendChargeResult(Charge charge, String paymentStatus, String trx_mode) {
-        System.out.println("TRX_MODE : " +trx_mode);
+        System.out.println("TRX_MODE : " + trx_mode);
         Map<String, Object> resultMap = new HashMap<>();
         if (charge.getStatus() != null)
             resultMap.put("status", charge.getStatus().name());
