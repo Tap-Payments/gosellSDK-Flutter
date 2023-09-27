@@ -349,7 +349,7 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
             }
         }
       }
-      return [CardType(cardType: .Debit), CardType(cardType: .Credit)]
+      return [CardType(cardType: .Debit), CardType(cardType: .Credit),CardType(cardType: .All)]
     }
     
     public var paymentMetadata: Metadata? {
