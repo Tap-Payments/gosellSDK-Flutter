@@ -130,12 +130,13 @@ class Destination {
 
 class PaymentItem {
   double amountPerUnit;
-  String? description;
-  Map<String, Object>? discount;
+  String description;
+  Map<String, Object> discount;
   String name;
   Quantity quantity;
-  List<Tax>? taxes;
-  int totalAmount;
+  List<Tax> taxes;
+  double totalAmount;
+
 
   PaymentItem(
       {required this.amountPerUnit,
@@ -252,4 +253,5 @@ class AuthorizeAction {
 
 enum AuthorizeActionType { CAPTURE, VOID }
 
-enum CardType { DEBIT, CREDIT, ALL }
+enum CardType { DEBIT, CREDIT , ALL}
+
