@@ -1,3 +1,7 @@
+## 2.3.0 - 2023-0927-23
+
+* Bug fixes for issuer object
+
 ## 2.2.9 - 2023-0927-23
 
 * Upgraded android sdk
