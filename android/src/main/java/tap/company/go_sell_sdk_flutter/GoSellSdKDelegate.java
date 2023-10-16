@@ -350,14 +350,17 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         System.out.println("Token id: " + token.getId());
         resultMap.put("token_currency", token.getCurrency());
         if (token.getCard() != null) {
-            System.out.println("Issuer: " + token.getCard().getIssuer());
-            System.out.println("Issuer ID: " + token.getCard().getIssuer().getId());
-            System.out.println("Issuer Bank:" + token.getCard().getIssuer().getBank());
-            System.out.println("Issuer Country: " + token.getCard().getIssuer().getCountry());
+            if (token.getCard().getIssuer() != null) {
+                System.out.println("Issuer: " + token.getCard().getIssuer());
+                System.out.println("Issuer ID: " + token.getCard().getIssuer().getId());
+                System.out.println("Issuer Bank:" + token.getCard().getIssuer().getBank());
+                System.out.println("Issuer Country: " + token.getCard().getIssuer().getCountry());
 
-            resultMap.put("issuer_id", token.getCard().getIssuer().getId());
-            resultMap.put("issuer_bank", token.getCard().getIssuer().getBank());
-            resultMap.put("issuer_country", token.getCard().getIssuer().getCountry());
+                resultMap.put("issuer_id", token.getCard().getIssuer().getId());
+                resultMap.put("issuer_bank", token.getCard().getIssuer().getBank());
+                resultMap.put("issuer_country", token.getCard().getIssuer().getCountry());
+
+            }
             resultMap.put("card_first_six", token.getCard().getFirstSix());
             resultMap.put("card_last_four", token.getCard().getLastFour());
             resultMap.put("card_object", token.getCard().getObject());

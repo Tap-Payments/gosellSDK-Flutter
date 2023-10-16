@@ -44,9 +44,9 @@ class _MyAppState extends State<MyApp> {
     GoSellSdkFlutter.configureApp(
       bundleId: Platform.isAndroid ? "ANDROID-PACKAGE-NAME" : "IOS-APP-ID",
       productionSecretKey:
-          Platform.isAndroid ? "Android-Live-KEY" : "iOS-Live-KEY",
+      Platform.isAndroid ? "Android-Live-KEY" : "iOS-Live-KEY",
       sandBoxSecretKey:
-          Platform.isAndroid ? "Android-SANDBOX-KEY" : "iOS-SANDBOX-KEY",
+      Platform.isAndroid ? "Android-SANDBOX-KEY" : "iOS-SANDBOX-KEY",
       lang: "en",
     );
   }
@@ -158,7 +158,7 @@ class _MyAppState extends State<MyApp> {
         receipt: Receipt(true, false),
         // Authorize Action [Capture - Void]
         authorizeAction:
-            AuthorizeAction(type: AuthorizeActionType.CAPTURE, timeInHours: 10),
+        AuthorizeAction(type: AuthorizeActionType.CAPTURE, timeInHours: 10),
         // Destinations
         destinations: null,
         // merchant id
