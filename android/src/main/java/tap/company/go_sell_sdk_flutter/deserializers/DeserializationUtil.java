@@ -17,6 +17,7 @@ import java.util.List;
 
 import company.tap.gosellapi.internal.api.models.PhoneNumber;
 import company.tap.gosellapi.open.enums.CardType;
+import company.tap.gosellapi.open.enums.GPayWalletMode;
 import company.tap.gosellapi.open.enums.TransactionMode;
 import company.tap.gosellapi.open.models.AuthorizeAction;
 import company.tap.gosellapi.open.models.Customer;
@@ -176,6 +177,21 @@ public class DeserializationUtil {
         return TransactionMode.PURCHASE;
     }
 
+    public static GPayWalletMode getGPayWalletMode(String jsonString) {
+        if (jsonString == null ||
+                "null".equalsIgnoreCase(jsonString) ||
+                "".equalsIgnoreCase(jsonString.trim())
+        ) return GPayWalletMode.ENVIRONMENT_TEST;
+        System.out.println("gPayWalletMode >>>> " + jsonString);
+        switch (jsonString) {
+            case "ENVIRONMENT_TEST":
+                return GPayWalletMode.ENVIRONMENT_TEST;
+            case "ENVIRONMENT_PRODUCTION":
+                return GPayWalletMode.ENVIRONMENT_PRODUCTION;
+        }
+        return GPayWalletMode.ENVIRONMENT_TEST;
+    }
+
     public static CardType getCardType(String jsonString) {
         if (jsonString == null || jsonString == CardType.ALL.toString() ||
                 "null".equalsIgnoreCase(jsonString) ||
@@ -184,8 +200,7 @@ public class DeserializationUtil {
         System.out.println("card type >>>> " + jsonString);
         if ("CardType.CREDIT".equalsIgnoreCase(jsonString)) {
             return CardType.CREDIT;
-        }
-        else if ("CardType.DEBIT".equalsIgnoreCase(jsonString)) return CardType.DEBIT;
+        } else if ("CardType.DEBIT".equalsIgnoreCase(jsonString)) return CardType.DEBIT;
         return CardType.ALL;
     }
 

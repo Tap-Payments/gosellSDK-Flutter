@@ -1,5 +1,3 @@
-
-
 class Reference {
   String? acquirer;
   String? gateway;
@@ -35,6 +33,7 @@ class Receipt {
   bool sms;
   bool email;
   String? id;
+
   Receipt(this.sms, this.email, {this.id});
 
   Map<String, dynamic> toJson() {
@@ -51,6 +50,7 @@ class Customer {
   String middleName;
   String lastName;
   String email;
+
   // Phone phone;
 
   String isdNumber;
@@ -90,7 +90,8 @@ class Destinations {
   int? count;
   List<Destination>? destinationlist;
 
-  Destinations({this.amount, required this.currency, this.count, this.destinationlist});
+  Destinations(
+      {this.amount, required this.currency, this.count, this.destinationlist});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -115,7 +116,11 @@ class Destination {
   String? reference;
 
   Destination(
-      {required this.id, required this.amount, required this.currency, this.description, this.reference});
+      {required this.id,
+      required this.amount,
+      required this.currency,
+      this.description,
+      this.reference});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -171,7 +176,12 @@ class Amount {
   double value;
   double maximumFee;
   double minimumFee;
-  Amount({required this.type, required this.value, required this.maximumFee, required this.minimumFee});
+
+  Amount(
+      {required this.type,
+      required this.value,
+      required this.maximumFee,
+      required this.minimumFee});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -207,7 +217,7 @@ class Tax {
     data['name'] = this.name;
     data['description'] = this.description;
     data['amount'] = this.amount.toJson();
-      return data;
+    return data;
   }
 }
 
@@ -253,3 +263,4 @@ class AuthorizeAction {
 enum AuthorizeActionType { CAPTURE, VOID }
 
 enum CardType { DEBIT, CREDIT, ALL }
+
