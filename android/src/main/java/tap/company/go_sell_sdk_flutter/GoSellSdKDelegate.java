@@ -20,6 +20,7 @@ import company.tap.gosellapi.internal.api.models.Charge;
 import company.tap.gosellapi.internal.api.models.Token;
 import company.tap.gosellapi.open.controllers.SDKSession;
 import company.tap.gosellapi.open.delegate.SessionDelegate;
+import company.tap.gosellapi.open.enums.GPayWalletMode;
 import company.tap.gosellapi.open.exception.CurrencyException;
 import company.tap.gosellapi.open.models.CardsList;
 import company.tap.gosellapi.open.models.TapCurrency;
@@ -133,6 +134,8 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
 
         // initiate PaymentDataSource
         sdkSession.instantiatePaymentDataSource(); // ** Required **
+
+        sdkSession.setGooglePayWalletMode(DeserializationUtil.getGPayWalletMode(sessionParameters.get("googlePayWalletMode").toString()));//** Required ** For setting GooglePAY Environment
 
         // sdk mode
         sdkSession.setTransactionMode(
@@ -385,6 +388,14 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         pendingResult = null;
     }
 
+    private void sendGooglePayError(String errorMessage) {
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("sdk_result", "SDK_ERROR");
+        resultMap.put("sdk_error_message", errorMessage);
+        pendingResult.success(resultMap);
+        pendingResult = null;
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void paymentSucceed(@NonNull Charge charge) {
@@ -453,6 +464,11 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
             System.out.println("Charge id:" + charge.getId());
             System.out.println("charge status:" + charge.getStatus());
         }
+    }
+
+    @Override
+    public void googlePayFailed(String error) {
+        sendGooglePayError(error);
     }
 
     @Override

@@ -73,6 +73,7 @@ class GoSellSdkFlutter {
     required CardType allowedCadTypes,
     String? applePayMerchantID,
     required SDKMode sdkMode,
+    GooglePayWalletMode? googlePayWalletMode,
     required PaymentType paymentType,
     required bool allowsToSaveSameCardMoreThanOnce,
     required String cardHolderName,
@@ -80,6 +81,9 @@ class GoSellSdkFlutter {
   }) {
     sessionParameters = <String, dynamic>{
       'trxMode': trxMode.toString(),
+      'googlePayWalletMode': googlePayWalletMode == null
+          ? GooglePayWalletMode.ENVIRONMENT_TEST.name
+          : googlePayWalletMode.name,
       'transactionCurrency': transactionCurrency,
       'amount': amount,
       'customer': jsonEncode(customer),
@@ -230,3 +234,8 @@ enum TransactionMode { PURCHASE, AUTHORIZE_CAPTURE, SAVE_CARD, TOKENIZE_CARD }
 enum SDKMode { Sandbox, Production }
 
 enum PaymentType { ALL, CARD, WEB, APPLE_PAY, DEVICE }
+
+enum GooglePayWalletMode {
+  ENVIRONMENT_TEST,
+  ENVIRONMENT_PRODUCTION,
+}

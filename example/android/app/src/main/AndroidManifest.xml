@@ -28,5 +28,9 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data
+            android:name="com.google.android.gsm.wallet.api.enabled"
+            android:value="true"
+            />
     </application>
 </manifest>

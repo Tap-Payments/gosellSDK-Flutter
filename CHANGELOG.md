@@ -1,13 +1,18 @@
-## 2.3.0 - 2023-0927-23
+## 2.3.1 - 2023-10-06
+
+* Upgraded android sdk
+* Updated configuration for google pay
+
+## 2.3.0 - 2023-09-27
 
 * Bug fixes for issuer object
 
-## 2.2.9 - 2023-0927-23
+## 2.2.9 - 2023-09-27
 
 * Upgraded android sdk
 * Bug fixes
 
-## 2.2.8 - 2023-0927-23
+## 2.2.8 - 2023-09-23
 
 * iOS bugs fixes for ApplePay
 
@@ -125,10 +130,10 @@
 
 ## 2.0.0 - 2020-10-20
 
-* Update Flutter version  >>> Flutter 1.22.1 • channel stable • https://github.com/flutter/flutter.git
+* Update Flutter version  >>> Flutter 1.22.1 • channel
+  stable • https://github.com/flutter/flutter.git
 * Change to the new flutter plugin scheme
 * Fix AR for Android
-
 
 ## 1.3.1 - 2020-08-26
 
