@@ -53,7 +53,7 @@ To use the SDK the following requirements must be met:
 ### Include goSellSDK plugin as a dependency in your pubspec.yaml
 
 ```dart  
- dependencies: go_sell_sdk_flutter: ^2.3.1 
+ dependencies: go_sell_sdk_flutter: ^2.3.2 
 ```  
   
 ---  

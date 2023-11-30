@@ -1,3 +1,8 @@
+## 2.3.2 - 2023-11-30
+
+* Upgraded iOS sdk
+* Updated Destination with DestinationGroup
+
 ## 2.3.1 - 2023-10-06
 
 * Upgraded android sdk

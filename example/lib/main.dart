@@ -31,6 +31,7 @@ class _MyAppState extends State<MyApp> {
     configureSDK();
   }
 
+
   // configure SDK
   Future<void> configureSDK() async {
     // configure app
@@ -164,7 +165,7 @@ class _MyAppState extends State<MyApp> {
         // merchant id
         merchantID: "",
         // Allowed cards
-        allowedCadTypes: CardType.ALL,
+        allowedCadTypes: CardType.CREDIT,
         applePayMerchantID: "merchant.applePayMerchantID",
         allowsToSaveSameCardMoreThanOnce: true,
         // pass the card holder name to the SDK
@@ -297,10 +298,18 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        useMaterial3: true,
+        bottomSheetTheme: const BottomSheetThemeData(
+          backgroundColor: Colors.white,
+          elevation: 0,
+        ),
+      ),
+
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Plugin example app'),
-          backgroundColor: Colors.grey,
+          centerTitle: true,
         ),
         body: SafeArea(
           child: Stack(

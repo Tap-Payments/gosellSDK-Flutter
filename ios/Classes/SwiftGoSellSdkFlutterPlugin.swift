@@ -289,24 +289,22 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
       }
         return .void(after: 0)
     }
-    public var destinations: [Destination]? {
-      if let destinationsGroupString:String = argsSessionParameters?["destinations"] as? String {
-        if let data = destinationsGroupString.data(using: .utf8) {
-          do {
-            if let destinationsGroupJson:[String:Any] = try JSONSerialization.jsonObject(with: data, options: [.allowFragments]) as? [String : Any],
-              let destinationsJson:[[String:Any]] = destinationsGroupJson["destination"] as? [[String:Any]] {
-              let destinationData = try JSONSerialization.data(withJSONObject: destinationsJson, options: [.fragmentsAllowed])
-              let decoder = JSONDecoder()
-              let destinationsItems:[Destination] = try decoder.decode([Destination].self, from: destinationData)
-              return destinationsItems
+    
+    public var destinations: DestinationGroup? {
+            if let destinationsGroupString: [String : Any] = argsSessionParameters?["destinations"] as?  [String : Any] {
+                do {
+                    let jsonData = try JSONSerialization.data(withJSONObject: destinationsGroupString, options: .prettyPrinted)
+                        let decoder = JSONDecoder()
+                        let destinationsItems: DestinationGroup = try decoder.decode(DestinationGroup.self, from: jsonData)
+                        return destinationsItems
+                } catch  {
+                    return nil
+                    print(error.localizedDescription)
+                }
             }
-          } catch {
-            print("error: \(error.localizedDescription)")
-          }
+            return nil
         }
-      }
-      return nil
-    }
+    
     public var shipping: [Shipping]? {
       if let shippingString:String = argsSessionParameters?["shipping"] as? String {
         if let data = shippingString.data(using: .utf8) {
