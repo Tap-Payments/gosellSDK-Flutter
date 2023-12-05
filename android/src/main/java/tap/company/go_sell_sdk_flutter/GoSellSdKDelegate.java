@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -19,8 +20,9 @@ import company.tap.gosellapi.internal.api.models.Authorize;
 import company.tap.gosellapi.internal.api.models.Charge;
 import company.tap.gosellapi.internal.api.models.Token;
 import company.tap.gosellapi.open.controllers.SDKSession;
+import company.tap.gosellapi.open.controllers.ThemeObject;
 import company.tap.gosellapi.open.delegate.SessionDelegate;
-import company.tap.gosellapi.open.enums.GPayWalletMode;
+import company.tap.gosellapi.open.enums.AppearanceMode;
 import company.tap.gosellapi.open.exception.CurrencyException;
 import company.tap.gosellapi.open.models.CardsList;
 import company.tap.gosellapi.open.models.TapCurrency;
@@ -158,6 +160,23 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
 
         sdkSession.setTransactionCurrency(transactionCurrency); // ** Required **
 
+        if (sessionParameters.get("appearanceMode") != null) {
+            ThemeObject.getInstance()
+                    .setAppearanceMode(DeserializationUtil.getAppearanceMode(sessionParameters.get("appearanceMode").toString()));
+        }else {
+            if(sessionParameters.get("trxMode").toString().equals("TransactionMode.SAVE_CARD") ||
+                    sessionParameters.get("trxMode").toString().equals("TransactionMode.TOKENIZE_CARD")) {
+                ThemeObject.getInstance()
+                        .setAppearanceMode(AppearanceMode.WINDOWED_MODE);
+            }else {
+                ThemeObject.getInstance()
+                        .setAppearanceMode(AppearanceMode.FULLSCREEN_MODE);
+            }
+        }
+
+
+
+
         // Using static CustomerBuilder method available inside TAP Customer Class you
         // can populate TAP Customer object and pass it to SDK
         sdkSession.setCustomer(DeserializationUtil.getCustomer(sessionParameters)); // ** Required **
@@ -195,6 +214,9 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
 
         // Post URL
         sdkSession.setPostURL(sessionParameters.get("postURL").toString());// ** Optional **
+
+        /// Supported payment methods
+        sdkSession.setSupportedPaymentMethods((ArrayList<String>) sessionParameters.get("supportedPaymentMethods"));
 
         // Payment Description
         sdkSession.setPaymentDescription(sessionParameters.get("paymentDescription").toString()); // ** Optional **

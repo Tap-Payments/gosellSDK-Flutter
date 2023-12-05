@@ -78,6 +78,8 @@ class GoSellSdkFlutter {
     required bool allowsToSaveSameCardMoreThanOnce,
     required String cardHolderName,
     required bool allowsToEditCardHolderName,
+    List<String>? supportedPaymentMethods,
+    SDKAppearanceMode? appearanceMode,
   }) {
     sessionParameters = <String, dynamic>{
       'trxMode': trxMode.toString(),
@@ -108,6 +110,10 @@ class GoSellSdkFlutter {
       "allowsToSaveSameCardMoreThanOnce": allowsToSaveSameCardMoreThanOnce,
       "cardHolderName": cardHolderName,
       "editCardHolderName": allowsToEditCardHolderName,
+      "supportedPaymentMethods": supportedPaymentMethods,
+      "appearanceMode": appearanceMode == SDKAppearanceMode.windowed
+          ? SDKAppearanceMode.windowed.name.toString()
+          : SDKAppearanceMode.fullscreen.name.toString()
     };
   }
 
@@ -238,4 +244,9 @@ enum PaymentType { ALL, CARD, WEB, APPLE_PAY, DEVICE }
 enum GooglePayWalletMode {
   ENVIRONMENT_TEST,
   ENVIRONMENT_PRODUCTION,
+}
+
+enum SDKAppearanceMode {
+  windowed,
+  fullscreen,
 }

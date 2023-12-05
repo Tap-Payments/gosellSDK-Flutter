@@ -31,7 +31,6 @@ class _MyAppState extends State<MyApp> {
     configureSDK();
   }
 
-
   // configure SDK
   Future<void> configureSDK() async {
     // configure app
@@ -174,8 +173,14 @@ class _MyAppState extends State<MyApp> {
         allowsToEditCardHolderName: true,
         // select payments you need to show [Default is all, and you can choose between WEB-CARD-APPLEPAY ]
         paymentType: PaymentType.ALL,
+        // Supported payment methods List
+        supportedPaymentMethods: [
+          "knet",
+          "visa",
+        ],
         // Transaction mode
         sdkMode: SDKMode.Sandbox,
+        appearanceMode: SDKAppearanceMode.fullscreen,
       );
     } on PlatformException {
       // platformVersion = 'Failed to get platform version.';
@@ -305,7 +310,6 @@ class _MyAppState extends State<MyApp> {
           elevation: 0,
         ),
       ),
-
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Plugin example app'),
