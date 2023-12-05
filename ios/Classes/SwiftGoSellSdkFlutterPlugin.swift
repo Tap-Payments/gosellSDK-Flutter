@@ -58,6 +58,8 @@ public class SwiftGoSellSdkFlutterPlugin: NSObject, FlutterPlugin {
     }
 }
 
+
+
 extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
 
     public var customer: Customer?{
@@ -247,6 +249,15 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
       }
       return nil
     }
+    
+    public var supportedPaymentMethods: [String] {
+           if let paymentTypeString:[String] = argsSessionParameters?["supportedPaymentMethods"] as? [String] {
+               return paymentTypeString
+           }else {
+               return []
+           }
+       }
+    
     public var paymentReference: Reference? {
       if let paymentReferenceString:String = argsSessionParameters?["paymentReference"] as? String {
         if let data = paymentReferenceString.data(using: .utf8) {
@@ -633,6 +644,19 @@ extension SwiftGoSellSdkFlutterPlugin: SessionAppearance {
     public func sessionShouldShowStatusPopup(_ session: SessionProtocol) -> Bool {
     return false
   }
+    
+    public func appearanceMode(for session: SessionProtocol) -> SDKAppearanceMode {
+        if let modeString:String = argsSessionParameters?["appearanceMode"] as? String {
+        
+              if modeString.lowercased() == "fullscreen" {
+                  return SDKAppearanceMode.fullscreen
+              }else if modeString.lowercased() == "windowed" {
+                  return SDKAppearanceMode.windowed
+              }
+         
+        }
+       return SDKAppearanceMode.default
+    }
 }
 
 

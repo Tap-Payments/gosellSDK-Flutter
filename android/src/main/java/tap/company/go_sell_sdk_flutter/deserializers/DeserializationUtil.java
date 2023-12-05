@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import company.tap.gosellapi.internal.api.models.PhoneNumber;
+import company.tap.gosellapi.open.enums.AppearanceMode;
 import company.tap.gosellapi.open.enums.CardType;
 import company.tap.gosellapi.open.enums.GPayWalletMode;
 import company.tap.gosellapi.open.enums.TransactionMode;
@@ -175,6 +176,14 @@ public class DeserializationUtil {
                 return TransactionMode.TOKENIZE_CARD;
         }
         return TransactionMode.PURCHASE;
+    }
+
+    public static AppearanceMode getAppearanceMode(String jsonString) {
+        if (jsonString.equals("windowed")) {
+            return AppearanceMode.WINDOWED_MODE;
+        } else {
+            return AppearanceMode.FULLSCREEN_MODE;
+        }
     }
 
     public static GPayWalletMode getGPayWalletMode(String jsonString) {
