@@ -1,7 +1,12 @@
+## 2.3.4 - 2023-12-11
+
+* Upgraded iOS sdk
+* Bug fixes and sdk enhancement 
+
 ## 2.3.3 - 2023-12-05
 
 * Upgraded iOS sdk
-* Upgraded iOS sdk
+* Upgraded Android sdk
 * AppearanceMode added for both Android & iOS
 * SupportedPaymentMethods added for both Android & iOS
 
