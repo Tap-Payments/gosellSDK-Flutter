@@ -1,37 +1,35 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:go_sell_sdk_flutter/model/models.dart';
 import 'package:go_sell_sdk_flutter/utils/util.dart';
 
 class GoSellSdkFlutter {
-  static const String ERROR_CODE_INVALID_SESSION_CONFIGURATION = '500';
-  static const String ERROR_CODE_INVALID_APP_CONFIGURATION = '501';
-  static final Map<dynamic, dynamic> _tapSDKResult = Map<dynamic, dynamic>();
+  static const String ERROR_CODE_INVALID_SESSION_CONFIGURATION = "500";
+  static const String ERROR_CODE_INVALID_APP_CONFIGURATION = "501";
+  static Map<dynamic, dynamic> _tapSDKResult = Map<dynamic, dynamic>();
 
-  static const MethodChannel _channel = MethodChannel('go_sell_sdk_flutter');
+  static const MethodChannel _channel =
+      const MethodChannel('go_sell_sdk_flutter');
 
   static Future<dynamic> get startPaymentSDK async {
     if (!_validateSessionArge() || _validateAppConfig()) return _tapSDKResult;
 
     /// prepare sdk configurations
     sdkConfigurations = {
-      'appCredentials': appCredentials,
-      'sessionParameters': sessionParameters
+      "appCredentials": appCredentials,
+      "sessionParameters": sessionParameters
     };
 
     // /forward call to channel
-    final dynamic result =
+    dynamic result =
         await _channel.invokeMethod('start_sdk', sdkConfigurations);
-    if (kDebugMode) {
-      print('result in dart : $result');
-    }
+    print('result in dart : $result');
     return result;
   }
 
   static Future<Null> terminateSession() async {
-    await _channel.invokeMethod('terminate_session');
+    _channel.invokeMethod('terminate_session');
   }
 
   static Map<String, dynamic> sdkConfigurations = {};
@@ -45,86 +43,85 @@ class GoSellSdkFlutter {
       required String bundleId,
       required String lang}) {
     appCredentials = <String, dynamic>{
-      'production_secrete_key': productionSecretKey,
-      'sandbox_secrete_key': sandBoxSecretKey,
-      'bundleID': bundleId,
-      'language': lang
+      "production_secrete_key": productionSecretKey,
+      "sandbox_secrete_key": sandBoxSecretKey,
+      "bundleID": bundleId,
+      "language": lang
     };
   }
 
   /// session configurations
   static void sessionConfigurations({
     required TransactionMode trxMode,
-    required SDKMode sdkMode,
-    String? transactionCurrency,
-    String? amount,
-    Customer? customer,
-    List<PaymentItem>? paymentItems,
-    List<Tax>? taxes,
-    List<Shipping>? shippings,
-    String? postURL,
-    String? paymentDescription,
-    Map<String, String>? paymentMetaData,
-    Reference? paymentReference,
-    String? paymentStatementDescriptor,
-    bool? isUserAllowedToSaveCard,
-    bool? isRequires3DSecure,
-    Receipt? receipt,
-    AuthorizeAction? authorizeAction,
+    required String transactionCurrency,
+    required String amount,
+    required Customer customer,
+    required List<PaymentItem> paymentItems,
+    required List<Tax> taxes,
+    required List<Shipping> shippings,
+    required String postURL,
+    required String paymentDescription,
+    required Map<String, String> paymentMetaData,
+    required Reference paymentReference,
+    required String paymentStatementDescriptor,
+    required bool isUserAllowedToSaveCard,
+    required bool isRequires3DSecure,
+    required Receipt receipt,
+    required AuthorizeAction authorizeAction,
     Destinations? destinations,
-    String? merchantID,
-    CardType? allowedCadTypes,
+    required String merchantID,
+    required CardType allowedCadTypes,
     String? applePayMerchantID,
+    required SDKMode sdkMode,
     GooglePayWalletMode? googlePayWalletMode,
-    PaymentType? paymentType,
-    bool? allowsToSaveSameCardMoreThanOnce,
-    String? cardHolderName,
-    bool? allowsToEditCardHolderName,
+    required PaymentType paymentType,
+    required bool allowsToSaveSameCardMoreThanOnce,
+    required String cardHolderName,
+    required bool allowsToEditCardHolderName,
     List<String>? supportedPaymentMethods,
     SDKAppearanceMode? appearanceMode,
   }) {
     sessionParameters = <String, dynamic>{
       'trxMode': trxMode.toString(),
-      'googlePayWalletMode': googlePayWalletMode?.name,
-      'transactionCurrency': transactionCurrency ?? 'AED',
-      'amount': amount ?? '0',
-      'customer': customer == null ? null : jsonEncode(customer),
-      'paymentitems': paymentItems == null ? null : jsonEncode(paymentItems),
-      'taxes': taxes == null ? null : jsonEncode(taxes),
-      'shipping': shippings == null ? null : jsonEncode(shippings),
-      'postURL': postURL,
-      'paymentDescription': paymentDescription,
-      'paymentMetaData':
-          paymentMetaData == null ? null : jsonEncode(paymentMetaData),
-      'paymentReference':
-          paymentReference == null ? null : jsonEncode(paymentReference),
-      'paymentStatementDescriptor': paymentStatementDescriptor,
-      'isUserAllowedToSaveCard': isUserAllowedToSaveCard,
-      'isRequires3DSecure': isRequires3DSecure ?? false,
-      'receiptSettings': receipt == null ? null : jsonEncode(receipt),
-      'authorizeAction':
-          authorizeAction == null ? null : jsonEncode(authorizeAction),
-      'destinations': destinations == null ? null : jsonEncode(destinations),
-      'merchantID': merchantID,
-      'allowedCadTypes': allowedCadTypes?.toString(),
-      'applePayMerchantID': applePayMerchantID,
-      'SDKMode': sdkMode.toString(),
-      'paymentType': paymentType?.toString(),
-      'allowsToSaveSameCardMoreThanOnce': allowsToSaveSameCardMoreThanOnce,
-      'cardHolderName': cardHolderName,
-      'editCardHolderName': allowsToEditCardHolderName ?? false,
-      'supportedPaymentMethods': supportedPaymentMethods ?? [],
-      'appearanceMode': appearanceMode == SDKAppearanceMode.windowed
-          ? SDKAppearanceMode.windowed.name
-          : SDKAppearanceMode.fullscreen.name
+      'googlePayWalletMode': googlePayWalletMode == null
+          ? GooglePayWalletMode.ENVIRONMENT_TEST.name
+          : googlePayWalletMode.name,
+      'transactionCurrency': transactionCurrency,
+      'amount': amount,
+      'customer': jsonEncode(customer),
+      "paymentitems": jsonEncode(paymentItems),
+      "taxes": jsonEncode(taxes),
+      "shipping": jsonEncode(shippings),
+      "postURL": postURL,
+      "paymentDescription": paymentDescription,
+      "paymentMetaData": jsonEncode(paymentMetaData),
+      "paymentReference": jsonEncode(paymentReference),
+      "paymentStatementDescriptor": paymentStatementDescriptor,
+      "isUserAllowedToSaveCard": isUserAllowedToSaveCard,
+      "isRequires3DSecure": isRequires3DSecure,
+      "receiptSettings": jsonEncode(receipt),
+      "authorizeAction": jsonEncode(authorizeAction),
+      "destinations": jsonEncode(destinations),
+      "merchantID": merchantID,
+      "allowedCadTypes": allowedCadTypes.toString(),
+      "applePayMerchantID": applePayMerchantID,
+      "SDKMode": sdkMode.toString(),
+      "paymentType": paymentType.toString(),
+      "allowsToSaveSameCardMoreThanOnce": allowsToSaveSameCardMoreThanOnce,
+      "cardHolderName": cardHolderName,
+      "editCardHolderName": allowsToEditCardHolderName,
+      "supportedPaymentMethods": supportedPaymentMethods,
+      "appearanceMode": appearanceMode == SDKAppearanceMode.windowed
+          ? SDKAppearanceMode.windowed.name.toString()
+          : SDKAppearanceMode.fullscreen.name.toString()
     };
   }
 
   /// validate app configurations
   static bool _validateAppConfig() {
-    if (appCredentials['bundleId'] == '' ||
-        appCredentials['bundleId'] == 'null' ||
-        appCredentials['bundleId'] == null) {
+    if (appCredentials["bundleId"] == "" ||
+        appCredentials["bundleId"] == "null" ||
+        appCredentials["bundleId"] == null) {
       _prepareConfigurationsErrorMap(
           errorCode: ERROR_CODE_INVALID_APP_CONFIGURATION,
           errorMsg: 'Invalid Bundle ID',
@@ -132,9 +129,9 @@ class GoSellSdkFlutter {
       return false;
     }
 
-    if (appCredentials['production_secrete_key'] == '' ||
-        appCredentials['production_secrete_key'] == 'null' ||
-        appCredentials['production_secrete_key'] == null) {
+    if (appCredentials["production_secrete_key"] == "" ||
+        appCredentials["production_secrete_key"] == "null" ||
+        appCredentials["production_secrete_key"] == null) {
       _prepareConfigurationsErrorMap(
           errorCode: ERROR_CODE_INVALID_APP_CONFIGURATION,
           errorMsg: 'Invalid secrete Key',
@@ -142,9 +139,9 @@ class GoSellSdkFlutter {
       return false;
     }
 
-    if (appCredentials['sandbox_secrete_key'] == '' ||
-        appCredentials['sandbox_secrete_key'] == 'null' ||
-        appCredentials['sandbox_secrete_key'] == null) {
+    if (appCredentials["sandbox_secrete_key"] == "" ||
+        appCredentials["sandbox_secrete_key"] == "null" ||
+        appCredentials["sandbox_secrete_key"] == null) {
       _prepareConfigurationsErrorMap(
           errorCode: ERROR_CODE_INVALID_APP_CONFIGURATION,
           errorMsg: 'Invalid secrete Key',
@@ -152,9 +149,9 @@ class GoSellSdkFlutter {
       return false;
     }
 
-    if (appCredentials['lang'] == '' ||
-        appCredentials['lang'] == 'null' ||
-        appCredentials['lang'] == null) {
+    if (appCredentials["lang"] == "" ||
+        appCredentials["lang"] == "null" ||
+        appCredentials["lang"] == null) {
       _prepareConfigurationsErrorMap(
           errorCode: ERROR_CODE_INVALID_SESSION_CONFIGURATION,
           errorMsg: 'Invalid language',
@@ -166,9 +163,9 @@ class GoSellSdkFlutter {
 
   static bool _validateSessionArge() {
     // validate trx mode
-    if (sessionParameters['trxMode'] == '' ||
-        sessionParameters['trxMode'] == 'null' ||
-        sessionParameters['trxMode'] == null) {
+    if (sessionParameters["trxMode"] == "" ||
+        sessionParameters["trxMode"] == "null" ||
+        sessionParameters["trxMode"] == null) {
       _prepareConfigurationsErrorMap(
           errorCode: ERROR_CODE_INVALID_SESSION_CONFIGURATION,
           errorMsg: 'Invalid Transaction Mode',
@@ -177,9 +174,9 @@ class GoSellSdkFlutter {
     }
 
     // validate transaction currency
-    if (sessionParameters['transactionCurrency'] == '' ||
-        sessionParameters['transactionCurrency'] == 'null' ||
-        sessionParameters['transactionCurrency'].length == 0) {
+    if (sessionParameters["transactionCurrency"] == "" ||
+        sessionParameters["transactionCurrency"] == "null" ||
+        sessionParameters["transactionCurrency"].length == 0) {
       _prepareConfigurationsErrorMap(
           errorCode: ERROR_CODE_INVALID_SESSION_CONFIGURATION,
           errorMsg: 'Invalid Transaction Currency',
@@ -188,8 +185,8 @@ class GoSellSdkFlutter {
     }
 
     // validate customer
-    if (sessionParameters['customer'] == 'null' ||
-        sessionParameters['customer'] == null) {
+    if (sessionParameters["customer"] == "null" ||
+        sessionParameters["customer"] == null) {
       _prepareConfigurationsErrorMap(
           errorCode: ERROR_CODE_INVALID_SESSION_CONFIGURATION,
           errorMsg: 'Invalid Customer',
@@ -198,9 +195,9 @@ class GoSellSdkFlutter {
     }
 
     // validate amount
-    if (sessionParameters['amount'] == 'null' ||
-        !Util.isNumeric(sessionParameters['amount'] as String) ||
-        sessionParameters['amount'] == '') {
+    if (sessionParameters["amount"] == "null" ||
+        !Util.isNumeric(sessionParameters["amount"]) ||
+        sessionParameters["amount"] == "") {
       _prepareConfigurationsErrorMap(
           errorCode: ERROR_CODE_INVALID_SESSION_CONFIGURATION,
           errorMsg: 'Invalid Amount',
@@ -210,19 +207,19 @@ class GoSellSdkFlutter {
     }
 
     // validate 3dsecure
-    _validateBooleanValues('isRequires3DSecure');
+    _validateBooleanValues("isRequires3DSecure");
     // validate saveCard
-    _validateBooleanValues('isUserAllowedToSaveCard');
+    _validateBooleanValues("isUserAllowedToSaveCard");
     // validate save multiple
-    _validateBooleanValues('allowsToSaveSameCardMoreThanOnce');
+    _validateBooleanValues("allowsToSaveSameCardMoreThanOnce");
 
     return true;
   }
 
   static void _validateBooleanValues(String param) {
-    if (sessionParameters[param] == 'null' ||
+    if (sessionParameters[param] == "null" ||
         sessionParameters[param] == null ||
-        sessionParameters[param] == '') {
+        sessionParameters[param] == "") {
       sessionParameters[param] = false;
     }
   }
