@@ -85,21 +85,21 @@ class GoSellSdkFlutter {
   }) {
     sessionParameters = <String, dynamic>{
       'trxMode': trxMode.toString(),
-      'googlePayWalletMode': googlePayWalletMode?.name,
+      'googlePayWalletMode': null,
       'transactionCurrency': transactionCurrency ?? 'AED',
       'amount': amount ?? '0',
       'customer': customer == null ? null : jsonEncode(customer),
-      'paymentitems': paymentItems == null ? null : jsonEncode(paymentItems),
-      'taxes': taxes == null ? null : jsonEncode(taxes),
-      'shipping': shippings == null ? null : jsonEncode(shippings),
-      'postURL': postURL,
-      'paymentDescription': paymentDescription,
+      'paymentitems': [],
+      'taxes': null,
+      'shipping':[],
+      'postURL': null,
+      'paymentDescription': null,
       'paymentMetaData':
-          paymentMetaData == null ? null : jsonEncode(paymentMetaData),
+         {},
       'paymentReference':
-          paymentReference == null ? null : jsonEncode(paymentReference),
-      'paymentStatementDescriptor': paymentStatementDescriptor,
-      'isUserAllowedToSaveCard': isUserAllowedToSaveCard,
+          null,
+      'paymentStatementDescriptor': null,
+      'isUserAllowedToSaveCard': false,
       'isRequires3DSecure': isRequires3DSecure ?? false,
       'receiptSettings': receipt == null ? null : jsonEncode(receipt),
       'authorizeAction':
