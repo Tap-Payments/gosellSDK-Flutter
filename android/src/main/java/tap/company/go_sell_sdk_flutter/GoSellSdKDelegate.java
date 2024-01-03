@@ -137,28 +137,28 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         // initiate PaymentDataSource
         sdkSession.instantiatePaymentDataSource(); // ** Required **
 
-        sdkSession.setGooglePayWalletMode(DeserializationUtil.getGPayWalletMode(sessionParameters.get("googlePayWalletMode").toString()));//** Required ** For setting GooglePAY Environment
+        // sdkSession.setGooglePayWalletMode(DeserializationUtil.getGPayWalletMode(sessionParameters.get("googlePayWalletMode").toString()));//** Required ** For setting GooglePAY Environment
 
         // sdk mode
         sdkSession.setTransactionMode(
                 DeserializationUtil.getTransactionMode(sessionParameters.get("trxMode").toString()));
 
         // set transaction currency associated to your account
-        TapCurrency transactionCurrency;
-        try {
-            transactionCurrency = new TapCurrency(
-                    (String) Objects.requireNonNull(sessionParameters.get("transactionCurrency")));
-        } catch (CurrencyException c) {
-            Log.d("GoSellSDKDelegate : ", "Unknown currency exception thrown : "
-                    + (String) Objects.requireNonNull(sessionParameters.get("transactionCurrency")));
-            transactionCurrency = new TapCurrency("KWD");
-        } catch (Exception e) {
-            Log.d("GoSellSDKDelegate : ", "Unknown currency: "
-                    + (String) Objects.requireNonNull(sessionParameters.get("transactionCurrency")));
-            transactionCurrency = new TapCurrency("KWD");
-        }
+        // TapCurrency transactionCurrency;
+        // try {
+        //     transactionCurrency = new TapCurrency(
+        //             (String) Objects.requireNonNull(sessionParameters.get("transactionCurrency")));
+        // } catch (CurrencyException c) {
+        //     Log.d("GoSellSDKDelegate : ", "Unknown currency exception thrown : "
+        //             + (String) Objects.requireNonNull(sessionParameters.get("transactionCurrency")));
+        //     transactionCurrency = new TapCurrency("KWD");
+        // } catch (Exception e) {
+        //     Log.d("GoSellSDKDelegate : ", "Unknown currency: "
+        //             + (String) Objects.requireNonNull(sessionParameters.get("transactionCurrency")));
+        //     transactionCurrency = new TapCurrency("KWD");
+        // }
 
-        sdkSession.setTransactionCurrency(transactionCurrency); // ** Required **
+        // sdkSession.setTransactionCurrency(transactionCurrency); // ** Required **
 
         if (sessionParameters.get("appearanceMode") != null) {
             ThemeObject.getInstance()

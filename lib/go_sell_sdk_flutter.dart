@@ -89,9 +89,30 @@ class GoSellSdkFlutter {
       'amount': amount ?? '0',
       'customer': customer == null ? null : jsonEncode(customer),
       'isUserAllowedToSaveCard': false,
-      'isRequires3DSecure':  false,
+      'isRequires3DSecure': false,
       'SDKMode': sdkMode.toString(),
       'allowsToSaveSameCardMoreThanOnce': false,
+      'paymentItems': [],
+      'taxes': [],
+      'shippings': [],
+      'postURL': postURL ?? '',
+      'paymentDescription': paymentDescription ?? '',
+      'paymentMetaData': paymentMetaData ?? {},
+      'paymentReference': paymentReference == null
+          ? null
+          : jsonEncode(paymentReference.toJson()),
+      'supportedPaymentMethods': supportedPaymentMethods ??
+          ['CREDIT_CARD', 'APPLE_PAY', 'GOOGLE_PAY', 'WEB'],
+      'paymentStatementDescriptor': paymentStatementDescriptor ?? '',
+      'receipt': receipt == null ? null : jsonEncode(receipt),
+      'authorizeAction':
+          authorizeAction == null ? null : jsonEncode(authorizeAction),
+      'destinations': destinations == null ? null : jsonEncode(destinations),
+      'merchantID': merchantID ?? '',
+      'allowedCadTypes': CardType.ALL.name,
+      'paymentType': PaymentType.ALL.name,
+      "cardHolderName": "CardHolderName",
+      "editCardHolderName": false,
     };
   }
 
