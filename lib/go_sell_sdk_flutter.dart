@@ -85,38 +85,13 @@ class GoSellSdkFlutter {
   }) {
     sessionParameters = <String, dynamic>{
       'trxMode': trxMode.toString(),
-      'googlePayWalletMode': null,
       'transactionCurrency': transactionCurrency ?? 'AED',
       'amount': amount ?? '0',
       'customer': customer == null ? null : jsonEncode(customer),
-      'paymentitems': [],
-      'taxes': null,
-      'shipping':[],
-      'postURL': null,
-      'paymentDescription': null,
-      'paymentMetaData':
-         {},
-      'paymentReference':
-          null,
-      'paymentStatementDescriptor': null,
       'isUserAllowedToSaveCard': false,
-      'isRequires3DSecure': isRequires3DSecure ?? false,
-      'receiptSettings': receipt == null ? null : jsonEncode(receipt),
-      'authorizeAction':
-          authorizeAction == null ? null : jsonEncode(authorizeAction),
-      'destinations': destinations == null ? null : jsonEncode(destinations),
-      'merchantID': merchantID,
-      'allowedCadTypes': allowedCadTypes?.toString(),
-      'applePayMerchantID': applePayMerchantID,
+      'isRequires3DSecure':  false,
       'SDKMode': sdkMode.toString(),
-      'paymentType': paymentType?.toString(),
-      'allowsToSaveSameCardMoreThanOnce': allowsToSaveSameCardMoreThanOnce,
-      'cardHolderName': cardHolderName,
-      'editCardHolderName': allowsToEditCardHolderName ?? false,
-      'supportedPaymentMethods': supportedPaymentMethods ?? [],
-      'appearanceMode': appearanceMode == SDKAppearanceMode.windowed
-          ? SDKAppearanceMode.windowed.name
-          : SDKAppearanceMode.fullscreen.name
+      'allowsToSaveSameCardMoreThanOnce': false,
     };
   }
 
