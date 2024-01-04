@@ -183,16 +183,16 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
 
         // Set Total Amount. The Total amount will be recalculated according to provided
         // Taxes and Shipping
-        // BigDecimal amount = BigDecimal.ZERO;
-        // try {
-        //     amount = new BigDecimal(
-        //             Double.parseDouble((String) Objects.requireNonNull(sessionParameters.get("amount"))));
-        // } catch (Exception e) {
-        //     Log.d("GoSellSDKDelegate : ", "Invalid amount can't be parsed to double : "
-        //             + (String) Objects.requireNonNull(sessionParameters.get("amount")));
-        //     amount = BigDecimal.ZERO;
-        // }
-        sdkSession.setAmount(BigDecimal.ZERO); // ** Required **
+        BigDecimal amount;
+        try {
+            amount = new BigDecimal(
+                    Double.parseDouble((String) Objects.requireNonNull(sessionParameters.get("amount"))));
+        } catch (Exception e) {
+            Log.d("GoSellSDKDelegate : ", "Invalid amount can't be parsed to double : "
+                    + (String) Objects.requireNonNull(sessionParameters.get("amount")));
+            amount = BigDecimal.ZERO;
+        }
+        sdkSession.setAmount(amount); // ** Required **
 
         sdkSession.setPaymentItems(DeserializationUtil.getPaymentItems(sessionParameters.get("paymentitems")));// **
         // Optional
