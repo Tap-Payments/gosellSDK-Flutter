@@ -183,7 +183,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
 
         // Set Total Amount. The Total amount will be recalculated according to provided
         // Taxes and Shipping
-        BigDecimal amount = BigDecimal("0.0");
+        // BigDecimal amount = BigDecimal.ZERO;
         // try {
         //     amount = new BigDecimal(
         //             Double.parseDouble((String) Objects.requireNonNull(sessionParameters.get("amount"))));
@@ -192,7 +192,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         //             + (String) Objects.requireNonNull(sessionParameters.get("amount")));
         //     amount = BigDecimal.ZERO;
         // }
-        sdkSession.setAmount(amount); // ** Required **
+        sdkSession.setAmount(BigDecimal.ZERO); // ** Required **
 
         sdkSession.setPaymentItems(DeserializationUtil.getPaymentItems(sessionParameters.get("paymentitems")));// **
         // Optional
