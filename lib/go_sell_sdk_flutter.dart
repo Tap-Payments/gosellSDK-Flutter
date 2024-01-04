@@ -87,7 +87,7 @@ class GoSellSdkFlutter {
           ? GooglePayWalletMode.ENVIRONMENT_TEST.name
           : googlePayWalletMode.name,
       'transactionCurrency': transactionCurrency,
-      'amount': amount,
+      'amount': '0',
       'customer': jsonEncode(customer),
       "paymentitems": jsonEncode(paymentItems),
       "taxes": jsonEncode(taxes),
