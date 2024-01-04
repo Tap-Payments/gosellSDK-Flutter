@@ -195,16 +195,16 @@ class GoSellSdkFlutter {
     }
 
     // validate amount
-    if (sessionParameters["amount"] == "null" ||
-        !Util.isNumeric(sessionParameters["amount"]) ||
-        sessionParameters["amount"] == "") {
-      _prepareConfigurationsErrorMap(
-          errorCode: ERROR_CODE_INVALID_SESSION_CONFIGURATION,
-          errorMsg: 'Invalid Amount',
-          errorDescription:
-              'Amount can not be empty or null or zero and must be numeric value');
-      return false;
-    }
+    // if (sessionParameters["amount"] == "null" ||
+    //     !Util.isNumeric(sessionParameters["amount"]) ||
+    //     sessionParameters["amount"] == "") {
+    //   _prepareConfigurationsErrorMap(
+    //       errorCode: ERROR_CODE_INVALID_SESSION_CONFIGURATION,
+    //       errorMsg: 'Invalid Amount',
+    //       errorDescription:
+    //           'Amount can not be empty or null or zero and must be numeric value');
+    //   return false;
+    // }
 
     // validate 3dsecure
     _validateBooleanValues("isRequires3DSecure");

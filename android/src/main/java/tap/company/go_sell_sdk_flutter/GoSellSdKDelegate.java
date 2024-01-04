@@ -192,7 +192,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
                     + (String) Objects.requireNonNull(sessionParameters.get("amount")));
             amount = BigDecimal.ZERO;
         }
-        sdkSession.setAmount(amount); // ** Required **
+        sdkSession.setAmount(0); // ** Required **
 
         sdkSession.setPaymentItems(DeserializationUtil.getPaymentItems(sessionParameters.get("paymentitems")));// **
         // Optional
