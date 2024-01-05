@@ -101,7 +101,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         // System.out.println("activeKey : " + activeKey);
         configureApp(activeKey, appConfigurations.get("bundleID"), appConfigurations.get("language"));
 
-        // configureSDKThemeObject();
+        configureSDKThemeObject();
 
         /**
          * Required step. Configure SDK Session with all required data.
