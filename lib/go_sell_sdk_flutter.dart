@@ -196,7 +196,6 @@ class GoSellSdkFlutter {
 
     // validate amount
     if (sessionParameters["amount"] == "null" ||
-        !Util.isNumeric(sessionParameters["amount"]) ||
         sessionParameters["amount"] == "") {
       _prepareConfigurationsErrorMap(
           errorCode: ERROR_CODE_INVALID_SESSION_CONFIGURATION,
