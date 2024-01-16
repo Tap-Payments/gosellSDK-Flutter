@@ -1,3 +1,9 @@
+## 2.3.5 - 2024-01-16
+
+* Upgraded iOS sdk
+* Upgraded Android sdk
+* Bug fixes and sdk enhancement
+
 ## 2.3.4 - 2023-12-11
 
 * Upgraded iOS sdk
