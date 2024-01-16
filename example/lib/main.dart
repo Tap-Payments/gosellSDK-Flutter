@@ -164,7 +164,7 @@ class _MyAppState extends State<MyApp> {
         // merchant id
         merchantID: "",
         // Allowed cards
-        allowedCadTypes: CardType.CREDIT,
+        allowedCadTypes: CardType.ALL,
         applePayMerchantID: "merchant.applePayMerchantID",
         allowsToSaveSameCardMoreThanOnce: true,
         // pass the card holder name to the SDK
@@ -216,9 +216,9 @@ class _MyAppState extends State<MyApp> {
           print(tapSDKResult!['sdk_error_message']);
           print(tapSDKResult!['sdk_error_description']);
           print('sdk error............');
-          sdkErrorCode = tapSDKResult!['sdk_error_code'].toString();
-          sdkErrorMessage = tapSDKResult!['sdk_error_message'];
-          sdkErrorDescription = tapSDKResult!['sdk_error_description'];
+          sdkErrorCode = tapSDKResult!['sdk_error_code'] ?? "";
+          sdkErrorMessage = tapSDKResult!['sdk_error_message'] ?? "";
+          sdkErrorDescription = tapSDKResult!['sdk_error_description'] ?? "";
           break;
 
         case "NOT_IMPLEMENTED":
@@ -258,7 +258,7 @@ class _MyAppState extends State<MyApp> {
         print('TOKENIZE issuer_bank    : ${tapSDKResult!['issuer_bank']}');
         print(
             'TOKENIZE issuer_country    : ${tapSDKResult!['issuer_country']}');
-        responseID = tapSDKResult!['token'];
+        responseID = tapSDKResult!['token'] ?? "";
         break;
     }
   }
@@ -291,9 +291,9 @@ class _MyAppState extends State<MyApp> {
         '$trxMode source_payment_type : ${tapSDKResult!['source_payment_type']}');
 
     if (trxMode == "Authorize") {
-      responseID = tapSDKResult!['authorize_id'];
+      responseID = tapSDKResult!['authorize_id'] ?? "";
     } else {
-      responseID = tapSDKResult!['charge_id'];
+      responseID = tapSDKResult!['charge_id'] ?? "";
     }
   }
 
