@@ -142,12 +142,13 @@ class _MyAppState extends State<MyApp> {
         },
         // Payment Reference
         paymentReference: Reference(
-            acquirer: "acquirer",
-            gateway: "gateway",
-            payment: "payment",
-            track: "track",
-            transaction: "trans_910101",
-            order: "order_262625"),
+          acquirer: "acquirer",
+          gateway: "gateway",
+          payment: "payment",
+          track: "track",
+          transaction: "trans_910101",
+          order: "order_262625",
+        ),
         // payment Descriptor
         paymentStatementDescriptor: "paymentStatementDescriptor",
         // Save Card Switch
