@@ -217,7 +217,7 @@ class _MyAppState extends State<MyApp> {
           print(tapSDKResult!['sdk_error_message']);
           print(tapSDKResult!['sdk_error_description']);
           print('sdk error............');
-          sdkErrorCode = tapSDKResult!['sdk_error_code'] ?? "";
+          sdkErrorCode = tapSDKResult!['sdk_error_code'].toString();
           sdkErrorMessage = tapSDKResult!['sdk_error_message'] ?? "";
           sdkErrorDescription = tapSDKResult!['sdk_error_description'] ?? "";
           break;
