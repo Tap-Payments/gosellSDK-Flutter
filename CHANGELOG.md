@@ -1,3 +1,13 @@
+## 2.3.6 - 2024-01-16
+
+* Upgraded iOS sdk
+- Major changes.
+   - Compile SdkVersion 34
+   - Target SdkVersion 34
+   - JAVA VERSION JavaVersion.VERSION_11
+   - Gradle version 7.4.2
+   - Android Gradle plugin version 7.3.1
+
 ## 2.3.5 - 2024-01-16
 
 * Upgraded iOS sdk
