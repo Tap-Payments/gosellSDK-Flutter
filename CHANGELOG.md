@@ -1,4 +1,9 @@
-## 2.3.6 - 2024-01-16
+## 2.3.7 - 2024-02-07
+
+* Upgraded Android sdk
+* Fixed copy paste issue in card number input
+
+## 2.3.6 - 2024-02-06
 
 * Upgraded iOS sdk
 - Major changes.
