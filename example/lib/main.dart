@@ -175,7 +175,7 @@ class _MyAppState extends State<MyApp> {
         // select payments you need to show [Default is all, and you can choose between WEB-CARD-APPLEPAY ]
         paymentType: PaymentType.ALL,
         // Supported payment methods List
-        supportedPaymentMethods: ["knet", "visa"],
+        supportedPaymentMethods: ["VISA", "MASTERCARD", "AMERICAN_EXPRESS"],
         // Transaction mode
         sdkMode: SDKMode.Sandbox,
         appearanceMode: SDKAppearanceMode.fullscreen,
