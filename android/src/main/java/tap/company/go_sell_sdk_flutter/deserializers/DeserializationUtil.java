@@ -39,14 +39,11 @@ public class DeserializationUtil {
     }
 
     static private JsonElement getJsonElement(String jsonString, String type) {
-        JsonParser jsonParser = new JsonParser();
         JsonElement jsonElement;
         if ("array".equalsIgnoreCase(type)) {
-            JsonArray jsonArray = (JsonArray) jsonParser.parse(jsonString);
-            jsonElement = jsonArray;
+            jsonElement = (JsonArray) JsonParser.parseString(jsonString);
         } else {
-            JsonObject jsonArray = (JsonObject) jsonParser.parse(jsonString);
-            jsonElement = jsonArray;
+            jsonElement = (JsonObject) JsonParser.parseString(jsonString);
         }
         return jsonElement;
     }

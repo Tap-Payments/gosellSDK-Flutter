@@ -29,6 +29,7 @@ import company.tap.gosellapi.open.models.TapCurrency;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.PluginRegistry;
+import kotlin.Suppress;
 import tap.company.go_sell_sdk_flutter.deserializers.DeserializationUtil;
 
 public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
@@ -85,6 +86,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         return true;
     }
 
+    @SuppressWarnings("unchecked")
     private void showSDK(HashMap<String, Object> sdkConfigurations, MethodChannel.Result result) {
         HashMap<String, Object> sessionParameters = (HashMap<String, Object>) sdkConfigurations
                 .get("sessionParameters");
