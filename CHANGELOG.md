@@ -1,3 +1,9 @@
+## 2.3.8 - 2024-02-27
+
+* Upgraded Android sdk
+* Upgraded iOS sdk
+* CardHolderName mapped and returned back in tokenize mode
+
 ## 2.3.7 - 2024-02-07
 
 * Upgraded Android sdk

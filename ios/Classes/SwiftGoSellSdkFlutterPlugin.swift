@@ -618,6 +618,7 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDelegate {
           resultMap["card_object"] = token.card.object
           resultMap["card_exp_month"] = token.card.expirationMonth
           resultMap["card_exp_year"] = token.card.expirationYear
+          resultMap["card_holder_name"] = token.card.cardholderName
           resultMap["sdk_result"] = "SUCCESS"
           resultMap["trx_mode"] = "TOKENIZE"
           resultMap["save_card"] = saveCard
