@@ -163,18 +163,16 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         if (sessionParameters.get("appearanceMode") != null) {
             ThemeObject.getInstance()
                     .setAppearanceMode(DeserializationUtil.getAppearanceMode(sessionParameters.get("appearanceMode").toString()));
-        }else {
-            if(sessionParameters.get("trxMode").toString().equals("TransactionMode.SAVE_CARD") ||
+        } else {
+            if (sessionParameters.get("trxMode").toString().equals("TransactionMode.SAVE_CARD") ||
                     sessionParameters.get("trxMode").toString().equals("TransactionMode.TOKENIZE_CARD")) {
                 ThemeObject.getInstance()
                         .setAppearanceMode(AppearanceMode.WINDOWED_MODE);
-            }else {
+            } else {
                 ThemeObject.getInstance()
                         .setAppearanceMode(AppearanceMode.FULLSCREEN_MODE);
             }
         }
-
-
 
 
         // Using static CustomerBuilder method available inside TAP Customer Class you
@@ -391,7 +389,9 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
             resultMap.put("card_object", token.getCard().getObject());
             resultMap.put("card_exp_month", token.getCard().getExpirationYear());
             resultMap.put("card_exp_year", token.getCard().getExpirationMonth());
+            resultMap.put("card_holder_name", token.getCard().getName());
             resultMap.put("save_card", saveCard);
+
 
         }
         resultMap.put("sdk_result", paymentStatus);
