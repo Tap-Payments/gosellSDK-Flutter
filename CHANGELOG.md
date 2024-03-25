@@ -1,3 +1,30 @@
+## 2.3.8 - 2024-02-27
+
+* Upgraded Android sdk
+* Upgraded iOS sdk
+* CardHolderName mapped and returned back in tokenize mode
+
+## 2.3.7 - 2024-02-07
+
+* Upgraded Android sdk
+* Fixed copy paste issue in card number input
+
+## 2.3.6 - 2024-02-06
+
+* Upgraded iOS sdk
+- Major changes.
+   - Compile SdkVersion 34
+   - Target SdkVersion 34
+   - JAVA VERSION JavaVersion.VERSION_11
+   - Gradle version 7.4.2
+   - Android Gradle plugin version 7.3.1
+
+## 2.3.5 - 2024-01-16
+
+* Upgraded iOS sdk
+* Upgraded Android sdk
+* Bug fixes and sdk enhancement
+
 ## 2.3.4 - 2023-12-11
 
 * Upgraded iOS sdk

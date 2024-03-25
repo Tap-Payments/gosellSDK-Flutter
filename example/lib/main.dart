@@ -42,11 +42,14 @@ class _MyAppState extends State<MyApp> {
   // configure app key and bundle-id (You must get those keys from tap)
   Future<void> configureApp() async {
     GoSellSdkFlutter.configureApp(
-      bundleId: Platform.isAndroid ? "ANDROID-PACKAGE-NAME" : "IOS-APP-ID",
+      bundleId: Platform.isAndroid
+          ? "ANDROID-PACKAGE-NAME"
+          : "company.tap.goSellSDKExamplee",
       productionSecretKey:
           Platform.isAndroid ? "Android-Live-KEY" : "iOS-Live-KEY",
-      sandBoxSecretKey:
-          Platform.isAndroid ? "Android-SANDBOX-KEY" : "iOS-SANDBOX-KEY",
+      sandBoxSecretKey: Platform.isAndroid
+          ? "Android-SANDBOX-KEY"
+          : "sk_test_cvSHaplrPNkJO7dhoUxDYjqA",
       lang: "en",
     );
   }
@@ -142,12 +145,13 @@ class _MyAppState extends State<MyApp> {
         },
         // Payment Reference
         paymentReference: Reference(
-            acquirer: "acquirer",
-            gateway: "gateway",
-            payment: "payment",
-            track: "track",
-            transaction: "trans_910101",
-            order: "order_262625"),
+          acquirer: "acquirer",
+          gateway: "gateway",
+          payment: "payment",
+          track: "track",
+          transaction: "trans_910101",
+          order: "order_262625",
+        ),
         // payment Descriptor
         paymentStatementDescriptor: "paymentStatementDescriptor",
         // Save Card Switch
@@ -164,7 +168,7 @@ class _MyAppState extends State<MyApp> {
         // merchant id
         merchantID: "",
         // Allowed cards
-        allowedCadTypes: CardType.CREDIT,
+        allowedCadTypes: CardType.ALL,
         applePayMerchantID: "merchant.applePayMerchantID",
         allowsToSaveSameCardMoreThanOnce: true,
         // pass the card holder name to the SDK
@@ -174,7 +178,7 @@ class _MyAppState extends State<MyApp> {
         // select payments you need to show [Default is all, and you can choose between WEB-CARD-APPLEPAY ]
         paymentType: PaymentType.ALL,
         // Supported payment methods List
-        supportedPaymentMethods: ["knet", "visa"],
+        supportedPaymentMethods: ["VISA", "MASTERCARD", "AMERICAN_EXPRESS"],
         // Transaction mode
         sdkMode: SDKMode.Sandbox,
         appearanceMode: SDKAppearanceMode.fullscreen,
@@ -217,8 +221,8 @@ class _MyAppState extends State<MyApp> {
           print(tapSDKResult!['sdk_error_description']);
           print('sdk error............');
           sdkErrorCode = tapSDKResult!['sdk_error_code'].toString();
-          sdkErrorMessage = tapSDKResult!['sdk_error_message'];
-          sdkErrorDescription = tapSDKResult!['sdk_error_description'];
+          sdkErrorMessage = tapSDKResult!['sdk_error_message'] ?? "";
+          sdkErrorDescription = tapSDKResult!['sdk_error_description'] ?? "";
           break;
 
         case "NOT_IMPLEMENTED":
@@ -252,13 +256,14 @@ class _MyAppState extends State<MyApp> {
         print('TOKENIZE card_first_six : ${tapSDKResult!['card_first_six']}');
         print('TOKENIZE card_last_four : ${tapSDKResult!['card_last_four']}');
         print('TOKENIZE card_object  : ${tapSDKResult!['card_object']}');
+        print('TOKENIZE card_holder_name  : ${tapSDKResult!['card_holder_name']}');
         print('TOKENIZE card_exp_month : ${tapSDKResult!['card_exp_month']}');
         print('TOKENIZE card_exp_year    : ${tapSDKResult!['card_exp_year']}');
         print('TOKENIZE issuer_id    : ${tapSDKResult!['issuer_id']}');
         print('TOKENIZE issuer_bank    : ${tapSDKResult!['issuer_bank']}');
         print(
             'TOKENIZE issuer_country    : ${tapSDKResult!['issuer_country']}');
-        responseID = tapSDKResult!['token'];
+        responseID = tapSDKResult!['token'] ?? "";
         break;
     }
   }
@@ -291,9 +296,9 @@ class _MyAppState extends State<MyApp> {
         '$trxMode source_payment_type : ${tapSDKResult!['source_payment_type']}');
 
     if (trxMode == "Authorize") {
-      responseID = tapSDKResult!['authorize_id'];
+      responseID = tapSDKResult!['authorize_id'] ?? "";
     } else {
-      responseID = tapSDKResult!['charge_id'];
+      responseID = tapSDKResult!['charge_id'] ?? "";
     }
   }
 
