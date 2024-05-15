@@ -45,6 +45,8 @@ Original SDKS
 
 16. [Apple Pay Setup](#apple_pay)
 
+17. [Google Pay Setup](#google_pay)
+
 <a href="requirements"></a>
 
 # Requirements
@@ -713,5 +715,17 @@ responseID = tapSDKResult['charge_id'];
 Follow the steps shared in the following link to setup apple pay:<br/>
 
 https://github.com/Tap-Payments/goSellSDK-ios#apple-pay
+  
+---
+
+---  
+
+<a name="google_pay"></a>
+
+**Google pay setup**
+
+Follow the steps shared in the following link to setup google pay:<br/>
+
+https://github.com/Tap-Payments/goSellSDK-AndroidX?tab=readme-ov-file#google-pay
   
 ---

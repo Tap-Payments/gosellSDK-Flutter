@@ -1,0 +1,120 @@
+PODS:
+  - CardIODynamic (5.4.1)
+  - EditableTextInsetsTextFieldV2 (0.0.3):
+    - TapAdditionsKitV2
+  - Flutter (1.0.0)
+  - go_sell_sdk_flutter (0.0.1):
+    - Flutter
+    - goSellSDK (= 2.3.32)
+  - goSellSDK (2.3.32):
+    - goSellSDK/Core (= 2.3.32)
+  - goSellSDK/Core (2.3.32):
+    - CardIODynamic
+    - EditableTextInsetsTextFieldV2
+    - SwiftyRSA
+    - TapAdditionsKitV2
+    - TapApplicationV2
+    - TapBundleLocalizationV2
+    - TapCardVlidatorKit-iOS
+    - TapEditableViewV2
+    - TapFontsKitV2
+    - TapGLKitV2
+    - TapKeychainV2
+    - TapNetworkManagerV2
+    - TapNibViewV2
+    - TapResponderChainInputViewV2
+    - TapSearchViewV2
+    - TapVisualEffectViewV2
+  - SwiftyRSA (1.7.0):
+    - SwiftyRSA/ObjC (= 1.7.0)
+  - SwiftyRSA/ObjC (1.7.0)
+  - TapAdditionsKitV2 (0.0.17):
+    - TapSwiftFixesV2
+  - TapApplicationV2 (0.0.3):
+    - TapAdditionsKitV2
+  - TapBundleLocalizationV2 (0.0.3)
+  - TapCardVlidatorKit-iOS (1.0.24)
+  - TapEditableViewV2 (1.0.2):
+    - TapAdditionsKitV2
+  - TapFontsKitV2 (0.0.5):
+    - TapAdditionsKitV2
+  - TapGLKitV2 (0.0.3):
+    - TapAdditionsKitV2
+  - TapKeychainV2 (1.0.2)
+  - TapNetworkManagerV2 (0.0.6):
+    - TapAdditionsKitV2
+  - TapNibViewV2 (0.0.3):
+    - TapAdditionsKitV2
+  - TapResponderChainInputViewV2 (0.0.5):
+    - TapAdditionsKitV2
+    - TapNibViewV2
+  - TapSearchViewV2 (0.0.5):
+    - TapAdditionsKitV2
+    - TapNibViewV2
+  - TapSwiftFixesV2 (1.0.3):
+    - TapSwiftFixesV2/CoreGraphics (= 1.0.3)
+    - TapSwiftFixesV2/Exceptions (= 1.0.3)
+    - TapSwiftFixesV2/Threading (= 1.0.3)
+  - TapSwiftFixesV2/CoreGraphics (1.0.3)
+  - TapSwiftFixesV2/Exceptions (1.0.3)
+  - TapSwiftFixesV2/Threading (1.0.3)
+  - TapVisualEffectViewV2 (0.0.4):
+    - TapAdditionsKitV2
+    - TapNibViewV2
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - go_sell_sdk_flutter (from `.symlinks/plugins/go_sell_sdk_flutter/ios`)
+
+SPEC REPOS:
+  trunk:
+    - CardIODynamic
+    - EditableTextInsetsTextFieldV2
+    - goSellSDK
+    - SwiftyRSA
+    - TapAdditionsKitV2
+    - TapApplicationV2
+    - TapBundleLocalizationV2
+    - TapCardVlidatorKit-iOS
+    - TapEditableViewV2
+    - TapFontsKitV2
+    - TapGLKitV2
+    - TapKeychainV2
+    - TapNetworkManagerV2
+    - TapNibViewV2
+    - TapResponderChainInputViewV2
+    - TapSearchViewV2
+    - TapSwiftFixesV2
+    - TapVisualEffectViewV2
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  go_sell_sdk_flutter:
+    :path: ".symlinks/plugins/go_sell_sdk_flutter/ios"
+
+SPEC CHECKSUMS:
+  CardIODynamic: 4a0d2d0e7b82993ceca67491564934c3475fbe79
+  EditableTextInsetsTextFieldV2: 4734d3376d6b1ebe95afc824da5caa1c37b228a3
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  go_sell_sdk_flutter: 8b4188fb6c6e70774e301804f54b445a847873ee
+  goSellSDK: b6290beeabbbb126d00298ca02ee1dd593176c4e
+  SwiftyRSA: 8c6dd1ea7db1b8dc4fb517a202f88bb1354bc2c6
+  TapAdditionsKitV2: 0bb217062d4df1db86b339e7693283b293b0ccff
+  TapApplicationV2: a5e256888515be65654f048605bfb871a5ad53a9
+  TapBundleLocalizationV2: 282e5a0ebfd08b502ec2ba22dde8da2de7340110
+  TapCardVlidatorKit-iOS: 05d3e644dddd6aa52dd95cc85a2c41f7ce0ba2f9
+  TapEditableViewV2: 53f87bbf98d7599f564e6e5bad1be6c1a5b31d66
+  TapFontsKitV2: 2b11cd69c4f8c4485376c92a1982387a5184ca13
+  TapGLKitV2: 5e5857e73e5a516807ec9c388f5c028de7616290
+  TapKeychainV2: aaa08a208f3e7aea042e2caf1b6b5abb39baecdc
+  TapNetworkManagerV2: 73a80838e7a30bd05e1030ff4b751421f14774a6
+  TapNibViewV2: a6df9bfe0a36dfa9039b8200f2921dd5f66874c5
+  TapResponderChainInputViewV2: d62b22fd9f1e6e9a195e4960c5679805a83ed44c
+  TapSearchViewV2: b6fb11576b6e20570768378d31499a3cb86f9010
+  TapSwiftFixesV2: ea726f752b6259d9e44624039fd6bad94b2a8633
+  TapVisualEffectViewV2: bc2b3b718acc3c1298ce7d21985633941d986345
+
+PODFILE CHECKSUM: 0bab1c36d5ee2861798d0f11f673f12f035c4a10
+
+COCOAPODS: 1.14.3
