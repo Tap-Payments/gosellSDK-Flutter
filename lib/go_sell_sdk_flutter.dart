@@ -54,7 +54,7 @@ class GoSellSdkFlutter {
   static void sessionConfigurations({
     required TransactionMode trxMode,
     required String transactionCurrency,
-    required String amount,
+    required double amount,
     required Customer customer,
     required List<PaymentItem> paymentItems,
     required List<Tax> taxes,
@@ -87,7 +87,7 @@ class GoSellSdkFlutter {
           ? GooglePayWalletMode.ENVIRONMENT_TEST.name
           : googlePayWalletMode.name,
       'transactionCurrency': transactionCurrency,
-      'amount': amount,
+      'amount': amount.toString(),
       'customer': jsonEncode(customer),
       "paymentitems": jsonEncode(paymentItems),
       "taxes": jsonEncode(taxes),

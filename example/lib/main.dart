@@ -42,14 +42,11 @@ class _MyAppState extends State<MyApp> {
   // configure app key and bundle-id (You must get those keys from tap)
   Future<void> configureApp() async {
     GoSellSdkFlutter.configureApp(
-      bundleId: Platform.isAndroid
-          ? "ANDROID-PACKAGE-NAME"
-          : "company.tap.goSellSDKExamplee",
+      bundleId: Platform.isAndroid ? "ANDROID-PACKAGE-NAME" : "IOS-BUNDLE-ID",
       productionSecretKey:
           Platform.isAndroid ? "Android-Live-KEY" : "iOS-Live-KEY",
-      sandBoxSecretKey: Platform.isAndroid
-          ? "Android-SANDBOX-KEY"
-          : "sk_test_cvSHaplrPNkJO7dhoUxDYjqA",
+      sandBoxSecretKey:
+          Platform.isAndroid ? "Android-SANDBOX-KEY" : "iOS-SANDBOX-KEY",
       lang: "en",
     );
   }
@@ -60,7 +57,7 @@ class _MyAppState extends State<MyApp> {
       GoSellSdkFlutter.sessionConfigurations(
         trxMode: TransactionMode.PURCHASE,
         transactionCurrency: "kwd",
-        amount: '1',
+        amount: 1,
         customer: Customer(
           customerId: "",
           // customer id is important to retrieve cards saved for this customer
@@ -256,7 +253,8 @@ class _MyAppState extends State<MyApp> {
         print('TOKENIZE card_first_six : ${tapSDKResult!['card_first_six']}');
         print('TOKENIZE card_last_four : ${tapSDKResult!['card_last_four']}');
         print('TOKENIZE card_object  : ${tapSDKResult!['card_object']}');
-        print('TOKENIZE card_holder_name  : ${tapSDKResult!['card_holder_name']}');
+        print(
+            'TOKENIZE card_holder_name  : ${tapSDKResult!['card_holder_name']}');
         print('TOKENIZE card_exp_month : ${tapSDKResult!['card_exp_month']}');
         print('TOKENIZE card_exp_year    : ${tapSDKResult!['card_exp_year']}');
         print('TOKENIZE issuer_id    : ${tapSDKResult!['issuer_id']}');
