@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
       GoSellSdkFlutter.sessionConfigurations(
         trxMode: TransactionMode.PURCHASE,
         transactionCurrency: "kwd",
-        amount: 1,
+        amount: 271,
         customer: Customer(
           customerId: "",
           // customer id is important to retrieve cards saved for this customer
