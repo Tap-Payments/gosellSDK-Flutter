@@ -42,11 +42,10 @@ class _MyAppState extends State<MyApp> {
   // configure app key and bundle-id (You must get those keys from tap)
   Future<void> configureApp() async {
     GoSellSdkFlutter.configureApp(
-      bundleId: Platform.isAndroid ? "ANDROID-PACKAGE-NAME" : "IOS-BUNDLE-ID",
+      bundleId: Platform.isAndroid ? "ANDROID-BUNDLE-ID" : "IOS-BUNDLE-ID",
       productionSecretKey:
           Platform.isAndroid ? "Android-Live-KEY" : "iOS-Live-KEY",
-      sandBoxSecretKey:
-          Platform.isAndroid ? "Android-SANDBOX-KEY" : "iOS-SANDBOX-KEY",
+      sandBoxSecretKey: Platform.isAndroid ? "" : "iOS-SANDBOX-KEY",
       lang: "en",
     );
   }
@@ -175,9 +174,15 @@ class _MyAppState extends State<MyApp> {
         // select payments you need to show [Default is all, and you can choose between WEB-CARD-APPLEPAY ]
         paymentType: PaymentType.ALL,
         // Supported payment methods List
-        supportedPaymentMethods: ["VISA", "MASTERCARD", "AMERICAN_EXPRESS"],
+        supportedPaymentMethods: [
+          "VISA",
+          "MASTERCARD",
+          "AMERICAN_EXPRESS",
+          "knet",
+          "Benefit"
+        ],
         // Transaction mode
-        sdkMode: SDKMode.Sandbox,
+        sdkMode: SDKMode.Production,
         appearanceMode: SDKAppearanceMode.fullscreen,
       );
     } on PlatformException {
@@ -343,14 +348,10 @@ class _MyAppState extends State<MyApp> {
                   height: 45,
                   child: ElevatedButton(
                     clipBehavior: Clip.hardEdge,
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        _buttonColor,
-                      ),
-                      shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: _buttonColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
                       ),
                     ),
                     onPressed: startSDK,
