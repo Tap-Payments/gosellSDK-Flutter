@@ -1,3 +1,7 @@
+## 2.3.9 - 2024-06-10
+
+* Upgraded Android sdk (Crash issue fixed for KNET)
+
 ## 2.3.8 - 2024-02-27
 
 * Upgraded Android sdk
