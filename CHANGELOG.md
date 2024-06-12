@@ -1,6 +1,10 @@
 ## 2.3.9 - 2024-06-10
 
 * Upgraded Android sdk (Crash issue fixed for KNET)
+* Hot fix for add clear buttons for fields.
+* Fix error for AMEX card.
+* Limit card length to 16 or max based on card type.
+* show amount next to selected currency.
 
 ## 2.3.8 - 2024-02-27
 
