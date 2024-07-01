@@ -22,12 +22,10 @@ class _MyAppState extends State<MyApp> {
   String sdkErrorMessage = "";
   String sdkErrorDescription = "";
   AwesomeLoaderController loaderController = AwesomeLoaderController();
-  late Color _buttonColor;
 
   @override
   void initState() {
     super.initState();
-    _buttonColor = Color(0xff2ace00);
     configureSDK();
   }
 
@@ -42,10 +40,11 @@ class _MyAppState extends State<MyApp> {
   // configure app key and bundle-id (You must get those keys from tap)
   Future<void> configureApp() async {
     GoSellSdkFlutter.configureApp(
-      bundleId: Platform.isAndroid ? "ANDROID-BUNDLE-ID" : "IOS-BUNDLE-ID",
+      bundleId: Platform.isAndroid ? "Android-BUNDLE-ID" : "IOS-BUNDLE-ID",
       productionSecretKey:
           Platform.isAndroid ? "Android-Live-KEY" : "iOS-Live-KEY",
-      sandBoxSecretKey: Platform.isAndroid ? "" : "iOS-SANDBOX-KEY",
+      sandBoxSecretKey:
+          Platform.isAndroid ? "Android-SANDBOX-KEY" : "iOS-SANDBOX-KEY",
       lang: "en",
     );
   }
@@ -55,10 +54,11 @@ class _MyAppState extends State<MyApp> {
     try {
       GoSellSdkFlutter.sessionConfigurations(
         trxMode: TransactionMode.PURCHASE,
-        transactionCurrency: "kwd",
+        transactionCurrency: "KWD",
         amount: 271,
         customer: Customer(
           customerId: "",
+          // "",
           // customer id is important to retrieve cards saved for this customer
           email: "test@test.com",
           isdNumber: "965",
@@ -179,11 +179,13 @@ class _MyAppState extends State<MyApp> {
           "MASTERCARD",
           "AMERICAN_EXPRESS",
           "knet",
-          "Benefit"
+          "Benefit",
+          "GOOGLE_PAY"
         ],
         // Transaction mode
-        sdkMode: SDKMode.Production,
+        sdkMode: SDKMode.Sandbox,
         appearanceMode: SDKAppearanceMode.fullscreen,
+        googlePayWalletMode: GooglePayWalletMode.ENVIRONMENT_PRODUCTION,
       );
     } on PlatformException {
       // platformVersion = 'Failed to get platform version.';
@@ -333,7 +335,6 @@ class _MyAppState extends State<MyApp> {
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w400,
-                    fontFamily: "Roboto",
                     fontStyle: FontStyle.normal,
                     fontSize: 15.0,
                   ),
@@ -349,7 +350,7 @@ class _MyAppState extends State<MyApp> {
                   child: ElevatedButton(
                     clipBehavior: Clip.hardEdge,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: _buttonColor,
+                      backgroundColor: Color(0xff2ace00),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
