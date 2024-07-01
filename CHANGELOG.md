@@ -1,3 +1,8 @@
+## 2.4.0 - 2024-07-01
+
+* Upgraded Android sdk
+* Roboto/avenir fronts are removed
+
 ## 2.3.9 - 2024-06-10
 
 * Upgraded Android sdk (Crash issue fixed for KNET)
