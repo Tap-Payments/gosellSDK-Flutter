@@ -58,7 +58,6 @@ class _MyAppState extends State<MyApp> {
         amount: 271,
         customer: Customer(
           customerId: "",
-          // "",
           // customer id is important to retrieve cards saved for this customer
           email: "test@test.com",
           isdNumber: "965",

@@ -1,3 +1,8 @@
+## 2.4.1 - 2024-07-02
+
+* Upgraded iOS sdk
+* Paying by a saved card enhancement
+
 ## 2.4.0 - 2024-07-01
 
 * Upgraded Android sdk
