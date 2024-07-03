@@ -1,3 +1,9 @@
+## 2.4.2 - 2024-07-03
+
+* Upgraded Android sdk
+* Hot fix for removing licensed fonts
+* Upgraded android material library
+
 ## 2.4.1 - 2024-07-02
 
 * Upgraded iOS sdk
@@ -30,12 +36,13 @@
 ## 2.3.6 - 2024-02-06
 
 * Upgraded iOS sdk
+
 - Major changes.
-   - Compile SdkVersion 34
-   - Target SdkVersion 34
-   - JAVA VERSION JavaVersion.VERSION_11
-   - Gradle version 7.4.2
-   - Android Gradle plugin version 7.3.1
+    - Compile SdkVersion 34
+    - Target SdkVersion 34
+    - JAVA VERSION JavaVersion.VERSION_11
+    - Gradle version 7.4.2
+    - Android Gradle plugin version 7.3.1
 
 ## 2.3.5 - 2024-01-16
 
@@ -46,7 +53,7 @@
 ## 2.3.4 - 2023-12-11
 
 * Upgraded iOS sdk
-* Bug fixes and sdk enhancement 
+* Bug fixes and sdk enhancement
 
 ## 2.3.3 - 2023-12-05
 
