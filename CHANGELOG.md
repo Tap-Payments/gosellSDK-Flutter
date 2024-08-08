@@ -1,3 +1,9 @@
+## 2.4.3 - 2024-08-08
+
+* Upgraded Android sdk
+* Upgraded iOS sdk
+* Updated the save card object with Payment agreement model
+
 ## 2.4.2 - 2024-07-03
 
 * Upgraded Android sdk

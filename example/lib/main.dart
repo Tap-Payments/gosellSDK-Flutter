@@ -40,11 +40,11 @@ class _MyAppState extends State<MyApp> {
   // configure app key and bundle-id (You must get those keys from tap)
   Future<void> configureApp() async {
     GoSellSdkFlutter.configureApp(
-      bundleId: Platform.isAndroid ? "Android-BUNDLE-ID" : "IOS-BUNDLE-ID",
+      bundleId: Platform.isAndroid ? "Android-Bundle-ID" : "IOS-BUNDLE-ID",
       productionSecretKey:
-          Platform.isAndroid ? "Android-Live-KEY" : "iOS-Live-KEY",
+          Platform.isAndroid ? "ANDROID-LIVE-KEY" : "iOS-Live-KEY",
       sandBoxSecretKey:
-          Platform.isAndroid ? "Android-SANDBOX-KEY" : "iOS-SANDBOX-KEY",
+          Platform.isAndroid ? "ANDROID-SANDBOX-KEY" : "iOS-SANDBOX-KEY",
       lang: "en",
     );
   }
@@ -184,7 +184,7 @@ class _MyAppState extends State<MyApp> {
         // Transaction mode
         sdkMode: SDKMode.Sandbox,
         appearanceMode: SDKAppearanceMode.fullscreen,
-        googlePayWalletMode: GooglePayWalletMode.ENVIRONMENT_PRODUCTION,
+        googlePayWalletMode: GooglePayWalletMode.ENVIRONMENT_TEST,
       );
     } on PlatformException {
       // platformVersion = 'Failed to get platform version.';
@@ -289,6 +289,7 @@ class _MyAppState extends State<MyApp> {
     print('$trxMode  card_exp_month  : ${tapSDKResult!['card_exp_month']}');
     print('$trxMode  card_exp_year: ${tapSDKResult!['card_exp_year']}');
     print('$trxMode  acquirer_id  : ${tapSDKResult!['acquirer_id']}');
+    print("$trxMode payment agreement : ${tapSDKResult!['payment_agreement']}");
     print(
         '$trxMode  acquirer_response_code : ${tapSDKResult!['acquirer_response_code']}');
     print(
