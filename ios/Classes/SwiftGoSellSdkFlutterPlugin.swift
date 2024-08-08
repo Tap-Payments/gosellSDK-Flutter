@@ -614,14 +614,23 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDelegate {
         resultMap["issuer_id"] = token.card.issuer?.id ?? ""
 
         resultMap["card_first_six"] = token.card.binNumber
-          resultMap["card_last_four"] = token.card.lastFourDigits
-          resultMap["card_object"] = token.card.object
-          resultMap["card_exp_month"] = token.card.expirationMonth
-          resultMap["card_exp_year"] = token.card.expirationYear
-          resultMap["card_holder_name"] = token.card.cardholderName
-          resultMap["sdk_result"] = "SUCCESS"
-          resultMap["trx_mode"] = "TOKENIZE"
-          resultMap["save_card"] = saveCard
+        resultMap["card_last_four"] = token.card.lastFourDigits
+        resultMap["card_object"] = token.card.object
+        resultMap["card_exp_month"] = token.card.expirationMonth
+        resultMap["card_exp_year"] = token.card.expirationYear
+        resultMap["card_holder_name"] = token.card.cardholderName
+        resultMap["sdk_result"] = "SUCCESS"
+        resultMap["trx_mode"] = "TOKENIZE"
+        resultMap["save_card"] = saveCard
+        if let paymentReference = session.dataSource?.paymentReference {
+                   resultMap["transaction_number"] = paymentReference?.transactionNumber
+                   resultMap["order_number"] = paymentReference?.orderNumber
+         }
+        if token.card.issuer != nil {
+                   resultMap["issuer_bank"] =  token.card.issuer?.bank
+                   resultMap["issuer_country"] =  token.card.issuer?.country
+                   resultMap["issuer_id"] =  token.card.issuer?.id
+        }
 //          result.success(resultMap)
         if let flutterResult = flutterResult {
             flutterResult(resultMap)

@@ -18,6 +18,9 @@ import company.tap.gosellapi.GoSellSDK;
 import company.tap.gosellapi.internal.api.callbacks.GoSellError;
 import company.tap.gosellapi.internal.api.models.Authorize;
 import company.tap.gosellapi.internal.api.models.Charge;
+import company.tap.gosellapi.internal.api.models.Contract;
+import company.tap.gosellapi.internal.api.models.PaymentAgreement;
+import company.tap.gosellapi.internal.api.models.SaveCard;
 import company.tap.gosellapi.internal.api.models.Token;
 import company.tap.gosellapi.open.controllers.SDKSession;
 import company.tap.gosellapi.open.controllers.ThemeObject;
@@ -340,6 +343,26 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
                 resultMap.put("card_exp_year", charge.getCard().getExp_year());
             }
         }
+
+        if (((SaveCard) charge).getPaymentAgreement() != null) {
+            PaymentAgreement paymentAgreement = ((SaveCard) charge).getPaymentAgreement();
+            HashMap<String, Object> paymentAgreementMap = new HashMap<>();
+            paymentAgreementMap.put("id", paymentAgreement.getId());
+            paymentAgreementMap.put("type", paymentAgreement.getType());
+            paymentAgreementMap.put("total_payments_count", paymentAgreement.getTotalPaymentCount());
+            paymentAgreementMap.put("trace_id", paymentAgreement.getTraceId());
+            if (paymentAgreement.getContract() != null) {
+                Contract contract = paymentAgreement.getContract();
+                HashMap<String, Object> contractMap = new HashMap<>();
+                contractMap.put("id", contract.getId());
+                contractMap.put("customer_id", contract.getCustomerId());
+                contractMap.put("type", contract.getType());
+                paymentAgreementMap.put("contract", contractMap);
+            }
+            resultMap.put("payment_agreement", paymentAgreementMap);
+        }
+
+
         if (charge.getAcquirer() != null) {
             resultMap.put("acquirer_id", charge.getAcquirer().getId());
             resultMap.put("acquirer_response_code", charge.getAcquirer().getResponse().getCode());
