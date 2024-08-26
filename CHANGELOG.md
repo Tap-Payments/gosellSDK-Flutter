@@ -1,3 +1,8 @@
+## 2.4.5 - 2024-08-26
+
+* Upgraded Android sdk
+* Hot fix for back button callback
+
 ## 2.4.4 - 2024-08-26
 
 * Upgraded Android sdk

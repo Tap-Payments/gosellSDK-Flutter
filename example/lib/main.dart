@@ -217,6 +217,10 @@ class _MyAppState extends State<MyApp> {
           sdkStatus = "FAILED";
           handleSDKResult();
           break;
+        case "CANCELLED":
+          sdkStatus = "CANCELLED";
+         // handleSDKResult();
+          break;
         case "SDK_ERROR":
           print('sdk error............');
           print(tapSDKResult!['sdk_error_code']);
