@@ -505,8 +505,9 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
             System.out.println("SDK Process Error : " + goSellError.getErrorMessage());
             System.out.println("SDK Process Error : " + goSellError.getErrorCode());
             sendSDKError(goSellError.getErrorCode(), goSellError.getErrorMessage(), goSellError.getErrorBody());
+        }else{
+            System.out.println("SESSION CANCELLED HERE ");
         }
-
     }
 
     @Override
