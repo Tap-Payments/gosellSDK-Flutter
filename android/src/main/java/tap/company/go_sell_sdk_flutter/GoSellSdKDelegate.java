@@ -321,19 +321,19 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void sendChargeResult(Charge charge, String paymentStatus, String trx_mode) {
-        System.out.println("TRX_MODE : " + trx_mode);
+        System.out.println("TRX_MODE :> " + trx_mode);
         Map<String, Object> resultMap = new HashMap<>();
         if (charge.getStatus() != null)
             resultMap.put("status", charge.getStatus().name());
         resultMap.put("charge_id", charge.getId());
         resultMap.put("description", charge.getDescription());
         resultMap.put("message", charge.getResponse().getMessage());
+
         if (charge.getCard() != null) {
             resultMap.put("card_first_six", charge.getCard().getFirstSix());
             resultMap.put("card_last_four", charge.getCard().getLast4());
             resultMap.put("card_object", charge.getCard().getObject());
             resultMap.put("card_id", charge.getCard().getId());
-            //   resultMap.put("card_id", charge.getCard().getObject());
             resultMap.put("card_brand", charge.getCard().getBrand());
             if (charge.getCard().getExpiry() != null) {
                 resultMap.put("card_exp_month", charge.getCard().getExpiry().getMonth());
@@ -344,22 +344,28 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
             }
         }
 
-        if (((SaveCard) charge).getPaymentAgreement() != null) {
-            PaymentAgreement paymentAgreement = ((SaveCard) charge).getPaymentAgreement();
-            HashMap<String, Object> paymentAgreementMap = new HashMap<>();
-            paymentAgreementMap.put("id", paymentAgreement.getId());
-            paymentAgreementMap.put("type", paymentAgreement.getType());
-            paymentAgreementMap.put("total_payments_count", paymentAgreement.getTotalPaymentCount());
-            paymentAgreementMap.put("trace_id", paymentAgreement.getTraceId());
-            if (paymentAgreement.getContract() != null) {
-                Contract contract = paymentAgreement.getContract();
-                HashMap<String, Object> contractMap = new HashMap<>();
-                contractMap.put("id", contract.getId());
-                contractMap.put("customer_id", contract.getCustomerId());
-                contractMap.put("type", contract.getType());
-                paymentAgreementMap.put("contract", contractMap);
+        if (trx_mode.equals("SAVE_CARD")) {
+            if (((SaveCard) charge).getPaymentAgreement() != null) {
+
+                PaymentAgreement paymentAgreement = ((SaveCard) charge).getPaymentAgreement();
+                HashMap<String, Object> paymentAgreementMap = new HashMap<>();
+
+                paymentAgreementMap.put("id", paymentAgreement.getId());
+                paymentAgreementMap.put("type", paymentAgreement.getType());
+                paymentAgreementMap.put("total_payments_count", paymentAgreement.getTotalPaymentCount());
+                paymentAgreementMap.put("trace_id", paymentAgreement.getTraceId());
+                if (paymentAgreement.getContract() != null) {
+                    Contract contract = paymentAgreement.getContract();
+                    HashMap<String, Object> contractMap = new HashMap<>();
+                    contractMap.put("id", contract.getId());
+                    contractMap.put("customer_id", contract.getCustomerId());
+                    contractMap.put("type", contract.getType());
+                    paymentAgreementMap.put("contract", contractMap);
+                }
+                resultMap.put("payment_agreement", paymentAgreementMap);
             }
-            resultMap.put("payment_agreement", paymentAgreementMap);
+
+
         }
 
 
@@ -385,6 +391,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         }
         resultMap.put("sdk_result", paymentStatus);
         resultMap.put("trx_mode", trx_mode);
+
         pendingResult.success(resultMap);
         pendingResult = null;
     }
