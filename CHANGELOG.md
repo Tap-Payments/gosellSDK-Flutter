@@ -1,3 +1,9 @@
+## 2.4.4 - 2024-08-26
+
+* Upgraded Android sdk
+* Hot fix for enable settings for webview
+* Hot fix for callback in flutter bridge
+
 ## 2.4.3 - 2024-08-08
 
 * Upgraded Android sdk
