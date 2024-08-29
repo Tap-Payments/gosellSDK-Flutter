@@ -1,3 +1,7 @@
+## 2.4.6 - 2024-08-29
+
+* Hot fix for target configs in podspec
+
 ## 2.4.5 - 2024-08-26
 
 * Upgraded Android sdk
