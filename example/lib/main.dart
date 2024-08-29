@@ -219,7 +219,7 @@ class _MyAppState extends State<MyApp> {
           break;
         case "CANCELLED":
           sdkStatus = "CANCELLED";
-         // handleSDKResult();
+          // handleSDKResult();
           break;
         case "SDK_ERROR":
           print('sdk error............');
