@@ -1,3 +1,7 @@
+## 2.4.7 - 2024-09-19
+
+* Hot fix for cardbrand-scheme validation
+
 ## 2.4.6 - 2024-08-29
 
 * Hot fix for target configs in podspec
