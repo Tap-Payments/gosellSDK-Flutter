@@ -1,3 +1,7 @@
+## 2.4.8 - 2024-09-23
+
+* Cobadged cards enhanced experience
+
 ## 2.4.7 - 2024-09-19
 
 * Hot fix for cardbrand-scheme validation
