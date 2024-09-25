@@ -1,3 +1,7 @@
+## 2.4.9 - 2024-09-25
+
+* Removed CardIO library to support latest iOS
+
 ## 2.4.8 - 2024-09-23
 
 * Cobadged cards enhanced experience
