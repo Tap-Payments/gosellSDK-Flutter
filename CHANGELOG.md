@@ -1,4 +1,4 @@
-## 2.4.9 - 2024-11-03
+## 2.4.10 - 2024-11-03
 
 * Update ios and android native dependency
 
