@@ -1,3 +1,7 @@
+## 2.4.9 - 2024-11-03
+
+* Update ios and android native dependency
+
 ## 2.4.9 - 2024-09-25
 
 * Removed CardIO library to support latest iOS
