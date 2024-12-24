@@ -1,3 +1,7 @@
+## 2.4.11 - 2024-12-24
+
+* Update ios native dependency to fixing webview ios 18 issue
+
 ## 2.4.10 - 2024-11-03
 
 * Update ios and android native dependency
