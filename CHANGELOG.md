@@ -1,3 +1,15 @@
+## 2.4.15 - 2024-01-19
+
+* Update ProGuard
+
+## 2.4.14 - 2024-01-16
+
+* Update ProGuard
+
+## 2.4.13 - 2024-01-16
+
+* Update ProGuard
+
 ## 2.4.12 - 2024-01-16
 
 * Update android native dependency

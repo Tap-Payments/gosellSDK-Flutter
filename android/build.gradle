@@ -24,6 +24,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 34
+    namespace = "tap.company.go_sell_sdk_flutter"
 
     defaultConfig {
         minSdkVersion 21

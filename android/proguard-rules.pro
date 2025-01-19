@@ -36,3 +36,24 @@
 -keep class org.** { *; }
 -keepclassmembers enum * { *; }
 
+# Retrofit
+-keepattributes Signature
+-keepattributes RuntimeVisibleAnnotations
+-keep class retrofit2.** { *; }
+-keep interface retrofit2.** { *; }
+-keepclassmembers class * {
+    @retrofit2.http.* <methods>;
+}
+
+# OkHttp
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.** { *; }
+
+# Gson
+-keep class com.google.gson.** { *; }
+-keepattributes EnclosingMethod
+-keepattributes InnerClasses
+-keepattributes Signature
+
+# Prevent stripping of your models (adjust the package name)
+-keep class tap.company.go_sell_sdk_flutter.** { *; }
