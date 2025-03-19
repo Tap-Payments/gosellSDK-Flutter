@@ -1,3 +1,7 @@
+## 2.4.16 - 2024-03-19
+
+* Update Sar symbol
+
 ## 2.4.15 - 2024-01-19
 
 * Update ProGuard
