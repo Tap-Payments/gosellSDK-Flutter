@@ -19,7 +19,6 @@ import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
-import io.flutter.plugin.common.PluginRegistry;
 
 /**
  * GoSellSdkFlutterPlugin
@@ -114,29 +113,6 @@ public class GoSellSdkFlutterPlugin implements MethodChannel.MethodCallHandler, 
     private Lifecycle lifecycle;
     private LifeCycleObserver observer;
     private static final String CHANNEL = "tap.company.go_sell_sdk_flutter.GoSellSdkFlutterPlugin";
-
-    /**
-     * Register with
-     *
-     * @param registrar
-     */
-
-    public static void registerWith(PluginRegistry.Registrar registrar) {
-        if (registrar.activity() == null) {
-            // If a background flutter view tries to register the plugin, there will be no activity from the registrar,
-            // we stop the registering process immediately because the SDK requires an activity.
-            return;
-        }
-        Activity activity = registrar.activity();
-        Application application = null;
-        if (registrar.context() != null) {
-            application = (Application) (registrar.context().getApplicationContext());
-        }
-        GoSellSdkFlutterPlugin plugin = new GoSellSdkFlutterPlugin();
-        plugin.setup(registrar.messenger(), application, activity, registrar, null);
-    }
-
-
     /**
      * Default constructor for the plugin.
      *
@@ -161,13 +137,12 @@ public class GoSellSdkFlutterPlugin implements MethodChannel.MethodCallHandler, 
 
     @Override
     public void onAttachedToActivity(ActivityPluginBinding binding) {
-        activityBinding = binding;
+    this.activityBinding = binding;
         setup(
                 pluginBinding.getBinaryMessenger(),
                 (Application) pluginBinding.getApplicationContext(),
-                activityBinding.getActivity(),
-                null,
-                activityBinding);
+                binding.getActivity(),
+                binding);
     }
 
     @Override
@@ -194,7 +169,6 @@ public class GoSellSdkFlutterPlugin implements MethodChannel.MethodCallHandler, 
             final BinaryMessenger messenger,
             final Application application,
             final Activity activity,
-            final PluginRegistry.Registrar registrar,
             final ActivityPluginBinding activityBinding) {
         this.activity = activity;
         this.application = application;
@@ -202,17 +176,10 @@ public class GoSellSdkFlutterPlugin implements MethodChannel.MethodCallHandler, 
         channel = new MethodChannel(messenger, "go_sell_sdk_flutter");
         channel.setMethodCallHandler(this);
         observer = new LifeCycleObserver(activity);
-        if (registrar != null) {
-            // V1 embedding setup for activity listeners.
-            application.registerActivityLifecycleCallbacks(observer);
-            registrar.addActivityResultListener(delegate);
-            registrar.addRequestPermissionsResultListener(delegate);
-        } else {
+        if (activityBinding != null) {
             // V2 embedding setup for activity listeners.
             activityBinding.addActivityResultListener(delegate);
             activityBinding.addRequestPermissionsResultListener(delegate);
-//            lifecycle = FlutterLifecycleAdapter.getActivityLifecycle(activityBinding);
-//            lifecycle.addObserver(observer);
         }
     }
 
