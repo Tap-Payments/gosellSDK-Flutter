@@ -14,6 +14,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import io.flutter.plugin.common.MethodCall;
+import io.flutter.plugin.common.MethodChannel;
+import io.flutter.plugin.common.PluginRegistry;
+
+// Tap SDK imports
 import company.tap.gosellapi.GoSellSDK;
 import company.tap.gosellapi.internal.api.callbacks.GoSellError;
 import company.tap.gosellapi.internal.api.models.Authorize;
@@ -29,11 +34,9 @@ import company.tap.gosellapi.open.enums.AppearanceMode;
 import company.tap.gosellapi.open.exception.CurrencyException;
 import company.tap.gosellapi.open.models.CardsList;
 import company.tap.gosellapi.open.models.TapCurrency;
-import io.flutter.plugin.common.MethodCall;
-import io.flutter.plugin.common.MethodChannel;
-import io.flutter.plugin.common.PluginRegistry;
-import tap.company.go_sell_sdk_flutter.deserializers.DeserializationUtil;
 
+// Local utility imports
+import tap.company.go_sell_sdk_flutter.deserializers.DeserializationUtil;
 public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         PluginRegistry.RequestPermissionsResultListener, SessionDelegate {
 
