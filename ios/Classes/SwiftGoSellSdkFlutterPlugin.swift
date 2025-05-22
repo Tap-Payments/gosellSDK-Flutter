@@ -443,6 +443,58 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDelegate {
             flutterResult(resultMap)
         }
     }
+    
+    
+    public func applePaymentTokenizationFailed(_ error: String, on session: SessionProtocol) {
+        var resultMap:[String:Any] = [:]
+        resultMap["sdk_result"] = "SDK_ERROR"
+        resultMap["trx_mode"] = "TOKENIZE"
+        resultMap["sdk_error_code"] = ""//error.type
+        resultMap["sdk_error_message"] = error
+        if let paymentReference = session.dataSource?.paymentReference {
+            resultMap["transaction_number"] = paymentReference?.transactionNumber
+            resultMap["order_number"] = paymentReference?.orderNumber
+        }
+        if let flutterResult = flutterResult {
+            flutterResult(resultMap)
+        }
+    }
+    
+    public func applePaymentTokenizationSucceeded(_ token: Token, on session: SessionProtocol) {
+        var resultMap:[String:Any] = [:]
+        resultMap["token"] = token.identifier
+        if let tokenDataSource = session.dataSource,
+           let tokenCurrency:Currency = tokenDataSource.currency as? Currency {
+            resultMap["token_currency"] = tokenCurrency.isoCode
+        }
+        resultMap["card_first_six"] = token.card.binNumber
+        resultMap["card_last_four"] = token.card.lastFourDigits
+        resultMap["card_object"] = token.card.object
+        resultMap["card_exp_month"] = token.card.expirationMonth
+        resultMap["card_exp_year"] = token.card.expirationYear
+        resultMap["sdk_result"] = "SUCCESS"
+        resultMap["trx_mode"] = "TOKENIZE"
+        if let paymentReference = session.dataSource?.paymentReference {
+            resultMap["transaction_number"] = paymentReference?.transactionNumber
+            resultMap["order_number"] = paymentReference?.orderNumber
+        }
+
+        
+        if let flutterResult = flutterResult {
+            flutterResult(resultMap)
+        }
+    }
+    
+    
+    public func applePaymentSucceed(_ charge: String, on session: SessionProtocol) {
+        var resultMap:[String:Any] = [:]
+        resultMap["charege_id"] = charge
+        if let flutterResult = flutterResult {
+            flutterResult(resultMap)
+        }
+    }
+    
+   
 
    public func paymentInitiated(with charge: Charge?, on session: SessionProtocol) {
             print("CHARGE : \(charge?.identifier ?? "")")
