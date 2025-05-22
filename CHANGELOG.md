@@ -1,3 +1,7 @@
+## 2.4.18 - 2025-05-22
+
+* Support apple payments callbacks
+
 ## 2.4.17 - 2025-04-15
 
 * Support for Flutter 3.29.0
