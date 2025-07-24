@@ -1,3 +1,17 @@
+## 2.4.20 - 2025-07-24
+### Enhancement Feature:
+• Updating to support latest android api 35
+### Impact on existing integrations:
+• May need to update gradles to support latest apis support sdk 35
+• compileSdkVersion 35
+• targetSdkVersion 35
+• Project build.gradle classpath 'com.android.tools.build:gradle:8.6.0'
+• Gradle wrapper.properties distributionUrl=https://services.gradle.org/distributions/gradle-8.10.2-bin.zip
+• May need to change kotlin version to 2.2.0 in android/settings.gradle.kts
+```
+    id("org.jetbrains.kotlin.android") version "2.2.0" apply false
+```
+
 ## 2.4.19 - 2025-07-24
 
 ### Enhancement Feature:
@@ -8,119 +22,10 @@
 • targetSdkVersion 35
 • Project build.gradle classpath 'com.android.tools.build:gradle:8.6.0'
 • Gradle wrapper.properties distributionUrl=https://services.gradle.org/distributions/gradle-8.10.2-bin.zip
-• May need to add proguard rules# Add project specific ProGuard rules here.  
-You can control the set of applied configuration files using the  
-proguardFiles setting in build.gradle.  
-For more details, see http://developer.android.com/guide/developing/tools/proguard.html  
-If your project uses WebView with JS, uncomment the following  
-and specify the fully qualified class name to the JavaScript interface  
-
+• May need to change kotlin version to 2.2.0 in android/settings.gradle.kts
 ```
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
-
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
-
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
--keepattributes Signature
--keepclassmembernames,allowobfuscation interface * {
-@retrofit2.http.* methods;
-}
--dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
-
-    #########################################################################
-    # OkHttp
-    #########################################################################
-    -dontwarn okhttp3.**
-    -dontwarn okhttp2.**
-    -dontwarn okio.**
-    -dontwarn javax.annotation.**
-    -dontwarn org.conscrypt.**
-    -keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
--keep class company.tap.gosellapi.** { *; }
--keep class gotap.com.tapglkitandroid.** { *; }
-
-
--dontwarn okhttp2.**
--dontwarn okio.**
--dontwarn javax.annotation.**
--dontwarn org.conscrypt.**
--keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
-#-dontobfuscate
--optimizations !code/allocation/variable
--keep class company.tap.gosellapi.** { *; }
-# KEEP TapGLKit classes
--keep class gotap.com.tapglkitandroid.** { *; }
--keep class gotap.com.tapglkitandroid.gl.Views.TapLoadingView { *; }
-
--dontwarn gotap.com.tapglkitandroid.**
--keepclassmembers class gotap.com.tapglkitandroid.gl.Views.TapLoadingView {
-public init(android.content.Context);
-public init(android.content.Context, android.util.AttributeSet);
-public init(android.content.Context, android.util.AttributeSet, int);
-}
--keep class company.tap.tapcardvalidator_android.** { *; }
--dontwarn company.tap.tapcardvalidator_android.**
-
-
-# GSON.
--keepnames class com.google.gson.** {*;}
--keepnames enum com.google.gson.** {*;}
--keepnames interface com.google.gson.** {*;}
--keep class com.google.gson.** { *; }
--keepnames class org.** {*;}
--keepnames enum org.** {*;}
--keepnames interface org.** {*;}
--keep class org.** { *; }
--keepclassmembers enum * { *; }
-
-# Retrofit
--keepattributes Signature
--keepattributes RuntimeVisibleAnnotations
--keep class retrofit2.** { *; }
--keep interface retrofit2.** { *; }
--keepclassmembers class * {
-@retrofit2.http.* methods;
-}
-
-# OkHttp
--keep class okhttp3.** { *; }
--keep interface okhttp3.** { *; }
-
-# Gson
--keep class com.google.gson.** { *; }
--keepattributes EnclosingMethod
--keepattributes InnerClasses
--keepattributes Signature
-
-# Gson TypeToken
--keep class com.google.gson.reflect.TypeToken { *; }
--keep class * extends com.google.gson.reflect.TypeToken
+    id("org.jetbrains.kotlin.android") version "2.2.0" apply false
 ```
-
-• Might be need to add additional libs (If use face issues for class not found etc then add below)
-```
-implementation 'com.google.android.material:material:1.14.0-alpha03'
-implementation 'com.github.Tap-Payments:TapGLKit-Android:1.19.1'
-implementation 'com.github.Tap-Payments:TapCardValidator-Android:2.16.2.1'
-// OkHttp core and logging interceptor
-implementation 'com.squareup.okhttp3:logging-interceptor:5.1.0'
-implementation 'com.squareup.okhttp3:okhttp:5.1.0'
-implementation 'com.squareup.retrofit2:retrofit:3.0.0'
-implementation 'com.squareup.retrofit2:converter-gson:3.0.0'
-implementation 'com.squareup.okhttp3:logging-interceptor:5.1.0'
-implementation 'com.squareup.picasso:picasso:2.71828'
-implementation 'com.google.android.gms:play-services-wallet:19.4.0'
-implementation 'jp.wasabeef:blurry:4.0.1'
-implementation 'io.card:android-sdk:5.5.1'
-```
-
-
 
 ## 2.4.18 - 2025-05-22
 
