@@ -7,14 +7,15 @@ class Reference {
   String? order;
   String? gosellID;
 
-  Reference(
-      {this.acquirer,
-      this.gateway,
-      this.order,
-      this.payment,
-      this.track,
-      this.transaction,
-      this.gosellID});
+  Reference({
+    this.acquirer,
+    this.gateway,
+    this.order,
+    this.payment,
+    this.track,
+    this.transaction,
+    this.gosellID,
+  });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -25,6 +26,221 @@ class Reference {
     data['transaction'] = this.transaction;
     data['order'] = this.order;
     data['gosellID'] = this.gosellID;
+    return data;
+  }
+}
+
+/// Represents configurable UI theme/appearance options that can be applied on
+/// both Android and iOS SDKs. Not all platforms will use all fields.
+enum ThemeAppearanceMode { windowed, fullscreen }
+
+enum ThemeLightDarkMode { light, dark }
+
+enum ThemeBlurStyle { none, light, extraLight, dark, regular, prominent }
+
+class ThemeOptions {
+  // Common appearance
+  final ThemeAppearanceMode? appearanceMode; // maps to SDKAppearanceMode
+  final ThemeLightDarkMode? darkLightMode; // iOS only
+
+  // Background
+  final String? backgroundColor; // Hex color string like #RRGGBB or #AARRGGBB
+  final String? contentBackgroundColor; // Hex
+  final ThemeBlurStyle? backgroundBlurStyle; // iOS only
+  final double? backgroundBlurProgress; // 0..1 (iOS only)
+
+  // Header
+  final String? headerFontFamily;
+  final String? headerTextColor; // Hex
+  final double? headerTextSize; // Android specific
+  final String? headerBackgroundColor; // Hex
+  final String? headerCancelButtonFontFamily;
+  final String? headerCancelButtonTextColorNormal; // Hex (iOS)
+  final String? headerCancelButtonTextColorHighlighted; // Hex (iOS)
+  final String? cardInputDescriptionFontFamily; // iOS description font
+  final String? cardInputDescriptionTextColor; // iOS description color
+
+  // Card input fields
+  final String? cardInputFontFamily;
+  final String? cardInputTextColor; // Hex
+  final String? cardInputInvalidTextColor; // Hex
+  final String? cardInputPlaceholderTextColor; // Hex
+
+  // Save card switch colors (Android)
+  final String? saveCardSwitchOffThumbTint; // Hex
+  final String? saveCardSwitchOnThumbTint; // Hex
+  final String? saveCardSwitchOffTrackTint; // Hex
+  final String? saveCardSwitchOnTrackTint; // Hex
+
+  // Card scanner
+  final bool? cardScannerIconVisible; // show/hide
+  final String?
+  scanIconResource; // Android resource name (e.g. "drawable/btn_card_scanner_normal")
+  final String? scanIconFrameTintColor; // Hex (iOS)
+  final String? scanIconTintColor; // Hex (iOS)
+
+  // Pay/Save button
+  final String? payButtonBackgroundResource; // Android selector resource
+  final String? payButtonFontFamily;
+  final String? payButtonDisabledTitleColor; // Hex
+  final String? payButtonEnabledTitleColor; // Hex
+  final double? payButtonTextSize; // Android specific
+  final bool? payButtonLoaderVisible;
+  final bool? payButtonSecurityIconVisible;
+  final String? payButtonText; // Android custom text
+  final bool? showAmountOnButton; // Android
+  final double? payButtonCornerRadius; // iOS
+  final EdgeInsetsSpec? payButtonInsets; // iOS insets from screen edges
+  final double? payButtonHeight; // iOS
+
+  // Dialog (Android)
+  final String? dialogTextColor; // Hex
+  final double? dialogTextSize;
+
+  // iOS status popup
+  final bool? showStatusPopup; // sessionShouldShowStatusPopup
+
+  ThemeOptions({
+    this.appearanceMode,
+    this.darkLightMode,
+    this.backgroundColor,
+    this.contentBackgroundColor,
+    this.backgroundBlurStyle,
+    this.backgroundBlurProgress,
+    this.headerFontFamily,
+    this.headerTextColor,
+    this.headerTextSize,
+    this.headerBackgroundColor,
+    this.headerCancelButtonFontFamily,
+    this.headerCancelButtonTextColorNormal,
+    this.headerCancelButtonTextColorHighlighted,
+    this.cardInputDescriptionFontFamily,
+    this.cardInputDescriptionTextColor,
+    this.cardInputFontFamily,
+    this.cardInputTextColor,
+    this.cardInputInvalidTextColor,
+    this.cardInputPlaceholderTextColor,
+    this.saveCardSwitchOffThumbTint,
+    this.saveCardSwitchOnThumbTint,
+    this.saveCardSwitchOffTrackTint,
+    this.saveCardSwitchOnTrackTint,
+    this.cardScannerIconVisible,
+    this.scanIconResource,
+    this.scanIconFrameTintColor,
+    this.scanIconTintColor,
+    this.payButtonBackgroundResource,
+    this.payButtonFontFamily,
+    this.payButtonDisabledTitleColor,
+    this.payButtonEnabledTitleColor,
+    this.payButtonTextSize,
+    this.payButtonLoaderVisible,
+    this.payButtonSecurityIconVisible,
+    this.payButtonText,
+    this.showAmountOnButton,
+    this.payButtonCornerRadius,
+    this.payButtonInsets,
+    this.payButtonHeight,
+    this.dialogTextColor,
+    this.dialogTextSize,
+    this.showStatusPopup,
+  });
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['appearanceMode'] = appearanceMode == null
+        ? null
+        : (appearanceMode == ThemeAppearanceMode.windowed
+              ? 'windowed'
+              : 'fullscreen');
+    data['darkLightMode'] = darkLightMode == null
+        ? null
+        : (darkLightMode == ThemeLightDarkMode.dark ? 'dark' : 'light');
+    data['backgroundColor'] = backgroundColor;
+    data['contentBackgroundColor'] = contentBackgroundColor;
+    if (backgroundBlurStyle != null) {
+      switch (backgroundBlurStyle!) {
+        case ThemeBlurStyle.none:
+          data['backgroundBlurStyle'] = 'none';
+          break;
+        case ThemeBlurStyle.light:
+          data['backgroundBlurStyle'] = 'light';
+          break;
+        case ThemeBlurStyle.extraLight:
+          data['backgroundBlurStyle'] = 'extraLight';
+          break;
+        case ThemeBlurStyle.dark:
+          data['backgroundBlurStyle'] = 'dark';
+          break;
+        case ThemeBlurStyle.regular:
+          data['backgroundBlurStyle'] = 'regular';
+          break;
+        case ThemeBlurStyle.prominent:
+          data['backgroundBlurStyle'] = 'prominent';
+          break;
+      }
+    }
+    data['backgroundBlurProgress'] = backgroundBlurProgress;
+    data['headerFontFamily'] = headerFontFamily;
+    data['headerTextColor'] = headerTextColor;
+    data['headerTextSize'] = headerTextSize;
+    data['headerBackgroundColor'] = headerBackgroundColor;
+    data['headerCancelButtonFontFamily'] = headerCancelButtonFontFamily;
+    data['headerCancelButtonTextColorNormal'] =
+        headerCancelButtonTextColorNormal;
+    data['headerCancelButtonTextColorHighlighted'] =
+        headerCancelButtonTextColorHighlighted;
+    data['cardInputDescriptionFontFamily'] = cardInputDescriptionFontFamily;
+    data['cardInputDescriptionTextColor'] = cardInputDescriptionTextColor;
+    data['cardInputFontFamily'] = cardInputFontFamily;
+    data['cardInputTextColor'] = cardInputTextColor;
+    data['cardInputInvalidTextColor'] = cardInputInvalidTextColor;
+    data['cardInputPlaceholderTextColor'] = cardInputPlaceholderTextColor;
+    data['saveCardSwitchOffThumbTint'] = saveCardSwitchOffThumbTint;
+    data['saveCardSwitchOnThumbTint'] = saveCardSwitchOnThumbTint;
+    data['saveCardSwitchOffTrackTint'] = saveCardSwitchOffTrackTint;
+    data['saveCardSwitchOnTrackTint'] = saveCardSwitchOnTrackTint;
+    data['cardScannerIconVisible'] = cardScannerIconVisible;
+    data['scanIconResource'] = scanIconResource;
+    data['scanIconFrameTintColor'] = scanIconFrameTintColor;
+    data['scanIconTintColor'] = scanIconTintColor;
+    data['payButtonBackgroundResource'] = payButtonBackgroundResource;
+    data['payButtonFontFamily'] = payButtonFontFamily;
+    data['payButtonDisabledTitleColor'] = payButtonDisabledTitleColor;
+    data['payButtonEnabledTitleColor'] = payButtonEnabledTitleColor;
+    data['payButtonTextSize'] = payButtonTextSize;
+    data['payButtonLoaderVisible'] = payButtonLoaderVisible;
+    data['payButtonSecurityIconVisible'] = payButtonSecurityIconVisible;
+    data['payButtonText'] = payButtonText;
+    data['showAmountOnButton'] = showAmountOnButton;
+    data['payButtonCornerRadius'] = payButtonCornerRadius;
+    data['payButtonInsets'] = payButtonInsets?.toJson();
+    data['payButtonHeight'] = payButtonHeight;
+    data['dialogTextColor'] = dialogTextColor;
+    data['dialogTextSize'] = dialogTextSize;
+    data['sessionShouldShowStatusPopup'] = showStatusPopup;
+    return data;
+  }
+}
+
+class EdgeInsetsSpec {
+  final double left;
+  final double top;
+  final double right;
+  final double bottom;
+
+  EdgeInsetsSpec({
+    required this.left,
+    required this.top,
+    required this.right,
+    required this.bottom,
+  });
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['left'] = left;
+    data['top'] = top;
+    data['right'] = right;
+    data['bottom'] = bottom;
     return data;
   }
 }
@@ -58,15 +274,16 @@ class Customer {
   String customerId;
   String? metaData;
 
-  Customer(
-      {required this.isdNumber,
-      required this.number,
-      required this.customerId,
-      required this.email,
-      required this.firstName,
-      required this.middleName,
-      required this.lastName,
-      this.metaData});
+  Customer({
+    required this.isdNumber,
+    required this.number,
+    required this.customerId,
+    required this.email,
+    required this.firstName,
+    required this.middleName,
+    required this.lastName,
+    this.metaData,
+  });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -90,8 +307,12 @@ class Destinations {
   int? count;
   List<Destination>? destinationlist;
 
-  Destinations(
-      {this.amount, required this.currency, this.count, this.destinationlist});
+  Destinations({
+    this.amount,
+    required this.currency,
+    this.count,
+    this.destinationlist,
+  });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -100,8 +321,9 @@ class Destinations {
     data['count'] = this.count;
 
     if (this.destinationlist != null) {
-      data['destination'] =
-          this.destinationlist!.map((v) => v.toJson()).toList();
+      data['destination'] = this.destinationlist!
+          .map((v) => v.toJson())
+          .toList();
     }
 
     return data;
@@ -115,12 +337,13 @@ class Destination {
   String? description;
   String? reference;
 
-  Destination(
-      {required this.id,
-      required this.amount,
-      required this.currency,
-      this.description,
-      this.reference});
+  Destination({
+    required this.id,
+    required this.amount,
+    required this.currency,
+    this.description,
+    this.reference,
+  });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -142,14 +365,15 @@ class PaymentItem {
   List<Tax>? taxes;
   int totalAmount;
 
-  PaymentItem(
-      {required this.amountPerUnit,
-      this.description,
-      this.discount,
-      required this.name,
-      required this.quantity,
-      this.taxes,
-      required this.totalAmount});
+  PaymentItem({
+    required this.amountPerUnit,
+    this.description,
+    this.discount,
+    required this.name,
+    required this.quantity,
+    this.taxes,
+    required this.totalAmount,
+  });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -177,11 +401,12 @@ class Amount {
   double maximumFee;
   double minimumFee;
 
-  Amount(
-      {required this.type,
-      required this.value,
-      required this.maximumFee,
-      required this.minimumFee});
+  Amount({
+    required this.type,
+    required this.value,
+    required this.maximumFee,
+    required this.minimumFee,
+  });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -263,4 +488,3 @@ class AuthorizeAction {
 enum AuthorizeActionType { CAPTURE, VOID }
 
 enum CardType { DEBIT, CREDIT, ALL }
-
