@@ -9,8 +9,9 @@ class GoSellSdkFlutter {
   static const String ERROR_CODE_INVALID_APP_CONFIGURATION = "501";
   static Map<dynamic, dynamic> _tapSDKResult = Map<dynamic, dynamic>();
 
-  static const MethodChannel _channel =
-      const MethodChannel('go_sell_sdk_flutter');
+  static const MethodChannel _channel = const MethodChannel(
+    'go_sell_sdk_flutter',
+  );
 
   static Future<dynamic> get startPaymentSDK async {
     if (!_validateSessionArge() || _validateAppConfig()) return _tapSDKResult;
@@ -18,12 +19,14 @@ class GoSellSdkFlutter {
     /// prepare sdk configurations
     sdkConfigurations = {
       "appCredentials": appCredentials,
-      "sessionParameters": sessionParameters
+      "sessionParameters": sessionParameters,
     };
 
     // /forward call to channel
-    dynamic result =
-        await _channel.invokeMethod('start_sdk', sdkConfigurations);
+    dynamic result = await _channel.invokeMethod(
+      'start_sdk',
+      sdkConfigurations,
+    );
     print('result in dart : $result');
     return result;
   }
@@ -37,16 +40,17 @@ class GoSellSdkFlutter {
   static Map<String, dynamic> sessionParameters = {};
 
   /// App configurations
-  static void configureApp(
-      {required String productionSecretKey,
-      required String sandBoxSecretKey,
-      required String bundleId,
-      required String lang}) {
+  static void configureApp({
+    required String productionSecretKey,
+    required String sandBoxSecretKey,
+    required String bundleId,
+    required String lang,
+  }) {
     appCredentials = <String, dynamic>{
       "production_secrete_key": productionSecretKey,
       "sandbox_secrete_key": sandBoxSecretKey,
       "bundleID": bundleId,
-      "language": lang
+      "language": lang,
     };
   }
 
@@ -80,6 +84,7 @@ class GoSellSdkFlutter {
     required bool allowsToEditCardHolderName,
     List<String>? supportedPaymentMethods,
     SDKAppearanceMode? appearanceMode,
+    ThemeOptions? theme,
   }) {
     sessionParameters = <String, dynamic>{
       'trxMode': trxMode.toString(),
@@ -113,7 +118,9 @@ class GoSellSdkFlutter {
       "supportedPaymentMethods": supportedPaymentMethods,
       "appearanceMode": appearanceMode == SDKAppearanceMode.windowed
           ? SDKAppearanceMode.windowed.name.toString()
-          : SDKAppearanceMode.fullscreen.name.toString()
+          : SDKAppearanceMode.fullscreen.name.toString(),
+      // Optional: platform theme options map
+      "theme": theme?.toJson(),
     };
   }
 
@@ -123,9 +130,10 @@ class GoSellSdkFlutter {
         appCredentials["bundleId"] == "null" ||
         appCredentials["bundleId"] == null) {
       _prepareConfigurationsErrorMap(
-          errorCode: ERROR_CODE_INVALID_APP_CONFIGURATION,
-          errorMsg: 'Invalid Bundle ID',
-          errorDescription: 'Bundle ID can not be empty or null');
+        errorCode: ERROR_CODE_INVALID_APP_CONFIGURATION,
+        errorMsg: 'Invalid Bundle ID',
+        errorDescription: 'Bundle ID can not be empty or null',
+      );
       return false;
     }
 
@@ -133,9 +141,10 @@ class GoSellSdkFlutter {
         appCredentials["production_secrete_key"] == "null" ||
         appCredentials["production_secrete_key"] == null) {
       _prepareConfigurationsErrorMap(
-          errorCode: ERROR_CODE_INVALID_APP_CONFIGURATION,
-          errorMsg: 'Invalid secrete Key',
-          errorDescription: 'Production Secrete key can not empty or null');
+        errorCode: ERROR_CODE_INVALID_APP_CONFIGURATION,
+        errorMsg: 'Invalid secrete Key',
+        errorDescription: 'Production Secrete key can not empty or null',
+      );
       return false;
     }
 
@@ -143,9 +152,10 @@ class GoSellSdkFlutter {
         appCredentials["sandbox_secrete_key"] == "null" ||
         appCredentials["sandbox_secrete_key"] == null) {
       _prepareConfigurationsErrorMap(
-          errorCode: ERROR_CODE_INVALID_APP_CONFIGURATION,
-          errorMsg: 'Invalid secrete Key',
-          errorDescription: 'Sandbox Secrete key can not empty or null');
+        errorCode: ERROR_CODE_INVALID_APP_CONFIGURATION,
+        errorMsg: 'Invalid secrete Key',
+        errorDescription: 'Sandbox Secrete key can not empty or null',
+      );
       return false;
     }
 
@@ -153,9 +163,10 @@ class GoSellSdkFlutter {
         appCredentials["lang"] == "null" ||
         appCredentials["lang"] == null) {
       _prepareConfigurationsErrorMap(
-          errorCode: ERROR_CODE_INVALID_SESSION_CONFIGURATION,
-          errorMsg: 'Invalid language',
-          errorDescription: 'Language can not empty or null');
+        errorCode: ERROR_CODE_INVALID_SESSION_CONFIGURATION,
+        errorMsg: 'Invalid language',
+        errorDescription: 'Language can not empty or null',
+      );
       return false;
     }
     return true;
@@ -167,9 +178,10 @@ class GoSellSdkFlutter {
         sessionParameters["trxMode"] == "null" ||
         sessionParameters["trxMode"] == null) {
       _prepareConfigurationsErrorMap(
-          errorCode: ERROR_CODE_INVALID_SESSION_CONFIGURATION,
-          errorMsg: 'Invalid Transaction Mode',
-          errorDescription: 'Transaction Mode can not empty or null');
+        errorCode: ERROR_CODE_INVALID_SESSION_CONFIGURATION,
+        errorMsg: 'Invalid Transaction Mode',
+        errorDescription: 'Transaction Mode can not empty or null',
+      );
       return false;
     }
 
@@ -178,9 +190,10 @@ class GoSellSdkFlutter {
         sessionParameters["transactionCurrency"] == "null" ||
         sessionParameters["transactionCurrency"].length == 0) {
       _prepareConfigurationsErrorMap(
-          errorCode: ERROR_CODE_INVALID_SESSION_CONFIGURATION,
-          errorMsg: 'Invalid Transaction Currency',
-          errorDescription: 'Transaction Currency can not be empty or null');
+        errorCode: ERROR_CODE_INVALID_SESSION_CONFIGURATION,
+        errorMsg: 'Invalid Transaction Currency',
+        errorDescription: 'Transaction Currency can not be empty or null',
+      );
       return false;
     }
 
@@ -188,9 +201,10 @@ class GoSellSdkFlutter {
     if (sessionParameters["customer"] == "null" ||
         sessionParameters["customer"] == null) {
       _prepareConfigurationsErrorMap(
-          errorCode: ERROR_CODE_INVALID_SESSION_CONFIGURATION,
-          errorMsg: 'Invalid Customer',
-          errorDescription: 'Customer can not be empty or null');
+        errorCode: ERROR_CODE_INVALID_SESSION_CONFIGURATION,
+        errorMsg: 'Invalid Customer',
+        errorDescription: 'Customer can not be empty or null',
+      );
       return false;
     }
 
@@ -199,10 +213,11 @@ class GoSellSdkFlutter {
         !Util.isNumeric(sessionParameters["amount"]) ||
         sessionParameters["amount"] == "") {
       _prepareConfigurationsErrorMap(
-          errorCode: ERROR_CODE_INVALID_SESSION_CONFIGURATION,
-          errorMsg: 'Invalid Amount',
-          errorDescription:
-              'Amount can not be empty or null or zero and must be numeric value');
+        errorCode: ERROR_CODE_INVALID_SESSION_CONFIGURATION,
+        errorMsg: 'Invalid Amount',
+        errorDescription:
+            'Amount can not be empty or null or zero and must be numeric value',
+      );
       return false;
     }
 
@@ -224,10 +239,11 @@ class GoSellSdkFlutter {
     }
   }
 
-  static void _prepareConfigurationsErrorMap(
-      {required String errorCode,
-      required String errorMsg,
-      required String errorDescription}) {
+  static void _prepareConfigurationsErrorMap({
+    required String errorCode,
+    required String errorMsg,
+    required String errorDescription,
+  }) {
     _tapSDKResult.putIfAbsent('sdk_result', () => 'SDK_ERROR');
     _tapSDKResult.putIfAbsent('sdk_error_code', () => errorCode);
     _tapSDKResult.putIfAbsent('sdk_error_message', () => errorMsg);
@@ -241,12 +257,6 @@ enum SDKMode { Sandbox, Production }
 
 enum PaymentType { ALL, CARD, WEB, APPLE_PAY, DEVICE }
 
-enum GooglePayWalletMode {
-  ENVIRONMENT_TEST,
-  ENVIRONMENT_PRODUCTION,
-}
+enum GooglePayWalletMode { ENVIRONMENT_TEST, ENVIRONMENT_PRODUCTION }
 
-enum SDKAppearanceMode {
-  windowed,
-  fullscreen,
-}
+enum SDKAppearanceMode { windowed, fullscreen }

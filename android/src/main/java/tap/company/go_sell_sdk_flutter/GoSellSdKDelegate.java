@@ -2,10 +2,13 @@ package tap.company.go_sell_sdk_flutter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.annotation.Nullable;
 
 import java.math.BigDecimal;
@@ -57,7 +60,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
     }
 
     public void startSDK(MethodCall methodCall, MethodChannel.Result result,
-                         HashMap<String, Object> sdkConfigurations) {
+            HashMap<String, Object> sdkConfigurations) {
 
         if (!setPendingMethodCallAndResult(methodCall, result)) {
             finishWithAlreadyActiveError(result);
@@ -113,7 +116,6 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         sdkSession.start(activity);
     }
 
-
     private void configureApp(String secrete_key, String bundleID, String language) {
         GoSellSDK.init(activity, secrete_key, bundleID); // to be replaced by merchant
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -140,7 +142,14 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         // initiate PaymentDataSource
         sdkSession.instantiatePaymentDataSource(); // ** Required **
 
-        sdkSession.setGooglePayWalletMode(DeserializationUtil.getGPayWalletMode(sessionParameters.get("googlePayWalletMode").toString()));//** Required ** For setting GooglePAY Environment
+        sdkSession.setGooglePayWalletMode(
+                DeserializationUtil.getGPayWalletMode(sessionParameters.get("googlePayWalletMode").toString()));// **
+                                                                                                                // Required
+                                                                                                                // **
+                                                                                                                // For
+                                                                                                                // setting
+                                                                                                                // GooglePAY
+                                                                                                                // Environment
 
         // sdk mode
         sdkSession.setTransactionMode(
@@ -165,7 +174,8 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
 
         if (sessionParameters.get("appearanceMode") != null) {
             ThemeObject.getInstance()
-                    .setAppearanceMode(DeserializationUtil.getAppearanceMode(sessionParameters.get("appearanceMode").toString()));
+                    .setAppearanceMode(
+                            DeserializationUtil.getAppearanceMode(sessionParameters.get("appearanceMode").toString()));
         } else {
             if (sessionParameters.get("trxMode").toString().equals("TransactionMode.SAVE_CARD") ||
                     sessionParameters.get("trxMode").toString().equals("TransactionMode.TOKENIZE_CARD")) {
@@ -177,6 +187,103 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
             }
         }
 
+        // Apply optional ThemeOptions coming from Flutter
+        Object themeObj = sessionParameters.get("theme");
+        if (themeObj instanceof HashMap) {
+            @SuppressWarnings("unchecked")
+            HashMap<String, Object> theme = (HashMap<String, Object>) themeObj;
+
+            // Header styles
+            Typeface headerTypeface = resolveTypeface(theme.get("headerFontFamily"));
+            if (headerTypeface != null)
+                ThemeObject.getInstance().setHeaderFont(headerTypeface);
+            Integer headerTextColor = parseColor(theme.get("headerTextColor"));
+            if (headerTextColor != null)
+                ThemeObject.getInstance().setHeaderTextColor(headerTextColor);
+            Integer headerTextSize = getInt(theme.get("headerTextSize"));
+            if (headerTextSize != null)
+                ThemeObject.getInstance().setHeaderTextSize(headerTextSize);
+            Integer headerBgColor = parseColor(theme.get("headerBackgroundColor"));
+            if (headerBgColor != null)
+                ThemeObject.getInstance().setHeaderBackgroundColor(headerBgColor);
+
+            // Card input
+            Typeface cardTypeface = resolveTypeface(theme.get("cardInputFontFamily"));
+            if (cardTypeface != null)
+                ThemeObject.getInstance().setCardInputFont(cardTypeface);
+            Integer cardTextColor = parseColor(theme.get("cardInputTextColor"));
+            if (cardTextColor != null)
+                ThemeObject.getInstance().setCardInputTextColor(cardTextColor);
+            Integer cardInvalidColor = parseColor(theme.get("cardInputInvalidTextColor"));
+            if (cardInvalidColor != null)
+                ThemeObject.getInstance().setCardInputInvalidTextColor(cardInvalidColor);
+            Integer cardPlaceholderColor = parseColor(theme.get("cardInputPlaceholderTextColor"));
+            if (cardPlaceholderColor != null)
+                ThemeObject.getInstance().setCardInputPlaceholderTextColor(cardPlaceholderColor);
+
+            // Save card switch tints
+            Integer offThumb = parseColor(theme.get("saveCardSwitchOffThumbTint"));
+            if (offThumb != null)
+                ThemeObject.getInstance().setSaveCardSwitchOffThumbTint(offThumb);
+            Integer onThumb = parseColor(theme.get("saveCardSwitchOnThumbTint"));
+            if (onThumb != null)
+                ThemeObject.getInstance().setSaveCardSwitchOnThumbTint(onThumb);
+            Integer offTrack = parseColor(theme.get("saveCardSwitchOffTrackTint"));
+            if (offTrack != null)
+                ThemeObject.getInstance().setSaveCardSwitchOffTrackTint(offTrack);
+            Integer onTrack = parseColor(theme.get("saveCardSwitchOnTrackTint"));
+            if (onTrack != null)
+                ThemeObject.getInstance().setSaveCardSwitchOnTrackTint(onTrack);
+
+            // Scanner icon
+            Boolean scannerVisible = getBoolean(theme.get("cardScannerIconVisible"));
+            if (scannerVisible != null)
+                ThemeObject.getInstance().setCardScannerIconVisible(scannerVisible);
+            Integer scanIconResId = resolveResourceId(theme.get("scanIconResource"));
+            if (scanIconResId != null) {
+                try {
+                    ThemeObject.getInstance().setScanIconDrawable(ContextCompat.getDrawable(activity, scanIconResId));
+                } catch (Exception ignored) {
+                }
+            }
+
+            // Pay/Save button visuals
+            Integer payBtnResId = resolveResourceId(theme.get("payButtonBackgroundResource"));
+            if (payBtnResId != null)
+                ThemeObject.getInstance().setPayButtonResourceId(payBtnResId);
+            Typeface payBtnTypeface = resolveTypeface(theme.get("payButtonFontFamily"));
+            if (payBtnTypeface != null)
+                ThemeObject.getInstance().setPayButtonFont(payBtnTypeface);
+            Integer payBtnDisabledColor = parseColor(theme.get("payButtonDisabledTitleColor"));
+            if (payBtnDisabledColor != null)
+                ThemeObject.getInstance().setPayButtonDisabledTitleColor(payBtnDisabledColor);
+            Integer payBtnEnabledColor = parseColor(theme.get("payButtonEnabledTitleColor"));
+            if (payBtnEnabledColor != null)
+                ThemeObject.getInstance().setPayButtonEnabledTitleColor(payBtnEnabledColor);
+            Integer payBtnTextSize = getInt(theme.get("payButtonTextSize"));
+            if (payBtnTextSize != null)
+                ThemeObject.getInstance().setPayButtonTextSize(payBtnTextSize);
+            Boolean loaderVisible = getBoolean(theme.get("payButtonLoaderVisible"));
+            if (loaderVisible != null)
+                ThemeObject.getInstance().setPayButtonLoaderVisible(loaderVisible);
+            Boolean securityIconVisible = getBoolean(theme.get("payButtonSecurityIconVisible"));
+            if (securityIconVisible != null)
+                ThemeObject.getInstance().setPayButtonSecurityIconVisible(securityIconVisible);
+            Object payBtnTextObj = theme.get("payButtonText");
+            if (payBtnTextObj instanceof String)
+                ThemeObject.getInstance().setPayButtonText((String) payBtnTextObj);
+            Boolean showAmount = getBoolean(theme.get("showAmountOnButton"));
+            if (showAmount != null)
+                ThemeObject.getInstance().setShowAmountOnButton(showAmount);
+
+            // Dialog
+            Integer dialogTextColor = parseColor(theme.get("dialogTextColor"));
+            if (dialogTextColor != null)
+                ThemeObject.getInstance().setDialogTextColor(dialogTextColor);
+            Integer dialogTextSize = getInt(theme.get("dialogTextSize"));
+            if (dialogTextSize != null)
+                ThemeObject.getInstance().setDialogTextSize(dialogTextSize);
+        }
 
         // Using static CustomerBuilder method available inside TAP Customer Class you
         // can populate TAP Customer object and pass it to SDK
@@ -318,6 +425,86 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         // CardHolderName .
 
     }
+
+    // region Helpers
+    @Nullable
+    private Integer parseColor(Object value) {
+        if (!(value instanceof String))
+            return null;
+        try {
+            return Color.parseColor((String) value);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Nullable
+    private Integer getInt(Object value) {
+        if (value instanceof Integer)
+            return (Integer) value;
+        if (value instanceof Double)
+            return ((Double) value).intValue();
+        if (value instanceof Float)
+            return ((Float) value).intValue();
+        if (value instanceof String) {
+            try {
+                return Integer.parseInt((String) value);
+            } catch (Exception ignored) {
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    private Boolean getBoolean(Object value) {
+        if (value instanceof Boolean)
+            return (Boolean) value;
+        if (value instanceof String) {
+            return Boolean.parseBoolean((String) value);
+        }
+        return null;
+    }
+
+    @Nullable
+    private Typeface resolveTypeface(Object value) {
+        if (!(value instanceof String))
+            return null;
+        String family = ((String) value).trim();
+        switch (family.toUpperCase()) {
+            case "SANS_SERIF":
+                return Typeface.SANS_SERIF;
+            case "SERIF":
+                return Typeface.SERIF;
+            case "MONOSPACE":
+                return Typeface.MONOSPACE;
+            default:
+                try {
+                    return Typeface.create(family, Typeface.NORMAL);
+                } catch (Exception e) {
+                    return null;
+                }
+        }
+    }
+
+    @Nullable
+    private Integer resolveResourceId(Object value) {
+        if (!(value instanceof String))
+            return null;
+        String spec = (String) value; // e.g., "drawable/btn_pay_selector" or "btn_pay_selector"
+        String resName = spec;
+        String resType = "drawable";
+        if (spec.contains("/")) {
+            String[] parts = spec.split("/");
+            if (parts.length == 2) {
+                resType = parts[0];
+                resName = parts[1];
+            }
+        }
+        int id = activity.getResources().getIdentifier(resName, resType, activity.getPackageName());
+        return id == 0 ? null : id;
+    }
+
+    // endregion
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void sendChargeResult(Charge charge, String paymentStatus, String trx_mode) {
@@ -365,9 +552,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
                 resultMap.put("payment_agreement", paymentAgreementMap);
             }
 
-
         }
-
 
         if (charge.getAcquirer() != null) {
             resultMap.put("acquirer_id", charge.getAcquirer().getId());
@@ -422,7 +607,6 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
             resultMap.put("card_holder_name", token.getCard().getName());
             resultMap.put("save_card", saveCard);
 
-
         }
         resultMap.put("sdk_result", paymentStatus);
         resultMap.put("trx_mode", "TOKENIZE");
@@ -436,16 +620,24 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         resultMap.put("sdk_error_code", errorCode);
         resultMap.put("sdk_error_message", errorMessage);
         resultMap.put("sdk_error_description", errorBody);
-        pendingResult.success(resultMap);
-        pendingResult = null;
+        if (pendingResult != null) {
+            pendingResult.success(resultMap);
+            pendingResult = null;
+        } else {
+            Log.w("GoSellSdKDelegate", "sendSDKError called with no pendingResult");
+        }
     }
 
     private void sendGooglePayError(String errorMessage) {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("sdk_result", "SDK_ERROR");
         resultMap.put("sdk_error_message", errorMessage);
-        pendingResult.success(resultMap);
-        pendingResult = null;
+        if (pendingResult != null) {
+            pendingResult.success(resultMap);
+            pendingResult = null;
+        } else {
+            Log.w("GoSellSdKDelegate", "sendGooglePayError called with no pendingResult");
+        }
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -505,7 +697,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
             System.out.println("SDK Process Error : " + goSellError.getErrorMessage());
             System.out.println("SDK Process Error : " + goSellError.getErrorCode());
             sendSDKError(goSellError.getErrorCode(), goSellError.getErrorMessage(), goSellError.getErrorBody());
-        }else{
+        } else {
             System.out.println("SESSION CANCELLED HERE ");
         }
     }
@@ -539,8 +731,12 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         Log.d("MainActivity", "Session Cancelled.........");
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("sdk_result", "CANCELLED");
-        pendingResult.success(resultMap);
-        pendingResult = null;
+        if (pendingResult != null) {
+            pendingResult.success(resultMap);
+            pendingResult = null;
+        } else {
+            Log.w("GoSellSdKDelegate", "sessionCancelled called with no pendingResult");
+        }
     }
 
     @Override

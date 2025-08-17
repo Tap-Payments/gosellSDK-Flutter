@@ -704,20 +704,184 @@ extension SwiftGoSellSdkFlutterPlugin: SessionDelegate {
 
 extension SwiftGoSellSdkFlutterPlugin: SessionAppearance {
     public func sessionShouldShowStatusPopup(_ session: SessionProtocol) -> Bool {
-    return false
-  }
+        if let theme = argsSessionParameters?["theme"] as? [String: Any],
+           let show = theme["sessionShouldShowStatusPopup"] as? Bool {
+            return show
+        }
+        return false
+    }
     
     public func appearanceMode(for session: SessionProtocol) -> SDKAppearanceMode {
+        // Prefer explicit theme value if provided
+        if let theme = argsSessionParameters?["theme"] as? [String: Any],
+           let modeString = (theme["appearanceMode"] as? String)?.lowercased() {
+            if modeString == "fullscreen" { return .fullscreen }
+            if modeString == "windowed" { return .windowed }
+        }
         if let modeString:String = argsSessionParameters?["appearanceMode"] as? String {
-        
               if modeString.lowercased() == "fullscreen" {
                   return SDKAppearanceMode.fullscreen
-              }else if modeString.lowercased() == "windowed" {
+              } else if modeString.lowercased() == "windowed" {
                   return SDKAppearanceMode.windowed
               }
-         
         }
-       return SDKAppearanceMode.default
+        return SDKAppearanceMode.default
+    }
+
+    // MARK: - Light/Dark Mode
+    public func darkLightMode(for session: SessionProtocol) -> SDKLightDarkMode {
+        if let theme = argsSessionParameters?["theme"] as? [String: Any],
+           let mode = (theme["darkLightMode"] as? String)?.lowercased() {
+            switch mode {
+            case "dark": return .darkMode
+            case "light": return .lightMode
+            default: return .lightMode
+            }
+        }
+        return .lightMode
+    }
+
+    // MARK: - Background
+    public func backgroundColor(for session: SessionProtocol) -> UIColor? {
+        return color(from: "backgroundColor")
+    }
+    public func contentBackgroundColor(for session: SessionProtocol) -> UIColor? {
+        return color(from: "contentBackgroundColor")
+    }
+    public func backgroundBlurEffectStyle(for session: SessionProtocol) -> TapBlurStyle {
+        if let theme = argsSessionParameters?["theme"] as? [String: Any],
+           let style = (theme["backgroundBlurStyle"] as? String)?.lowercased() {
+            switch style {
+            case "regular": return .regular
+            case "prominent": return .prominent
+            case "extraLight": return .extraLight
+            case "light": return .light
+            case "dark": return .dark
+            default: return .regular
+            }
+        }
+        return .regular
+    }
+    @available(iOS 10.0, *)
+    public func backgroundBlurProgress(for session: SessionProtocol) -> CGFloat {
+        if let theme = argsSessionParameters?["theme"] as? [String: Any],
+           let progress = theme["backgroundBlurProgress"] as? NSNumber {
+            return CGFloat(truncating: progress)
+        }
+        return 0
+    }
+
+    // MARK: - Header
+    public func headerFont(for session: SessionProtocol) -> UIFont {
+        return font(from: "headerFontFamily") ?? UIFont.systemFont(ofSize: UIFont.labelFontSize)
+    }
+    public func headerTextColor(for session: SessionProtocol) -> UIColor? { return color(from: "headerTextColor") }
+    public func headerBackgroundColor(for session: SessionProtocol) -> UIColor? { return color(from: "headerBackgroundColor") }
+    public func headerCancelButtonFont(for session: SessionProtocol) -> UIFont { return font(from: "headerCancelButtonFontFamily") ?? UIFont.systemFont(ofSize: UIFont.buttonFontSize) }
+    public func headerCancelButtonTextColor(for state: UIControl.State, session: SessionProtocol) -> UIColor? {
+        if let theme = argsSessionParameters?["theme"] as? [String: Any] {
+            if state == .normal { return color(value: theme["headerCancelButtonTextColorNormal"]) }
+            if state == .highlighted { return color(value: theme["headerCancelButtonTextColorHighlighted"]) }
+        }
+        return nil
+    }
+
+    // MARK: - Card Input Fields
+    public func cardInputFieldsFont(for session: SessionProtocol) -> UIFont { return font(from: "cardInputFontFamily") ?? UIFont.systemFont(ofSize: UIFont.labelFontSize) }
+    public func cardInputFieldsTextColor(for session: SessionProtocol) -> UIColor? { return color(from: "cardInputTextColor") }
+    public func cardInputFieldsPlaceholderColor(for session: SessionProtocol) -> UIColor? { return color(from: "cardInputPlaceholderTextColor") }
+    public func cardInputFieldsInvalidTextColor(for session: SessionProtocol) -> UIColor? { return color(from: "cardInputInvalidTextColor") }
+
+    // MARK: - Card Input Description
+    public func cardInputDescriptionFont(for session: SessionProtocol) -> UIFont { return font(from: "cardInputDescriptionFontFamily") ?? UIFont.systemFont(ofSize: UIFont.smallSystemFontSize) }
+    public func cardInputDescriptionTextColor(for session: SessionProtocol) -> UIColor? { return color(from: "cardInputDescriptionTextColor") }
+    public func cardInputSaveCardSwitchOffTintColor(for session: SessionProtocol) -> UIColor? { return color(from: "saveCardSwitchOffTrackTint") }
+    public func cardInputSaveCardSwitchOnTintColor(for session: SessionProtocol) -> UIColor? { return color(from: "saveCardSwitchOnTrackTint") }
+    public func cardInputSaveCardSwitchThumbTintColor(for session: SessionProtocol) -> UIColor? {
+        // Use On thumb if provided, else Off thumb
+        if let color = color(from: "saveCardSwitchOnThumbTint") { return color }
+        return color(from: "saveCardSwitchOffThumbTint")
+    }
+    public func cardInputScanIconFrameTintColor(for session: SessionProtocol) -> UIColor? { return color(from: "scanIconFrameTintColor") }
+    public func cardInputScanIconTintColor(for session: SessionProtocol) -> UIColor? { return color(from: "scanIconTintColor") }
+
+    // MARK: - Pay/Save Button
+    public func tapButtonBackgroundColor(for state: UIControl.State, session: SessionProtocol) -> UIColor? {
+        // Not provided in theme currently; return nil to use default
+        return nil
+    }
+    public func tapButtonFont(for session: SessionProtocol) -> UIFont {
+        return font(from: "payButtonFontFamily") ?? UIFont.systemFont(ofSize: UIFont.buttonFontSize)
+    }
+    public func tapButtonTextColor(for state: UIControl.State, session: SessionProtocol) -> UIColor? {
+        if let theme = themeDict() {
+            if state == .normal { return color(value: theme["payButtonEnabledTitleColor"]) }
+            if state == .disabled { return color(value: theme["payButtonDisabledTitleColor"]) }
+        }
+        return nil
+    }
+    public func tapButtonCornerRadius(for session: SessionProtocol) -> CGFloat {
+        if let theme = themeDict(), let n = theme["payButtonCornerRadius"] as? NSNumber { return CGFloat(truncating: n) }
+        return 0
+    }
+    public func isLoaderVisibleOnTapButtton(for session: SessionProtocol) -> Bool {
+        if let theme = themeDict(), let v = theme["payButtonLoaderVisible"] as? Bool { return v }
+        return true
+    }
+    public func isSecurityIconVisibleOnTapButton(for session: SessionProtocol) -> Bool {
+        if let theme = themeDict(), let v = theme["payButtonSecurityIconVisible"] as? Bool { return v }
+        return true
+    }
+    public func tapButtonInsets(for session: SessionProtocol) -> UIEdgeInsets {
+        guard let theme = themeDict(), let insets = theme["payButtonInsets"] as? [String: Any] else { return .zero }
+        let l = (insets["left"] as? NSNumber)?.doubleValue ?? 0
+        let t = (insets["top"] as? NSNumber)?.doubleValue ?? 0
+        let r = (insets["right"] as? NSNumber)?.doubleValue ?? 0
+        let b = (insets["bottom"] as? NSNumber)?.doubleValue ?? 0
+        return UIEdgeInsets(top: t, left: l, bottom: b, right: r)
+    }
+    public func tapButtonHeight(for session: SessionProtocol) -> CGFloat {
+        if let theme = themeDict(), let n = theme["payButtonHeight"] as? NSNumber { return CGFloat(truncating: n) }
+        return 0
+    }
+}
+
+// MARK: - Appearance helpers
+extension SwiftGoSellSdkFlutterPlugin {
+    fileprivate func themeDict() -> [String: Any]? {
+        return argsSessionParameters?["theme"] as? [String: Any]
+    }
+
+    fileprivate func color(from key: String) -> UIColor? {
+        guard let theme = themeDict() else { return nil }
+        return color(value: theme[key])
+    }
+
+    fileprivate func color(value: Any?) -> UIColor? {
+        guard let hex = value as? String else { return nil }
+        return UIColor(hexString: hex)
+    }
+
+    fileprivate func font(from key: String) -> UIFont? {
+        guard let theme = themeDict(), let family = theme[key] as? String else { return nil }
+        if family.lowercased() == "system" { return UIFont.systemFont(ofSize: UIFont.labelFontSize) }
+        if let custom = UIFont(name: family, size: UIFont.labelFontSize) { return custom }
+        return UIFont.systemFont(ofSize: UIFont.labelFontSize)
+    }
+}
+
+// Simple hex color initializer
+extension UIColor {
+    convenience init?(hexString: String) {
+        var str = hexString.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        if str.hasPrefix("#") { str.removeFirst() }
+        if str.count == 6 { str = "FF" + str }
+        guard str.count == 8, let value = UInt32(str, radix: 16) else { return nil }
+        let a = CGFloat((value & 0xFF000000) >> 24) / 255.0
+        let r = CGFloat((value & 0x00FF0000) >> 16) / 255.0
+        let g = CGFloat((value & 0x0000FF00) >> 8) / 255.0
+        let b = CGFloat(value & 0x000000FF) / 255.0
+        self.init(red: r, green: g, blue: b, alpha: a)
     }
 }
 
