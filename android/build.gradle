@@ -62,21 +62,15 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    implementation 'com.github.Tap-Payments:goSellSDK-AndroidX:3.19.34'
-    implementation 'com.google.code.gson:gson:2.9.0'
-
-    implementation 'com.google.android.material:material:1.14.0-alpha03'
-    implementation 'com.github.Tap-Payments:TapGLKit-Android:1.19.1'
-    implementation 'com.github.Tap-Payments:TapCardValidator-Android:2.16.2.1'
-// OkHttp core and logging interceptor
+    implementation('com.github.Tap-Payments:goSellSDK-AndroidX:3.19.37.3')
     implementation 'com.squareup.okhttp3:logging-interceptor:5.1.0'
     implementation 'com.squareup.okhttp3:okhttp:5.1.0'
+    implementation 'com.google.code.gson:gson:2.13.1'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'com.github.Tap-Payments:TapGLKit-Android:1.19.1'
+    implementation 'com.github.Tap-Payments:TapCardValidator-Android:2.16.2.1'
     implementation 'com.squareup.retrofit2:retrofit:3.0.0'
     implementation 'com.squareup.retrofit2:converter-gson:3.0.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:5.1.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.google.android.gms:play-services-wallet:19.4.0'
     implementation 'jp.wasabeef:blurry:4.0.1'
