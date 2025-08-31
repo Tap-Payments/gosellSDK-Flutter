@@ -1,3 +1,6 @@
+## 2.4.21 - 2025-08-2431
+### Enhancement Feature:
+• Updating to support latest android api 35
 ## 2.4.20 - 2025-07-24
 ### Enhancement Feature:
 • Updating to support latest android api 35
