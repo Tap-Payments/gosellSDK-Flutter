@@ -119,6 +119,8 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             GoSellSDK.setLocale(activity,language); // to be replaced by merchant
         }
+        ThemeObject.getInstance()
+                .setSdkLanguage(language);
     }
 
     /**
