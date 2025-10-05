@@ -1,3 +1,5 @@
+## 2.4.25 - 2025-10-01
+• Fix Localization
 ## 2.4.24 - 2025-10-01
 ### Enhancement Feature:
 • Updating to support latest android api 35
