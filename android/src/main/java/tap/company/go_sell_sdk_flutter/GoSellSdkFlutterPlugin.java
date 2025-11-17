@@ -19,11 +19,13 @@ import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
+import io.flutter.plugin.common.PluginRegistry;
+
 
 /**
  * GoSellSdkFlutterPlugin
  */
-public class GoSellSdkFlutterPlugin implements MethodChannel.MethodCallHandler, FlutterPlugin, ActivityAware {
+public class GoSellSdkFlutterPlugin implements FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware {
 
 
     /**
@@ -113,6 +115,7 @@ public class GoSellSdkFlutterPlugin implements MethodChannel.MethodCallHandler, 
     private Lifecycle lifecycle;
     private LifeCycleObserver observer;
     private static final String CHANNEL = "tap.company.go_sell_sdk_flutter.GoSellSdkFlutterPlugin";
+
     /**
      * Default constructor for the plugin.
      *
@@ -121,28 +124,34 @@ public class GoSellSdkFlutterPlugin implements MethodChannel.MethodCallHandler, 
     public GoSellSdkFlutterPlugin() {
     }
 
-
     /**
      * @param binding
      */
+    // For new Flutter plugin system (V2 embedding)
     @Override
-    public void onAttachedToEngine(FlutterPluginBinding binding) {
+    public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
         pluginBinding = binding;
+        channel = new MethodChannel(binding.getBinaryMessenger(), CHANNEL);
+        channel.setMethodCallHandler(this);
     }
 
     @Override
-    public void onDetachedFromEngine(FlutterPluginBinding binding) {
+    public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+        if (channel != null) {
+            channel.setMethodCallHandler(null);
+            channel = null;
+        }
         pluginBinding = null;
     }
 
     @Override
     public void onAttachedToActivity(ActivityPluginBinding binding) {
-    this.activityBinding = binding;
+        activityBinding = binding;
         setup(
                 pluginBinding.getBinaryMessenger(),
                 (Application) pluginBinding.getApplicationContext(),
-                binding.getActivity(),
-                binding);
+                activityBinding.getActivity(),
+                activityBinding);
     }
 
     @Override
@@ -164,7 +173,6 @@ public class GoSellSdkFlutterPlugin implements MethodChannel.MethodCallHandler, 
     /**
      * setup
      */
-
     private void setup(
             final BinaryMessenger messenger,
             final Application application,
@@ -176,13 +184,17 @@ public class GoSellSdkFlutterPlugin implements MethodChannel.MethodCallHandler, 
         channel = new MethodChannel(messenger, "go_sell_sdk_flutter");
         channel.setMethodCallHandler(this);
         observer = new LifeCycleObserver(activity);
-        if (activityBinding != null) {
-            // V2 embedding setup for activity listeners.
-            activityBinding.addActivityResultListener(delegate);
-            activityBinding.addRequestPermissionsResultListener(delegate);
-        }
-    }
 
+        // V2 embedding setup for activity listeners.
+        activityBinding.addActivityResultListener(delegate);
+        activityBinding.addRequestPermissionsResultListener(delegate);
+        // Lifecycle observer setup can be added here if needed
+        // lifecycle = FlutterLifecycleAdapter.getActivityLifecycle(activityBinding);
+        // lifecycle.addObserver(observer);
+
+        // Register activity lifecycle callbacks
+        application.registerActivityLifecycleCallbacks(observer);
+    }
 
     /**
      * tearDown()
@@ -201,11 +213,9 @@ public class GoSellSdkFlutterPlugin implements MethodChannel.MethodCallHandler, 
         application = null;
     }
 
-
     /**
      * construct delegate
      */
-
     private final GoSellSdKDelegate constructDelegate(final Activity setupActivity) {
         return new GoSellSdKDelegate(setupActivity);
     }
@@ -213,7 +223,6 @@ public class GoSellSdkFlutterPlugin implements MethodChannel.MethodCallHandler, 
     /**
      * MethodChannel.Result wrapper that responds on the platform thread.
      */
-
     private static class MethodResultWrapper implements MethodChannel.Result {
         private MethodChannel.Result methodResult;
         private Handler handler;
@@ -225,7 +234,6 @@ public class GoSellSdkFlutterPlugin implements MethodChannel.MethodCallHandler, 
 
         @Override
         public void success(final Object result) {
-
             System.out.println("success coming from delegate : " + result);
 
             handler.post(
@@ -270,7 +278,5 @@ public class GoSellSdkFlutterPlugin implements MethodChannel.MethodCallHandler, 
         }
         MethodChannel.Result result = new MethodResultWrapper(rawResult);
         delegate.startSDK(call, result, args);
-
     }
-
 }
