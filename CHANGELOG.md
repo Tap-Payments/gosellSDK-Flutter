@@ -1,3 +1,25 @@
+## 2.4.28 - 2026-01-11
+
+### Enhancement Feature:
+• Add enableApplePaySetup parameter support
+• Update iOS goSellSDK dependency to version 2.3.49
+
+### Description:
+The `enableApplePaySetup` parameter allows you to control the visibility of the Apple Pay setup button:
+• When set to `true`: The Apple Pay setup button will be shown if the wallet is not setup on the device
+• When set to `false` (default): The Apple Pay setup button will be hidden
+
+This enables users to easily configure Apple Pay on their device during the payment process if they haven't already done so.
+
+### Usage Example:
+```dart
+GoSellSdkFlutter.startPaymentProcess(
+  ....,
+  enableApplePaySetup: true,  // Show Apple Pay setup button if wallet not configured
+  ...,
+);
+```
+
 ## 2.4.25 - 2025-10-01
 • Fix Localization
 ## 2.4.24 - 2025-10-01

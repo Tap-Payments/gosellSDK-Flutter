@@ -715,6 +715,27 @@ responseID = tapSDKResult['charge_id'];
 Follow the steps shared in the following link to setup apple pay:<br/>
 
 https://github.com/Tap-Payments/goSellSDK-ios#apple-pay
+
+### Enable Apple Pay Setup Button
+
+The SDK now supports the `enableApplePaySetup` parameter which allows you to show the Apple Pay setup button to users who haven't configured Apple Pay on their device.
+
+```dart
+GoSellSdkFlutter.startPaymentProcess(
+  merchantID: "YOUR_MERCHANT_ID",
+  allowedCadTypes: CardType.ALL,
+  applePayMerchantID: "merchant.com.tap.applepay",
+  enableApplePaySetup: true,  // Show setup button if wallet not configured
+  sdkMode: SDKMode.SANDBOX,
+  paymentType: PaymentType.ALL,
+);
+```
+
+**Behavior:**
+- When `enableApplePaySetup: true` → The Apple Pay setup button will be displayed if the wallet is not configured on the device
+- When `enableApplePaySetup: false` (default) → The Apple Pay setup button will be hidden
+
+This feature enables users to easily configure Apple Pay during the payment process if they haven't already done so.
   
 ---
 
