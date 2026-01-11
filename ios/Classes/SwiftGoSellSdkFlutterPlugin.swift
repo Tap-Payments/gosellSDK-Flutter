@@ -61,6 +61,14 @@ public class SwiftGoSellSdkFlutterPlugin: NSObject, FlutterPlugin {
 
 
 extension SwiftGoSellSdkFlutterPlugin: SessionDataSource {
+    
+  
+    public var enableApplePaySetup: Bool {
+        if let enableApplePaySetupBool: Bool = argsSessionParameters?["enableApplePaySetup"] as? Bool {
+            return enableApplePaySetupBool
+        }
+        return false
+    }
 
     public var customer: Customer?{
       if let customerString:String = argsSessionParameters?["customer"] as? String {
