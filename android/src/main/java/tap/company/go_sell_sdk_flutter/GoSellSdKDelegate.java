@@ -37,10 +37,12 @@ import tap.company.go_sell_sdk_flutter.deserializers.DeserializationUtil;
 public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         PluginRegistry.RequestPermissionsResultListener, SessionDelegate {
 
+    private static final String TAG = "GoSellSDKDelegate";
     private SDKSession sdkSession;
     private Activity activity;
     private MethodChannel.Result pendingResult;
     private MethodCall methodCall;
+    private boolean isCancellingSession = false;
 
     public GoSellSdKDelegate(Activity _activity) {
         this.activity = _activity;
@@ -69,6 +71,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
 
     public void terminateSDKSession() {
         if (activity != null) {
+            isCancellingSession = true;
             sdkSession.cancelSession(activity);
         }
     }
@@ -391,8 +394,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         resultMap.put("sdk_result", paymentStatus);
         resultMap.put("trx_mode", trx_mode);
 
-        pendingResult.success(resultMap);
-        pendingResult = null;
+        completeResult(resultMap);
     }
 
     private void sendTokenResult(Token token, String paymentStatus, boolean saveCard) {
@@ -425,8 +427,7 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         }
         resultMap.put("sdk_result", paymentStatus);
         resultMap.put("trx_mode", "TOKENIZE");
-        pendingResult.success(resultMap);
-        pendingResult = null;
+        completeResult(resultMap);
     }
 
     private void sendSDKError(int errorCode, String errorMessage, String errorBody) {
@@ -435,14 +436,21 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
         resultMap.put("sdk_error_code", errorCode);
         resultMap.put("sdk_error_message", errorMessage);
         resultMap.put("sdk_error_description", errorBody);
-        pendingResult.success(resultMap);
-        pendingResult = null;
+        completeResult(resultMap);
     }
 
     private void sendGooglePayError(String errorMessage) {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("sdk_result", "SDK_ERROR");
         resultMap.put("sdk_error_message", errorMessage);
+        completeResult(resultMap);
+    }
+
+    private void completeResult(Map<String, Object> resultMap) {
+        if (pendingResult == null) {
+            Log.w(TAG, "Result is null; dropping SDK callback: " + resultMap.get("sdk_result"));
+            return;
+        }
         pendingResult.success(resultMap);
         pendingResult = null;
     }
@@ -536,10 +544,14 @@ public class GoSellSdKDelegate implements PluginRegistry.ActivityResultListener,
     @Override
     public void sessionCancelled() {
         Log.d("MainActivity", "Session Cancelled.........");
+        if (!isCancellingSession && activity != null && sdkSession != null) {
+            isCancellingSession = true;
+            sdkSession.cancelSession(activity);
+        }
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("sdk_result", "CANCELLED");
-        pendingResult.success(resultMap);
-        pendingResult = null;
+        completeResult(resultMap);
+        isCancellingSession = false;
     }
 
     @Override
