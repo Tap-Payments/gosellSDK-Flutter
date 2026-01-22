@@ -1,3 +1,12 @@
+## 2.4.29 - 2026-01-22
+
+### Bug Fix:
+• Handle session cancellation edge cases on Android
+• Prevent duplicate cancellation calls when session is already being cancelled
+• Add null check to prevent errors when result callback is invoked after activity destruction
+
+---
+
 ## 2.4.28 - 2026-01-11
 
 ### Enhancement Feature:
