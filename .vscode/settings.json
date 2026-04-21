@@ -1,9 +1,10 @@
 {
-    "files.exclude": {
-        "**/.classpath": true,
-        "**/.project": true,
-        "**/.settings": true,
-        "**/.factorypath": true
-    },
-    "java.configuration.updateBuildConfiguration": "disabled"
+  "files.exclude": {
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true
+  },
+  "java.configuration.updateBuildConfiguration": "disabled",
+  "dart.flutterSdkPath": ".fvm/versions/3.41.7"
 }
